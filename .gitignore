@@ -1,8 +1,7 @@
 **migrations/
 *.py[cod]
-.venv/
-PB/TFCbackend/db.sqlite3
-PB/TFCbackend/accounts/migrations/0001_initial.py
-venv/
+PF/TFCbackend/db.sqlite3
+PF/TFCbackend/accounts/migrations/0001_initial.py
+PF/TFCbackend/venv/
 .gitkeep
 **/.DS_Store
