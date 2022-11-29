@@ -1,0 +1,6 @@
+**migrations/
+*.py[cod]
+.venv/
+PB/TFCbackend/db.sqlite3
+PB/TFCbackend/accounts/migrations/0001_initial.py
+venv/
