@@ -1,0 +1,15 @@
+.Profile{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+.PaymentList{
+    height: 100vh;
+    width: 20vw;
+    background-color: grey;
+}
+.AccountInfo{
+    height: 100vh;
+    width: 80vw;
+    background-color: beige;
+}
