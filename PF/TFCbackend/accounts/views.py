@@ -215,8 +215,6 @@ class PaymentsView(ListAPIView):
     serializer_class = PaymentSerializer
 
     def get_queryset(self):
-        print("pp")
-        # account = get_object_or_404(Account, email=self.request.user.email)
-        print("milk")
-        # payments = Payment.objects.filter(account=account)
-        return Payment.objects.all()
+        account = get_object_or_404(Account, email=self.request.user.email)
+        payments = Payment.objects.filter(account=account)
+        return payments
