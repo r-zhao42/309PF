@@ -1,0 +1,28 @@
+.tabs{
+    height: 200px;
+    width: 100vw;
+    min-width: 600px;
+    background-color: orange;
+    display: table-cell;
+}
+.tab-list{
+    display: inline-flex;
+    margin: 0;
+}
+.tab-btn{
+    height: 30px;
+    width: 15vw;
+    min-width: 150px;
+    background-color: rgb(236, 234, 234);
+    border: 1px solid grey;
+}
+.tab-btn:hover{
+    background-color: white;
+    border-color: black;
+}
+.outlet{
+    background-color: rgb(221, 114, 114);
+}
+.outlet > div > p{
+    margin: 0;
+}
