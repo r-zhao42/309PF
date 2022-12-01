@@ -1,0 +1,8 @@
+
+nav a, button {
+    margin: 12px;
+}
+
+.loginBtn {
+    background-color: aqua !important;
+}
