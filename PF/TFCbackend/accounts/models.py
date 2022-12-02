@@ -75,7 +75,11 @@ class Account(AbstractBaseUser):
         return self.is_admin
 
 class PaymentInfo(models.Model):
-    account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True)
+    class Meta:
+        verbose_name = "payment_info"
+        verbose_name_plural = "payment_infos"
+    
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='payment_info')
     credit_num = models.CharField(max_length=20)
     credit_exp_month = models.CharField(max_length=6)
     credit_exp_year = models.CharField(max_length=6)
@@ -101,7 +105,7 @@ class SubscriptionType(models.Model):
         return f'{self.type}: {self.amount}'
 
 class Subscription(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
+    account = models.ForeignKey(Account, on_delete=models.DO_NOTHING, related_name='sub')
     sub_type = models.ForeignKey(SubscriptionType, on_delete=models.CASCADE, null=True, blank=True)
     start_date = models.DateField(auto_now_add=True)
     next_payment_date = models.DateField()
