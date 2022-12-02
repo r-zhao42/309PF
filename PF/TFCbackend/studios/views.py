@@ -158,7 +158,7 @@ def perform_create(request):
         date_of_class = target_class.start_time    
 
         # get all repeatclass instances with same parent class as the target class and filter for only ones that occur at the same or later date
-        queryset = RepeatClass.objects.filter(repeat_class=parent_class, start_time__gte=date_of_class)
+        queryset = RepeatClass.objects.filter(parent_class=parent_class, start_time__gte=date_of_class)
 
     # user wants to enrol in one instance of this class
     else:
