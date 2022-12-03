@@ -1,38 +1,75 @@
-import {Link, Outlet} from "react-router-dom";
-import './NavBar.css'
+import {Outlet} from "react-router-dom";
 import React from 'react';
-import logo from './tfc.png'
-import {NavButton} from "./NavBarElements"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import logo from './tfc.png';
 import Button from 'react-bootstrap/Button';
+
 
 
 const NavBar = () => {
     return (
-        <>  
+        <>
+            <style type="text/css"> 
+            {`
+            button {
+                margin: 5px;
+            }
 
-            {/* <nav>
-                <img id="logo" src={logo} alt="logo" />
-                <NavButton title="Login" titleColor='#2f5491' bgColor='white' to="/login" borderColor='#fd610c'/>
-                <NavButton title="Sign Up" titleColor='white' bgColor='#fd610c' to="/signup" borderColor='#fd610c' />
-            </nav>      */}
-            <Navbar bg="light" expand="lg" fixed="top">
-                    <Navbar.Brand href="#home"><img alt="" src={logo} height="60" className="d-inline-block align-top"
-            /></Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"  className="ml-auto"/>
-                    <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mx-auto">
-                        <Nav.Link href="#link">Gyms</Nav.Link>
-                        <Nav.Link href="#link">Classes</Nav.Link>
+            .btn-outline-orange {
+                background: #fff;
+                color: #31548a;
+                border: 2px solid #fb6414;
+                border-radius: 5px;
+                padding: 5px 10px;
+              }
+            
+            .btn-outline-orange:hover {
+                background: #fb6414;
+                color: #fff;
+                border: 2px solid #fb6414;
+                border-radius: 5px;
+                padding: 5px 10px;
+            }
+            
+            .btn-orange {
+                background: #fb6414;
+                color: #fff;
+                border: 2px solid #fb6414;
+                border-radius: 5px;
+                padding: 5px 10px;
+            }
+            
+            .btn-orange:hover {
+                background: #ce5311;
+                color: #fff;
+                border: 2px solid #ce5311;
+                border-radius: 5px;
+                padding: 5px 10px;
+            }
+            `}
+            </style>
+
+            <Navbar bg="light" expand="lg">
+                <Container fluid>
+                    <Navbar.Brand href="#"><img src={logo} height="50" alt="logo" /></Navbar.Brand>
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                    <Nav
+                        className="me-auto my-2 my-lg-0"
+                        style={{ maxHeight: '100px' }}
+                        navbarScroll
+                    >
+                        <Nav.Link href="#action1">Home</Nav.Link>
+                        <Nav.Link href="#action2">Link</Nav.Link>
                     </Nav>
-                    <Nav className="me-2">
-                        <NavButton text="Login" />
-                        <NavButton text="Sign Up" />
+                    <Nav>
+                        <Button variant="outline-orange">Login</Button>
+                        <Button variant="orange">Sign Up</Button>
                     </Nav>
                     </Navbar.Collapse>
+                </Container>
             </Navbar>
             <Outlet />
         </>   
