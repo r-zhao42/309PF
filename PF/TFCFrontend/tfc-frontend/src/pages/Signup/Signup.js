@@ -57,40 +57,29 @@ const Signup = () => {
       .then((response) => response.json())
       .then((request) => {
         console.log(request)
-        const newErrorsState = {...errors};
+        const newErrorsState = {
+          phone_num: '',
+          email: '',
+          password: '',
+          repeatpassword: ''
+        };
         
         if ('phone_num' in request) {
           newErrorsState.phone_num = request.phone_num[0]
         }
-        else{
-          newErrorsState.phone_num = ''
-        }
-
         if ('email' in request) {
           // request.email is sometimes not an array (when email is taken... look into this lol)
-          newErrorsState.email = request.email
+          newErrorsState.email = request.email[0]
         }
-        else{
-          newErrorsState.email = ''
-        }
-
         if ('password' in request) {
           newErrorsState.password = request.password[0]
         }
-        else{
-          newErrorsState.password = ''
-        }
-
         if ('repeat_password' in request) {
           newErrorsState.repeatpassword = request.repeat_password[0]
         }
         else if ({password} !== {repeatpassword}){
           newErrorsState.repeatpassword = 'Passwords do not match'
         }
-        else{
-          newErrorsState.repeatpassword = ''
-        }
-        
         setErrors(newErrorsState);
       });
   };
@@ -98,7 +87,7 @@ const Signup = () => {
 
   return (
     <>
-      <div className="outer-div">
+      <div className="outer-div1">
         <div className="inner-div1">
           <h3>Sign Up</h3>
 
