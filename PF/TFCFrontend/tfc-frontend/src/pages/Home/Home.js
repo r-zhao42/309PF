@@ -17,9 +17,9 @@ const Home = () => {
     <>
     <div className = "outer-div">
         <div className = "inner-div">
-            <h1>Welcome to the Toronto Fitness Club</h1>
+            <h1 className = 'home-title'>Welcome to the Toronto Fitness Club</h1>
             <br/>
-            <Button variant="primary" onClick={handleClick}>
+            <Button variant="home" onClick={handleClick}>
                 Find a Studio Near You
             </Button>
         </div>
