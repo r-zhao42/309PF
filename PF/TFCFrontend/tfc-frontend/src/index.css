@@ -8,6 +8,8 @@ body {
 
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+
+  background-color: rgb(245, 245, 245) !important;
 }
 body::-webkit-scrollbar {
   display: none;
