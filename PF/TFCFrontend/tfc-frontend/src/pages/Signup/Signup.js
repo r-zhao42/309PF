@@ -13,7 +13,7 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [repeatpassword, setRepeatPassword] = useState('')
 
-  const [output, setOutput] = useState('')
+  const [error, setError] = useState('')
 
   const handleFirstChange = event => {
     setFirst(event.target.value)
@@ -53,12 +53,16 @@ const Signup = () => {
       method: "POST",
       mode: 'cors',
       body: datathing
-    
-    }).then((response) => response.json()) 
-      .then((responseJson) => {
-          setOutput(responseJson)
+  })
+    .then((response) => response.json())
+    .then((request) => {
+      if (request.phone_num != null){
+        setPhone(phone + request.phone_num)
       }
-      ) 
+      else{
+        setError('')
+      }
+    });
   };
 
 
@@ -66,33 +70,35 @@ const Signup = () => {
     <>
       <div className="outer-div">
         <div className="inner-div">
-          Login
+          <h3>Sign Up</h3>
 
-          <Form onSubmit={handleSubmit} >
-            <Form.Group>
-              <Form.Label>First Name:</Form.Label>
+          <br/>
+          <Form onSubmit={handleSubmit} class="form-horizontal" >
+            <Form.Group class="label">
+              <Form.Label>First Name</Form.Label>
               <Form.Control type="text" value={first} onChange={handleFirstChange} />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Last Name:</Form.Label>
+            <Form.Group class="label">
+              <Form.Label>Last Name</Form.Label>
               <Form.Control type="text" value={last} onChange={handleLastChange}/>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Phone Number:</Form.Label>
+            <Form.Group class="label">
+              <Form.Label>Phone Number</Form.Label>
               <Form.Control type="tel" value={phone} placeholder="+14169567234" onChange={handlePhoneChange} />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Email:</Form.Label>
+            <Form.Group class="label">
+              <Form.Label>Email</Form.Label>
               <Form.Control type="email" value={email} placeholder="some@example.com" onChange={handleEmailChange}/>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Password:</Form.Label>
+            <Form.Group class="label">
+              <Form.Label>Password</Form.Label>
               <Form.Control type="password" value={password} onChange={handlePasswordChange}/>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Repeat Password:</Form.Label>
+            <Form.Group class="label">
+              <Form.Label>Repeat Password</Form.Label>
               <Form.Control type="password" value={repeatpassword} onChange={handleRepeatPasswordChange}/>
             </Form.Group>
+            <br/>
             <Button variant="primary" type="submit">
               Sign Up
             </Button>
