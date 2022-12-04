@@ -100,8 +100,8 @@ const NavBar = () => {
                         <Nav.Link href="#action2" className="nav-item">Membership</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Button variant="outline-orange">Login</Button>
-                        <Button variant="orange">Sign Up</Button>
+                        <Button variant="orange">Login</Button>
+                        <Button variant="outline-orange">Sign Up</Button>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>
