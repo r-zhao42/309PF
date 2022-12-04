@@ -79,7 +79,6 @@ class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, U
     
     @rest_framework.decorators.action(methods=["GET"], detail=False)
     def details(self, request):
-        print("got here")
         serializer = self.get_serializer(data=request.data)
         account = get_object_or_404(Account, email=request.user.email)
         account = serializer.serialize(account)

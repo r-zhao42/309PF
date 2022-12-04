@@ -2,7 +2,6 @@
     height: 100vh;
     width: 100vw;
     min-width: 600px;
-    background-color: grey;
     text-align: center;
 }
 .profile-header{
@@ -11,18 +10,57 @@
     min-width: calc(0.9 * 600px);
     display: inline-flex;
     background-color: beige;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.avatar-table{
+    height: 100%;
+    width: 30%;
+    display: table;
 }
 .account-avatar{
-    height: 100%;
-    width: 40%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
     background-color: bisque;
+}
+.avatar-frame{
+    height: calc(90vw * 0.3 * 0.6);
+    min-height: calc(0.9 * 600px * 0.3 * 0.6);
+    width: 60%;
+    display: inline-block;
+    background-color: black;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.avatar-frame > img{
+    height: 100%;
+    width: 100%;
 }
 .account-short-details{
     height: 100%;
-    width: 60%;
+    width: 70%;
     background-color: blanchedalmond;
+    display: flex;
 }
-
-.profile-header > div > h1{
+.details-section{
+    width: 50%;
+    display: table;
+    text-align: start;
+    vertical-align: middle;
+}
+.details-data{
+    display: table-cell;
+    vertical-align: middle;
+}
+.name-text{
+    font-weight: 100;
+    letter-spacing: 4px;
     margin: 0;
+    margin-left: 5%;
+}
+.contact-text{
+    font-weight: 100;
+    letter-spacing: 2px;
+    margin-left: 8%;
 }

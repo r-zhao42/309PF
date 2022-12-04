@@ -21,8 +21,6 @@
     border-color: black;
 }
 .outlet{
+    width: 100vw;
     background-color: rgb(221, 114, 114);
-}
-.outlet > div > p{
-    margin: 0;
 }
