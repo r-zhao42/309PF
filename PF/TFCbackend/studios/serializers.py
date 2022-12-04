@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Studio, Class, RepeatClass, Enrollment, Image, Amenity
+from .models import Studio, Class, RepeatClass, Enrollment, Image
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
