@@ -1,30 +1,31 @@
-// import logo from '../../logo.svg';
-// import '../../App.css';
-
-
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./Home.css";
 
 
 const Home = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/replace-this');
+      };
+    
+  
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <h1>Home</h1>
-  );
+    <>
+    <div className = "outer-div">
+        <div className = "inner-div">
+            <h1>Welcome to the Toronto Fitness Club</h1>
+            <br/>
+            <Button variant="primary" onClick={handleClick}>
+                Find a Studio Near You
+            </Button>
+        </div>
+    </div>
+    </>
+)
 }
 
 export default Home;
