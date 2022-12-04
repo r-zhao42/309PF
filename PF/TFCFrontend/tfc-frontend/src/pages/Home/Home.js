@@ -1,30 +1,25 @@
-// import logo from '../../logo.svg';
-// import '../../App.css';
-
-
 import React from 'react';
-
+import "../../styles/home.css";
+import NavBar from '../../components/NavBar/NavBar';
 
 const Home = () => {
-  return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <h1>Home</h1>
-  );
+  const handleClick = () => {
+    // implementation details
+  };
+  
+return (
+    
+    <div className = "bannerdiv">
+        <div className = "innerdiv">
+            {/* <NavBar /> */}
+            {/* <img src={require('../images/lifting.jpg')} alt="gym-banner" className='banner'/> */}
+            <h1>Welcome to the Toronto Fitness Club</h1>
+            <button type="button" onClick={handleClick}>
+                Join Us
+            </button>
+        </div>
+    </div>
+)
 }
 
 export default Home;

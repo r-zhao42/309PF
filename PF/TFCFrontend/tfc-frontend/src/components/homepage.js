@@ -1,5 +1,6 @@
 import React from 'react';
 import "../styles/homepage.css";
+import NavBar from './NavBar/NavBar';
 
 function Homepage() {
 
@@ -9,12 +10,15 @@ function Homepage() {
       
     return (
         
-        <div>
-            <img src={require('../images/lifting.jpg')} alt="gym-banner" className='banner'/>
-            <h1>Welcome to the Toronto Fitness Club</h1>
-            <button type="button" onClick={handleClick}>
-                Join Us
-            </button>
+        <div className = "bannerdiv">
+            <div className = "innerdiv">
+                <NavBar />
+                {/* <img src={require('../images/lifting.jpg')} alt="gym-banner" className='banner'/> */}
+                <h1>Welcome to the Toronto Fitness Club</h1>
+                <button type="button" onClick={handleClick}>
+                    Join Us
+                </button>
+            </div>
         </div>
     )
 }
