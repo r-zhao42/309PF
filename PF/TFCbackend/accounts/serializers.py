@@ -137,10 +137,10 @@ class RegisterAccountSerializer(ParentAccountSerializer, serializers.ModelSerial
         #Do passwords match, if some missing then skip  
         try:  
             if data['password'] != data['repeat_password']:  
-                if err['password']:  
-                    err['password'].append('Passwords do not match.')  
+                if 'password' in  err.keys(): 
+                    err['repeat_password'].append('Passwords do not match.')  
                 else:  
-                    err['password'] = ['Passwords do not match.']  
+                    err['repeat_password'] = ['Passwords do not match.']  
         except:  
             pass  
           

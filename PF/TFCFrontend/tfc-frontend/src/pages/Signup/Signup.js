@@ -1,18 +1,19 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./Signup.css";
-const Signup = () => {
 
+const Signup = () => {
+  const navigate = useNavigate();
   const [first, setFirst] = useState('')
   const [last, setLast] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatpassword, setRepeatPassword] = useState('')
-
   const [errors, setErrors] = useState({});
 
   const handleFirstChange = event => {
@@ -55,32 +56,41 @@ const Signup = () => {
       body: formbody
     })
       .then((response) => response.json())
-      .then((request) => {
-        console.log(request)
-        const newErrorsState = {
-          phone_num: '',
-          email: '',
-          password: '',
-          repeatpassword: ''
-        };
-        
-        if ('phone_num' in request) {
-          newErrorsState.phone_num = request.phone_num[0]
+      .then((responseJson) => {
+
+        if (!('new_account' in responseJson)) {
+          console.log(responseJson)
+          const newErrorsState = {
+            first_name: '',
+            last_name: '',
+            phone_num: '',
+            email: '',
+            password: '',
+            repeatpassword: ''
+          };
+          if ('first_name' in responseJson) {
+            newErrorsState.first_name = responseJson.first_name[0]
+          }
+          if ('last_name' in responseJson) {
+            newErrorsState.last_name = responseJson.last_name[0]
+          }
+          if ('phone_num' in responseJson) {
+            newErrorsState.phone_num = responseJson.phone_num[0]
+          }
+          if ('email' in responseJson) {
+            newErrorsState.email = responseJson.email[0]
+          }
+          if ('password' in responseJson) {
+            newErrorsState.password = responseJson.password[0]
+          }
+          if ('repeat_password' in responseJson) {
+            newErrorsState.repeatpassword = responseJson.repeat_password[0]
+          }
+          setErrors(newErrorsState);
         }
-        if ('email' in request) {
-          // request.email is sometimes not an array (when email is taken... look into this lol)
-          newErrorsState.email = request.email[0]
+        else {
+          navigate('/replace-this');
         }
-        if ('password' in request) {
-          newErrorsState.password = request.password[0]
-        }
-        if ('repeat_password' in request) {
-          newErrorsState.repeatpassword = request.repeat_password[0]
-        }
-        else if ({password} !== {repeatpassword}){
-          newErrorsState.repeatpassword = 'Passwords do not match'
-        }
-        setErrors(newErrorsState);
       });
   };
 
@@ -95,11 +105,13 @@ const Signup = () => {
           <Form onSubmit={handleSubmit} className="form-horizontal" >
             <Form.Group className="slabel">
               <Form.Label>First Name</Form.Label>
-              <Form.Control type="text" value={first} onChange={handleFirstChange} />
+              <Form.Control type="text" value={first} onChange={handleFirstChange} isInvalid={!!errors.first_name} />
+              <Form.Control.Feedback type="invalid">{errors.first_name}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="slabel">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control type="text" value={last} onChange={handleLastChange} />
+              <Form.Control type="text" value={last} onChange={handleLastChange} isInvalid={!!errors.last_name} />
+              <Form.Control.Feedback type="invalid">{errors.last_name}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="slabel">
               <Form.Label>Phone Number</Form.Label>
