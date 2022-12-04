@@ -1,24 +1,23 @@
 import React from 'react';
-import "../../styles/home.css";
+import "./Home.css";
 import NavBar from '../../components/NavBar/NavBar';
-
 const Home = () => {
+
   const handleClick = () => {
-    // implementation details
   };
   
-return (
-    
+  return (
+    <>
     <div className = "bannerdiv">
         <div className = "innerdiv">
-            {/* <NavBar /> */}
-            {/* <img src={require('../images/lifting.jpg')} alt="gym-banner" className='banner'/> */}
             <h1>Welcome to the Toronto Fitness Club</h1>
             <button type="button" onClick={handleClick}>
-                Join Us
+                Discover a Studio Near You
             </button>
         </div>
     </div>
+    </>
+    
 )
 }
 

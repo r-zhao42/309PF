@@ -7,7 +7,7 @@ function Profile() {
     headers: new Headers({
         'Authorization': 'Token 183162720dd2185cc5db39b9c4900804283f95bf',
     }),
-    data:
+    // data:
   });
     // fetch("http://127.0.0.1:8000/api/accounts/details/").then(function(response) {
     //   return response.json();

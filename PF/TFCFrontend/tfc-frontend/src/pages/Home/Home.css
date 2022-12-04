@@ -9,7 +9,7 @@
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    background-image: url('../images/lifting.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.50)), url('https://assets.gqindia.com/photos/6371fe387cd61ae612b76939/master/pass/Workout.jpg');
     width: 100vw;
     height: 100vh;
     background-repeat: no-repeat;
@@ -19,6 +19,12 @@
 
 .innerdiv {
     display: inline-block;
+    /* transform: translate(0vw, -50%); */
+}
+
+h3 {
+    text-align: center;
+    padding: 5vw;
 }
 
 h1 {
