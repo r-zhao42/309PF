@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import './Profile.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
 import Tabs from "../../components/ProfileTabs/Tabs"
 
 function Profile() {
+  const [isHover, setIsHover] = useState(false);
+  const handleMouseOver = () => {
+    setIsHover(true);
+  };
+  const handleMouseOut = () => {
+    setIsHover(false);
+  };
+
+
   const [accData, setAccData] = useState(null);
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/accounts/details/', {
@@ -21,7 +28,9 @@ function Profile() {
 
   return (
     <div className='profile'>
-      <div className='profile-header shadow'>
+      <div className={'profile-header ' + (isHover ? 'shadow' : 'shadow-sm')}
+            onMouseOver={handleMouseOver} 
+            onMouseOut={handleMouseOut}>
         <div className='avatar-table'>
           <div className='account-avatar'>
             <div className='avatar-frame'>

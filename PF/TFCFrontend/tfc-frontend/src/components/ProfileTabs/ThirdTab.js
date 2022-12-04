@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import './TableTab.css';
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const ThirdTab = () => {
   const [paymentHistory, setPaymentHistory] = useState(null);
@@ -13,7 +12,6 @@ const ThirdTab = () => {
       }),
     }).then((response) => response.json())
       .then((data) => {
-        console.log(data.results);
         setPaymentHistory(data.results);
       });
   }, []);
@@ -22,7 +20,7 @@ const ThirdTab = () => {
     <div className="table-tab">
       <div className="table-container">
         <div className="table-center">
-          <table className="table table-hover table-dark">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th scope="col">Date</th>
@@ -34,7 +32,7 @@ const ThirdTab = () => {
               {paymentHistory && paymentHistory.map(({datetime, amount, payment_info}) => {
                 return (
                   <tr key={payment_info.id}>
-                    <td>{datetime}</td>
+                    <td>{datetime.slice(0,10)} {datetime.slice(11,19)}</td>
                     <td>{amount}</td>
                     <td>{payment_info.credit_num}</td>
                   </tr>

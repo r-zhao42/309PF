@@ -1,26 +1,32 @@
 .tabs{
-    height: 200px;
-    width: 100vw;
-    min-width: 600px;
-    background-color: orange;
-    display: table-cell;
+    width: 90vw;
+    min-width: calc(0.9 * 600px);
+    margin-bottom: 20px;
+    display: inline-block;
+    background-color: bisque;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.tab-list-center{
+    text-align: center;
 }
 .tab-list{
-    display: inline-flex;
-    margin: 0;
+    width: 100%;
+    margin: auto;
 }
 .tab-btn{
-    height: 30px;
+    height: 100%;
     width: 15vw;
     min-width: 150px;
-    background-color: rgb(236, 234, 234);
-    border: 1px solid grey;
+    margin: 0;
+    padding: 10px;
+    background-color: bisque;
+    border: none;
 }
 .tab-btn:hover{
-    background-color: white;
-    border-color: black;
+    background-color: antiquewhite;
 }
 .outlet{
-    width: 100vw;
-    background-color: rgb(221, 114, 114);
+    width: 90vw;
+    min-width: 600px;
 }

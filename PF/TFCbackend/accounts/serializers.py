@@ -145,7 +145,7 @@ class RegisterAccountSerializer(ParentAccountSerializer, serializers.ModelSerial
             try:  
                 validate_international_phonenumber(data['phone_num'])  
             except:  
-                if err['phone_num']:  
+                if 'phone_num' in  err.keys():
                     err['phone_num'].append('The phone number is not valid. Example format: +12125552368')  
                 else:  
                     err['phone_num'] = ['The phone number is not valid. Example format: +12125552368']  
