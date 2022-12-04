@@ -50,6 +50,7 @@ const Signup = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+
     fetch("http://127.0.0.1:8000/api/accounts/register/", {
       method: "POST",
       mode: 'cors',
@@ -59,7 +60,6 @@ const Signup = () => {
       .then((responseJson) => {
 
         if (!('new_account' in responseJson)) {
-          console.log(responseJson)
           const newErrorsState = {
             first_name: '',
             last_name: '',
@@ -94,13 +94,11 @@ const Signup = () => {
       });
   };
 
-
   return (
     <>
       <div className="outer-div1">
         <div className="inner-div1">
           <h3>Sign Up</h3>
-
           <br />
           <Form onSubmit={handleSubmit} className="form-horizontal" >
             <Form.Group className="slabel">
@@ -141,7 +139,6 @@ const Signup = () => {
         </div>
       </div>
     </>
-
   )
 }
 
