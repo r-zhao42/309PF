@@ -18,9 +18,9 @@ const NavBar = () => {
             }
 
             .btn-outline-orange {
-                background: #fff;
+                background: #fdebe2;
                 color: #31548a;
-                border: 2px solid #fb6414;
+                border: 2px solid #fdebe2;
                 border-radius: 5px;
                 padding: 5px 10px;
               }
