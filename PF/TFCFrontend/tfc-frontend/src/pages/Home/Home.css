@@ -14,24 +14,24 @@
     display: inline-block;
 }
 
-h1 {
+.home-title {
     color: white;
     font-size: 3vw;
 }
 
-.btn-primary {
+.btn-home {
     background-color:#e85f15 !important;
     border-color: #e85f15 !important;
     color: #fdebe2 !important;
 }
 
-.btn-primary:hover {
+.btn-home:hover {
     background-color:#a6430e !important;
     border-color: #a6430e !important;
     color: #fdebe2 !important;
 }
 
-.btn-primary:active {
+.btn-home:active {
     background-color:#a6430e !important;
     border-color: #a6430e !important;
     color: #fdebe2 !important
