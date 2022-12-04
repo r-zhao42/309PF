@@ -34,24 +34,57 @@ const NavBar = () => {
             }
             
             .btn-orange {
-                background: #fb6414;
-                color: #fff;
-                border: 2px solid #fb6414;
-                border-radius: 5px;
-                padding: 5px 10px;
-            }
-            
-            .btn-orange:hover {
                 background: #ce5311;
                 color: #fff;
                 border: 2px solid #ce5311;
                 border-radius: 5px;
                 padding: 5px 10px;
             }
+            
+            .btn-orange:hover {
+                background: #b74a10;
+                color: #fff;
+                border: 2px solid #b74a10;
+                border-radius: 5px;
+                padding: 5px 10px;
+            }
+
+            .color-nav {
+                background-color: #fb6414;
+            }
+
+            .nav-item {
+                display: inline-block;
+                position: relative;
+                color: white;
+            }
+
+            .nav-item:hover {
+                color: white;
+            }
+              
+            .nav-item::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                transform: scaleX(0);
+                height: 2px;
+                bottom: 0;
+                left: 0;
+                background-color: white;
+                transform-origin: bottom right;
+                transition: transform 0.25s ease-out;
+              }
+              
+            .nav-item:hover::after {
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+            
             `}
             </style>
 
-            <Navbar bg="light" expand="lg">
+            <Navbar className="color-nav" expand="lg">
                 <Container fluid>
                     <Navbar.Brand href="#"><img src={logo} height="50" alt="logo" /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -61,8 +94,10 @@ const NavBar = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1">Home</Nav.Link>
-                        <Nav.Link href="#action2">Link</Nav.Link>
+                        <Nav.Link href="#action1" className="nav-item">Home</Nav.Link>
+                        <Nav.Link href="#action2" className="nav-item">Gyms</Nav.Link>
+                        <Nav.Link href="#action2" className="nav-item">Classes</Nav.Link>
+                        <Nav.Link href="#action2" className="nav-item">Membership</Nav.Link>
                     </Nav>
                     <Nav>
                         <Button variant="outline-orange">Login</Button>
