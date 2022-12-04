@@ -1,9 +1,11 @@
+import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar"
 import Signup from "./pages/Signup/Signup"
 import Home from "./pages/Home/Home"
+import Profile from "./pages/Profile/Profile"
 import './App.css';
-import React from 'react';
+
 
 function App() {
   return (

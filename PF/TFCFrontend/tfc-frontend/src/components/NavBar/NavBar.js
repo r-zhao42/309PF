@@ -1,10 +1,10 @@
 import {Outlet} from "react-router-dom";
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import logo from './tfc.png';
-import Button from 'react-bootstrap/Button';
+// import Container from 'react-bootstrap/Container';
+// import Nav from 'react-bootstrap/Nav';
+// import Navbar from 'react-bootstrap/Navbar';
+// import logo from './tfc.png';
+// import Button from 'react-bootstrap/Button';
 
 
 
@@ -100,7 +100,7 @@ const NavBar = () => {
             `}
             </style>
 
-            <Navbar className="color-nav" expand="lg">
+            {/* <Navbar className="color-nav" expand="lg">
                 <Container fluid>
                     <Navbar.Brand href="#"><img src={logo} height="50" alt="logo" /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -121,7 +121,7 @@ const NavBar = () => {
                     </Nav>
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>
+            </Navbar> */}
             <Outlet />
         </>   
     );
