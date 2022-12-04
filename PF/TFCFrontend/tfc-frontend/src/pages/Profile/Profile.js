@@ -1,33 +1,53 @@
+import React, { useEffect, useState } from "react";
 import './Profile.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import Tabs from "../../components/ProfileTabs/Tabs"
 
 function Profile() {
-  fetch('http://127.0.0.1:8000/api/accounts/login/', {
-    method: 'post',
-    headers: new Headers({
-        'Authorization': 'Token 183162720dd2185cc5db39b9c4900804283f95bf',
-    }),
-    data:
-  });
-    // fetch("http://127.0.0.1:8000/api/accounts/details/").then(function(response) {
-    //   return response.json();
-    // }).then(function(data) {
-    //   console.log(data);
-    // }).catch(function() {
-    //   console.log("Booo");
-    // });
+  const [accData, setAccData] = useState(null);
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/accounts/details/', {
+      method: 'get',
+      mode: 'cors',
+      headers: new Headers({
+          'Authorization': 'Token ac0aca069c9f1c7c2725419c4617c8381ccf09a9',
+      }),
+    }).then((response) => response.json())
+      .then((data) => {
+        setAccData(data.account_details);
+      });
+  }, []);
+
   return (
     <div className='profile'>
-      <div className='profile-header'>
-        <div className='account-avatar'>
-          <h1>Avatar Block</h1>
+      <div className='profile-header shadow'>
+        <div className='avatar-table'>
+          <div className='account-avatar'>
+            <div className='avatar-frame'>
+              {accData && <img alt='Avatar' src={'http://localhost:8000' + accData.avatar}/>}
+            </div>
+          </div>
         </div>
         <div className='account-short-details'>
-          <h1>Account Short</h1>
+          <div className="details-section">
+            <div className="details-data">
+              {accData && <h1 className="name-text">{accData.first_name} {accData.last_name}</h1>}
+              {accData && <p className="contact-text">{accData.email}</p>}
+              {accData && <p className="contact-text">{accData.phone_num}</p>}
+            </div>
+          </div>
+          <div className="details-section">
+            <div className="details-data">
+              {accData && <h3 className="name-text">Next Payment Due:</h3>}
+              {accData && <p className="contact-text">{accData.subscription.next_payment_date}</p>}
+            </div>
+          </div>
         </div>
       </div>
 
-      <Tabs/>
+      <Tabs payment_info={accData && accData.payment_info}
+            subscription={accData && accData.subscription}/>
     </div>
   );
 }
