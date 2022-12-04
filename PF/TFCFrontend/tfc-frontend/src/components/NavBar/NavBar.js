@@ -26,13 +26,21 @@ const NavBar = () => {
               }
             
             .btn-outline-orange:hover {
-                background: #fb6414;
+                background: #e85f15;
                 color: #fff;
-                border: 2px solid #fb6414;
+                border: 2px solid #e85f15;
                 border-radius: 5px;
                 padding: 5px 10px;
             }
             
+            .btn-outline-orange:active {
+                background: #d25715 !important;
+                color: #fff !important;
+                border: 2px solid #d25715 !important;
+                border-radius: 5px !important;
+                padding: 5px 10px !important;
+            }
+
             .btn-orange {
                 background: #ce5311;
                 color: #fff;
@@ -47,6 +55,14 @@ const NavBar = () => {
                 border: 2px solid #b74a10;
                 border-radius: 5px;
                 padding: 5px 10px;
+            }
+
+            .btn-orange:active {
+                background: #a1420f !important;
+                color: #fff !important;
+                border: 2px solid #a1420f !important;
+                border-radius: 5px !important;
+                padding: 5px 10px !important;
             }
 
             .color-nav {
@@ -94,14 +110,14 @@ const NavBar = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1" className="nav-item">Home</Nav.Link>
-                        <Nav.Link href="#action2" className="nav-item">Gyms</Nav.Link>
-                        <Nav.Link href="#action2" className="nav-item">Classes</Nav.Link>
-                        <Nav.Link href="#action2" className="nav-item">Membership</Nav.Link>
+                        <Nav.Link href="/home" className="nav-item">Home</Nav.Link>
+                        <Nav.Link href="/gyms" className="nav-item">Gyms</Nav.Link>
+                        <Nav.Link href="/classes" className="nav-item">Classes</Nav.Link>
+                        <Nav.Link href="/membership" className="nav-item">Membership</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Button variant="orange">Login</Button>
-                        <Button variant="outline-orange">Sign Up</Button>
+                        <Nav.Link href="/home"><Button variant="orange">Login</Button></Nav.Link>
+                        <Nav.Link href="/home"><Button variant="outline-orange">Sign Up</Button></Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>
