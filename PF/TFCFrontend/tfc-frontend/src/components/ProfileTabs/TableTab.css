@@ -1,0 +1,15 @@
+.table-tab{
+    min-height: 20vh;
+    width: 100vw;
+    min-width: 600px;
+    display: table;
+    background-color: antiquewhite;
+}
+.table-container{
+    display: table-cell;
+    text-align: center;
+}
+.table-center{
+    width: 90vw;
+    display: inline-block;
+}

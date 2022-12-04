@@ -4,30 +4,27 @@ import FirstTab from "../../components/ProfileTabs/FirstTab";
 import SecondTab from "../../components/ProfileTabs/SecondTab";
 import ThirdTab from "../../components/ProfileTabs/ThirdTab";
 
-const Tabs = () => {
+const Tabs = ({payment_info, subscription}) => {
     const [activeTab, setActiveTab] = useState("tab1");
 
-    //  Functions to handle Tab Switching
     const handleTab1 = () => {
-        // update the state to tab1
         setActiveTab("tab1");
     };
     const handleTab2 = () => {
-        // update the state to tab2
         setActiveTab("tab2");
     };
     const handleTab3 = () => {
-        // update the state to tab3
         setActiveTab("tab3");
     };
 
     var content = "";
     if (activeTab === 'tab1'){
-        content = <FirstTab />;
+        content = <FirstTab payment_info={payment_info}
+                            subscription={subscription}/>;
     }else if (activeTab === 'tab2'){
-        content = <SecondTab />;
+        content = <SecondTab/>;
     }else{
-        content = <ThirdTab />;
+        content = <ThirdTab/>;
     }
     return (
         <div className="tabs">

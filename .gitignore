@@ -3,5 +3,6 @@
 PF/TFCbackend/db.sqlite3
 PF/TFCbackend/accounts/migrations/0001_initial.py
 PF/TFCbackend/venv/
+**.venv/
 .gitkeep
 **/.DS_Store
