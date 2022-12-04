@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import './TableTab.css';
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const SecondTab = () => {
   const [classSchedule, setClassSchedule] = useState(null);
+  const [nextFetchLink, setFetchLink] = useState(null);
+  var fetchLink = 'http://127.0.0.1:8000/api/studios/schedule/';
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/studios/schedule/', {
+    fetch(fetchLink, {
       method: 'get',
       mode: 'cors',
       headers: new Headers({
@@ -13,15 +14,24 @@ const SecondTab = () => {
       }),
     }).then((response) => response.json())
       .then((data) => {
+        setFetchLink(data.next);
         setClassSchedule(data.results);
       });
-  }, []);
+  }, [fetchLink]);
+
+  const nextPage = () => {
+    console.log(nextFetchLink);
+    if (nextFetchLink != null){
+      console.log("Got here");
+      fetchLink = String(nextFetchLink);
+    }
+  };
 
   return (
     <div className="table-tab">
       <div className="table-container">
         <div className="table-center">
-          <table className="table table-hover table-dark">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th scope="col">Name</th>
@@ -35,14 +45,17 @@ const SecondTab = () => {
                 return (
                   <tr key={repeat_class.id}>
                     <td>{repeat_class.parent_class.name}</td>
-                    <td>{repeat_class.start_time}</td>
-                    <td>{repeat_class.end_time}</td>
+                    <td>{repeat_class.start_time.slice(0,10)} {repeat_class.start_time.slice(11,19)}</td>
+                    <td>{repeat_class.end_time.slice(0,10)} {repeat_class.end_time.slice(11,19)}</td>
                     <td>{repeat_class.cancelled ? 'true' : 'false'}</td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          <div className="pagination-btns">
+            <button className="btn btn-primary" onClick={nextPage}></button>
+          </div>
         </div>
       </div>
     </div>

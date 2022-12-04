@@ -8,8 +8,9 @@
     height: 50vh;
     width: 90vw;
     min-width: calc(0.9 * 600px);
+    margin-top: 10px;
+    margin-bottom: 20px;
     display: inline-flex;
-    background-color: beige;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -29,7 +30,7 @@
     min-height: calc(0.9 * 600px * 0.3 * 0.6);
     width: 60%;
     display: inline-block;
-    background-color: black;
+    background-color: white;
     border-radius: 100%;
     overflow: hidden;
 }
@@ -40,7 +41,7 @@
 .account-short-details{
     height: 100%;
     width: 70%;
-    background-color: blanchedalmond;
+    background-color: antiquewhite;
     display: flex;
 }
 .details-section{
