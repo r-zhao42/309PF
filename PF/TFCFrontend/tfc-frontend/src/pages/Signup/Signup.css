@@ -1,0 +1,23 @@
+.outer-div {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.inner-div {
+    display: inline-block;
+    background-color: lightgray;
+    height: 30vw;
+    width: 30vw;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
