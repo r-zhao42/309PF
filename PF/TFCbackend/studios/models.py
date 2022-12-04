@@ -23,6 +23,7 @@ class Image(models.Model):
     class Meta:
         verbose_name = "images"
         verbose_name_plural = "images"
+    
     studio = models.ForeignKey(Studio, null=False, blank=False, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(null=False, blank=False, upload_to=get_image_path)
 

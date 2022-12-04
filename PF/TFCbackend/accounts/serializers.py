@@ -4,7 +4,55 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model  
 from django.contrib.auth import authenticate  
   
-from .models import Account, Subscription, Payment
+from .models import Account, Subscription, Payment, PaymentInfo
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = ['type']
+    
+    def serialize(sub):
+        json_data = {'sub_type': str(sub.sub_type),
+                    'start_date': sub.start_date,
+                    'next_payment_date': sub.next_payment_date,
+        }
+        return json_data
+
+    def create(self, validated_data):
+        type = validated_data['type']  
+        return super().create(type=type)  
+  
+    def save(self, validated_data, subscription):  
+        for key in validated_data:  
+            setattr(subscription, key, validated_data[key])  
+        subscription.save()  
+        return subscription  
+  
+class PaymentInfoSerializer(serializers.ModelSerializer):  
+    class Meta:
+        model = PaymentInfo  
+        fields = ['credit_num', 'credit_exp_year', 'credit_exp_month', 'credit_cvv']  
+    
+    def serialize(paymentInfo):
+        json_data = {'credit_num': paymentInfo.credit_num,
+                    'credit_exp_year': paymentInfo.credit_exp_year,
+                    'credit_exp_month': paymentInfo.credit_exp_month,
+                    'credit_cvv': paymentInfo.credit_cvv,
+        }
+        return json_data
+  
+    def save(self, validated_data, payment_info):  
+        for key in validated_data:  
+            setattr(payment_info, key, validated_data[key])  
+        payment_info.save()  
+        return payment_info
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = ['account', 'amount', 'datetime', 'payment_info']
+        depth = 1
+
   
 class AuthTokenSerializer(serializers.Serializer):  
     email = serializers.CharField(  
@@ -197,43 +245,25 @@ class EditAccountSerializer(ParentAccountSerializer, serializers.ModelSerializer
             account.set_password(validated_data['password'])  
         account.save()  
         return account  
-  
-  
+
 class DetailAccountSerializer(ParentAccountSerializer, serializers.ModelSerializer):  
     # API - Serialize the account with edits off, show info  
-    class Meta:  
-        model = get_user_model()  
-        fields = ['email', 'first_name', 'last_name', 'phone_num']  
-        read_only_fields = ['email', 'first_name', 'last_name', 'phone_num'] # no edit  
-  
-class SubscriptionSerializer(serializers.ModelSerializer):  
-    class Meta:  
-        model = Subscription  
-        fields = ['type']  
-  
-    def create(self, validated_data):  
-        type = validated_data['type']  
-        return super().create(type=type)  
-  
-    def save(self, validated_data, subscription):  
-        for key in validated_data:  
-            setattr(subscription, key, validated_data[key])  
-        subscription.save()  
-        return subscription  
-  
-class PaymentInfoSerializer(serializers.ModelSerializer):  
-    class Meta:  
-        model = Subscription  
-        fields = ['credit_num', 'credit_exp_year', 'credit_exp_month', 'credit_cvv']  
-  
-    def save(self, validated_data, payment_info):  
-        for key in validated_data:  
-            setattr(payment_info, key, validated_data[key])  
-        payment_info.save()  
-        return payment_info
-
-class PaymentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Payment
-        fields = ['account', 'amount', 'datetime', 'payment_info']
-        depth = 1
+    
+    def serialize(self, account):  
+        try:
+            payment_info = PaymentInfoSerializer.serialize(account.payment_info.get())
+        except:
+            payment_info = None
+        try:
+            sub = SubscriptionSerializer.serialize(account.sub.get())
+        except:
+            sub = None
+        json_data = {'email': account.email,  
+                'first_name': account.first_name,  
+                'last_name': account.last_name,  
+                'phone_num': str(account.phone_num),  
+                'avatar': account.avatar.url,
+                'payment_info': payment_info,
+                'subscription': sub,
+        }
+        return json_data  
