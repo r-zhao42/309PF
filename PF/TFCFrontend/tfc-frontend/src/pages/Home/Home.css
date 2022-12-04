@@ -1,42 +1,38 @@
-.banner {
-    width: 100vw;
-    background-color: saddlebrown;
-    filter: brightness(50%);
-
-}
-
-.bannerdiv {
+.outer-div {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
     background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.50)), url('https://assets.gqindia.com/photos/6371fe387cd61ae612b76939/master/pass/Workout.jpg');
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 80px);
     background-repeat: no-repeat;
     background-size: cover;
 
 }
 
-.innerdiv {
+.inner-div {
     display: inline-block;
-    /* transform: translate(0vw, -50%); */
-}
-
-h3 {
-    text-align: center;
-    padding: 5vw;
 }
 
 h1 {
-    /* position: absolute;
-    top: 50vw;
-    left: 50vw; */
-    /* transform: translate(-50%, -300%); */
     color: white;
     font-size: 3vw;
 }
 
-body {
-    margin: 0;
-    padding: 0;
+.btn-primary {
+    background-color:#e85f15 !important;
+    border-color: #e85f15 !important;
+    color: #fdebe2 !important;
+}
+
+.btn-primary:hover {
+    background-color:#a6430e !important;
+    border-color: #a6430e !important;
+    color: #fdebe2 !important;
+}
+
+.btn-primary:active {
+    background-color:#a6430e !important;
+    border-color: #a6430e !important;
+    color: #fdebe2 !important
 }
