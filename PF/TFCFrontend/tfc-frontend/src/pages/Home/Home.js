@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Home.css";
-import NavBar from '../../components/NavBar/NavBar';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 const Home = () => {
 
   const handleClick = () => {
@@ -11,9 +12,9 @@ const Home = () => {
     <div className = "bannerdiv">
         <div className = "innerdiv">
             <h1>Welcome to the Toronto Fitness Club</h1>
-            <button type="button" onClick={handleClick}>
-                Discover a Studio Near You
-            </button>
+            <Button variant="primary" onClick={handleClick}>
+                Find a Studio Near You
+            </Button>
         </div>
     </div>
     </>
