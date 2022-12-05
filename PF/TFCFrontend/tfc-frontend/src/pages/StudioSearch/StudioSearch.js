@@ -1,20 +1,27 @@
 import Form from 'react-bootstrap/Form';
 import SummaryCard from '../../components/SummaryCard/SummaryCard';
+import StudioList from '../../components/StudioSearch/StudioList';
 import './StudioSearch.css';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 
 // need to make call to backend to get all studios and conver each to a Summary card
 // use the useEffect for loading the page
 
 const StudioSearch = () => {
-    // const Studio = function(name, id, address, phone, ) {
-    //     const rank = rank;
-    //     const suit = suit;
-    //     return { rank, suit };
-    // };
+    // const Studio = (studio_name, studio_images, studio_location, studio_address, studio_phone_num, studio_postal_code) => {
+    //     const name = studio_name;
+    //     const images = studio_images;
+    //     const location = studio_location;
+    //     const address = studio_address
+    //     const phone_num = studio_phone_num
+    //     const postal_code = studio_postal_code
 
-    // const [studios, setStudios] = useState([])
+    //     return {name, address, postal_code, location, phone_num, images}
+    // }
+
+    const [studiosArray, setStudios] = useState([])
+
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/studios/list/', {
           method: 'get',
@@ -24,7 +31,7 @@ const StudioSearch = () => {
           }),
         }).then((response) => response.json())
           .then((data) => {
-            console.log(data)
+            setStudios(data.results)
           });
       }, []);
 
@@ -35,8 +42,9 @@ const StudioSearch = () => {
                 <Form.Control type="email" placeholder="Search for a gym name, classes, coaches" />
             </Form.Group> 
 
-            <SummaryCard title="gym1" link="gymDetails" subtitles={['subtitle1', 'subtitle2']} buttons={['button1', 'button2']}></SummaryCard>
-            <SummaryCard title="gym1" subtitles={['subtitle1']} buttons={['button1']}></SummaryCard>
+            {/* {studiosArray.map((studio) => <SummaryCard title={studio.name} link="asdf" subtitles={[studio.address, studio.phone_num]} buttons={["Directions", "Class Schedule"]}/>)} */}
+            <StudioList studios={studiosArray}/>
+        
         </>
     )
 }

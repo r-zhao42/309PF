@@ -1,0 +1,17 @@
+.table-tab{
+    min-height: 20vh;
+    width: 100%;
+    min-width: 600px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: table;
+    background-color: antiquewhite;
+}
+.table-container{
+    display: table-cell;
+    text-align: center;
+}
+.table-center{
+    width: 90%;
+    display: inline-block;
+}

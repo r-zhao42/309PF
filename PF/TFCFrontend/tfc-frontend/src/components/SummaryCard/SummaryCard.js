@@ -1,19 +1,19 @@
 import Button from 'react-bootstrap/Button';
-import './SummaryCard.js'
+import './SummaryCard.css'
 
 
 const SummaryCard = (props) => {
     return(
-        <div className='summaryCard'>
-            <h2>{props.title}</h2>
-            {props.link &&
-                <a href="#gym-details">{props.link}</a>
+        <div onClick={props.onClick} className={props.active ? 'summary-card-active' : "summary-card"}>
+            <h2 className="summary-title">{props.title}</h2>
+            {props.link && 
+                <a href={props.link} className="summary-link">link</a>
             }
             
-            {props.subtitles.map((text) => <p>{text}</p>)}
+            {props.subtitles && props.subtitles.map((text) => <p className="summary-subtitle">{text}</p>)}
 
             <div>
-                {props.buttons.map((button) => <Button variant='outline-primary'>{button}</Button>)}
+                {props.buttons && props.buttons.map((button) => <Button className="summary-button" variant='outline-orange'>{button}</Button>)}
             </div>
         </div>
     )

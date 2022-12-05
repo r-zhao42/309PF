@@ -1,0 +1,28 @@
+.account-details{
+    width: 100%;
+    min-width: calc(0.7 * 600px);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: antiquewhite;
+}
+.info-container{
+    width: 80%;
+    display: inline-block;
+    text-align: start;
+}
+.card-info{
+    width: 100%;
+}
+.sub-info{
+    width: 100%;
+}
+.info-subtitle{
+    font-weight: 100;
+    letter-spacing: 4px;
+}
+.info-text{
+    font-weight: 100;
+    letter-spacing: 2px;
+    margin-left: 8%;
+}
