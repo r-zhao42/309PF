@@ -101,7 +101,7 @@ const StudioDetail = () => {
           <Carousel className="studio-car">
             {studioData.images && studioData.images.map((image) => {
               return <Carousel.Item key={image.id}>
-                <img src={image.image} className="studio-image" />
+                <img src={image.image} className="studio-image" alt={image.id} />
               </Carousel.Item>;
             })}
           </Carousel>
