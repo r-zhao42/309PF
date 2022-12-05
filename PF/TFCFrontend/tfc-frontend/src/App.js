@@ -2,7 +2,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile"
-import StudioSearch from "./pages/StudioSearch/StudioSearch"
+import StudioSearchPage from "./pages/StudioSearch/StudioSearchPage"
 import './App.css';
 import React from 'react';
 
@@ -14,7 +14,7 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="home" element={<Home />}/>
                 <Route path="profile" element={<Profile />} />
-                <Route path="studio-search" element={<StudioSearch/>}/>
+                <Route path="studio-search" element={<StudioSearchPage/>}/>
             </Route>
         </Routes>
     </BrowserRouter>
