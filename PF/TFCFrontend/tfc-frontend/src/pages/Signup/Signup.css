@@ -1,38 +1,47 @@
-.outer-div {
+.outer-div1 {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.50)), url('strongman.jpeg');
+    background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.50)), url('../Home/strongman.jpeg');
     width: 100vw;
     height: calc(100vh - 80px);
     background-repeat: no-repeat;
     background-size: cover;
-
+    padding: 100px 30px 100px 30px
 }
 
-.inner-div {
+.inner-div1 {
     display: inline-block;
+    background-color: #f5f5f5;
+    width: 450px;
+    border-radius: 10px;
+    padding: 20px;
 }
 
-.home-title {
-    color: white;
-    font-size: 3vw;
-}
 
-.btn-home {
+.btn-signup {
     background-color:#e85f15 !important;
     border-color: #e85f15 !important;
     color: #fdebe2 !important;
 }
 
-.btn-home:hover {
+.btn-signup:hover {
     background-color:#a6430e !important;
     border-color: #a6430e !important;
     color: #fdebe2 !important;
 }
 
-.btn-home:active {
+.btn-signup:active {
     background-color:#a6430e !important;
     border-color: #a6430e !important;
     color: #fdebe2 !important
+}
+
+.slabel{
+    text-align: left !important;
+}
+
+.form-control:focus{
+    border-color: white !important;
+    box-shadow: 0 0 0 0.1rem #e85f15 !important;
 }

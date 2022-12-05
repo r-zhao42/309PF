@@ -118,7 +118,7 @@ const NavBar = () => {
                     </Nav>
                     <Nav>
                         <Nav.Link href="/home"><Button variant="orange">Login</Button></Nav.Link>
-                        <Nav.Link href="/home"><Button variant="outline-orange">Sign Up</Button></Nav.Link>
+                        <Nav.Link href="/signup"><Button variant="outline-orange">Sign Up</Button></Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>
