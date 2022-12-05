@@ -12,6 +12,15 @@ function Profile() {
   };
 
 
+  const [avatarHover, setAvatarHover] = useState(false);
+  const avatarHoverOn = () => {
+    console.log("Here");
+    setAvatarHover(true);
+  };
+  const avatarHoverOff = () => {
+    setAvatarHover(false);
+  };
+
   const [show, setShow] = useState(false);
   const avatarModal = () => {
     setShow(show ? false : true);
@@ -154,8 +163,11 @@ function Profile() {
         </Modal>
         <div className='avatar-table'>
           <div className='account-avatar'>
-            <div className='avatar-frame' onClick={avatarModal}>
+            <div className='avatar-frame' onClick={avatarModal}
+                                          onMouseOver={avatarHoverOn} 
+                                          onMouseOut={avatarHoverOff}>
               {accData && <img alt='Avatar' src={'http://localhost:8000' + accData.avatar}/>}
+              <div className={avatarHover ? 'avatar-blur' : ''}></div>
             </div>
           </div>
         </div>

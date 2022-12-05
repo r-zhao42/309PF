@@ -31,10 +31,19 @@
     height: calc(90vw * 0.3 * 0.6);
     min-height: calc(0.9 * 600px * 0.3 * 0.6);
     width: 60%;
+    position: relative;
     display: inline-block;
     background-color: white;
     border-radius: 100%;
     overflow: hidden;
+}
+.avatar-blur{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(250, 235, 215, 0.587);
 }
 .avatar-frame > img{
     height: 100%;
