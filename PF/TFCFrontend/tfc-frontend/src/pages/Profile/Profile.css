@@ -44,6 +44,7 @@
     top: 0;
     left: 0;
     background-color: rgba(250, 235, 215, 0.587);
+    cursor: pointer;
 }
 .avatar-frame > img{
     height: 100%;

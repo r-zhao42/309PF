@@ -14,6 +14,7 @@ from django.utils import timezone
 
 from .permissions import IsSelfOrAdmin
 from .serializers import AuthTokenSerializer, RegisterAccountSerializer, EditAccountSerializer, DetailAccountSerializer, SubscriptionSerializer, PaymentInfoSerializer, PaymentSerializer
+from .pagination import PaymentHistoryPagination
 from .models import Account, Subscription, PaymentInfo, Payment, SubscriptionType
 from studios.models import Enrollment
 
@@ -214,6 +215,7 @@ class DeleteSubscriptionView(CreateAPIView):
 class PaymentsView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PaymentSerializer
+    pagination_class = PaymentHistoryPagination
 
     def get_queryset(self):
         account = get_object_or_404(Account, email=self.request.user.email)
