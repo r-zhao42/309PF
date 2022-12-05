@@ -80,7 +80,7 @@ const Login = () => {
             </Form.Group>
             <br />
             <Button variant="login" type="submit">
-              Sign Up
+              Log In
             </Button>
           </Form>
         </div>
