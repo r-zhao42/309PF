@@ -122,6 +122,7 @@ function Profile() {
       }),
     }).then((response) => response.json())
       .then((data) => {
+        console.log(localStorage.getItem('token'))
         setAccData(data.account_details);
       });
   }, []);
