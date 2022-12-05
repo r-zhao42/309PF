@@ -89,7 +89,8 @@ const Signup = () => {
           setErrors(newErrorsState);
         }
         else {
-          navigate('/replace-this');
+          localStorage.setItem('token', responseJson.token);
+          navigate('/profile');
         }
       });
   };
