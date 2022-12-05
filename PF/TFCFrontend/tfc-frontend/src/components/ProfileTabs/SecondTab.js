@@ -2,28 +2,31 @@ import React, { useEffect, useState } from "react";
 import './TableTab.css';
 
 const SecondTab = () => {
-  const [classSchedule, setClassSchedule] = useState(null);
-  const [nextFetchLink, setFetchLink] = useState(null);
-  var fetchLink = 'http://127.0.0.1:8000/api/studios/schedule/';
+  const [classData, setClassSchedule] = useState(null);
+  const [fetchLink, setFetchLink] = useState('http://127.0.0.1:8000/api/studios/schedule/');
   useEffect(() => {
     fetch(fetchLink, {
       method: 'get',
       mode: 'cors',
       headers: new Headers({
-          'Authorization': 'Token ac0aca069c9f1c7c2725419c4617c8381ccf09a9',
+        'Authorization': 'Token ' + localStorage.getItem('token'),
       }),
     }).then((response) => response.json())
       .then((data) => {
-        setFetchLink(data.next);
-        setClassSchedule(data.results);
+        setClassSchedule({'schedule': data.results,
+                          'next': data.next,
+                          'prev': data.previous});
       });
   }, [fetchLink]);
 
+  const prevPage = () => {
+    if (classData.prev != null){
+      setFetchLink(String(classData.prev));
+    }
+  };
   const nextPage = () => {
-    console.log(nextFetchLink);
-    if (nextFetchLink != null){
-      console.log("Got here");
-      fetchLink = String(nextFetchLink);
+    if (classData.next != null){
+      setFetchLink(String(classData.next));
     }
   };
 
@@ -41,7 +44,7 @@ const SecondTab = () => {
               </tr>
             </thead>
             <tbody>
-              {classSchedule && classSchedule.map(({repeat_class}) => {
+              {classData && classData.schedule.map(({repeat_class}) => {
                 return (
                   <tr key={repeat_class.id}>
                     <td>{repeat_class.parent_class.name}</td>
@@ -54,7 +57,8 @@ const SecondTab = () => {
             </tbody>
           </table>
           <div className="pagination-btns">
-            <button className="btn btn-primary" onClick={nextPage}></button>
+            {classData && (classData.prev && <button className="btn btn-schedule" onClick={prevPage}>Prev</button>)}
+            {classData && (classData.next && <button className="btn btn-schedule" onClick={nextPage}>Next</button>)}
           </div>
         </div>
       </div>

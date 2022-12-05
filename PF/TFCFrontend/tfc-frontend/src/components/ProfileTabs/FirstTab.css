@@ -3,6 +3,7 @@
     min-width: calc(0.7 * 600px);
     padding-top: 10px;
     padding-bottom: 10px;
+    position: relative;
     text-align: center;
     background-color: antiquewhite;
 }
@@ -11,8 +12,34 @@
     display: inline-block;
     text-align: start;
 }
+.info-container-edit{
+    width: 50%;
+    display: inline-block;
+    text-align: start;
+}
 .card-info{
     width: 100%;
+}
+.edit-info-btn{
+    height: 40px;
+    width: 40px;
+    font-size: 14px;
+    background-color:#e85f15;
+    border-color: #e85f15;
+    color: #fdebe2;
+    border: none;
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.edit-info-btn:hover{
+    background-color:#a6430e;
+    border-color: #a6430e;
+    color: #fdebe2;
+}
+.edit-info-btn:active{
+    box-shadow: 0 0 0 0.25rem #e85f15;
 }
 .sub-info{
     width: 100%;
