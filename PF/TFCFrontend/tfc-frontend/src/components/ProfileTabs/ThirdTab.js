@@ -8,7 +8,7 @@ const ThirdTab = () => {
       method: 'get',
       mode: 'cors',
       headers: new Headers({
-          'Authorization': 'Token ac0aca069c9f1c7c2725419c4617c8381ccf09a9',
+        'Authorization': 'Token ' + localStorage.getItem('token'),
       }),
     }).then((response) => response.json())
       .then((data) => {
@@ -29,9 +29,9 @@ const ThirdTab = () => {
               </tr>
             </thead>
             <tbody>
-              {paymentHistory && paymentHistory.map(({datetime, amount, payment_info}) => {
+              {paymentHistory && paymentHistory.map(({id, datetime, amount, payment_info}) => {
                 return (
-                  <tr key={payment_info.id}>
+                  <tr key={id}>
                     <td>{datetime.slice(0,10)} {datetime.slice(11,19)}</td>
                     <td>{amount}</td>
                     <td>{payment_info.credit_num}</td>
