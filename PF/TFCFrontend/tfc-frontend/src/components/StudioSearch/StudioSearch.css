@@ -8,6 +8,14 @@
 }
 
 .studio-search-flex-item {
-    flex: 1;
+    /* flex: 1; */
     border: 5px orange solid
+}
+
+.studio-list {
+    flex: 6
+}
+
+.studio-map {
+    flex: 2
 }

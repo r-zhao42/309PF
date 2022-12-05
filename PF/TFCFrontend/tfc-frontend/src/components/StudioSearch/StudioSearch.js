@@ -45,7 +45,6 @@ const StudioSearch = () => {
         return result
     }
 
-
     useEffect(() => {
         fetch(getFetchLink(), {
           method: 'get',
@@ -77,8 +76,6 @@ const StudioSearch = () => {
         } else {
             return position(0, 0)
         }
-        
-  
     }
 
     const handleSearchNameChange = (e) => {
@@ -109,8 +106,8 @@ const StudioSearch = () => {
                 <Form.Control type="input" placeholder="Search for a amenities" onChange={handleSearchAmenityChange}/>
             </Form.Group> 
             <div className="studio-search-flex-box">
-                <StudioList className="studio-search-flex-item" studios={studiosArray} onClick={setChosen} chosen={chosen}/>
-                <StudioMap className="studio-search-flex-item" center={getStudioPosition(chosen)} markers={studiosArray.map((studio) => getStudioPosition(studio))}/>
+                <StudioList className="studio-search-flex-item studio-list" studios={studiosArray} onClick={setChosen} chosen={chosen}/>
+                <StudioMap className="studio-search-flex-item studio-map" center={getStudioPosition(chosen)} markers={studiosArray.map((studio) => getStudioPosition(studio))}/>
             </div>
         </>
     )

@@ -2,7 +2,6 @@
     border: 1px black solid;
     display: inline-block;
     padding: 5px 10px;
-    width:400px;
 }
 
 .active{
@@ -21,4 +20,8 @@
 
 .summary-title {
     margin: 2px !important;
+}
+
+.summary-card-button-list {
+    display: flex;
 }

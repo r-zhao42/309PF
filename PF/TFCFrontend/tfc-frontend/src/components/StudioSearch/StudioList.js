@@ -1,5 +1,4 @@
 import SummaryCard from "../SummaryCard/SummaryCard"
-import {useState} from 'react'
 import './StudioList.css'
 
 const StudioList = (props) => {
