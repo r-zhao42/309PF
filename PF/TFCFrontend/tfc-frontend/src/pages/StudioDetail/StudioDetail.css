@@ -34,7 +34,31 @@
 }
 
 .studio-image {
-    width: 100px;
-    height: auto;
+    height: 60vh;
+    width:  80vw;
+    max-width: 500px;
 }
 
+.studio-car {
+    height: 60vh;
+    width: 80vw;
+    max-width: 500px;
+}
+
+.btn-directions-button {
+    background-color:#e85f15 !important;
+    border-color: #e85f15 !important;
+    color: #fdebe2 !important;
+}
+
+.btn-directions-button:hover {
+    background-color:#a6430e !important;
+    border-color: #a6430e !important;
+    color: #fdebe2 !important;
+}
+
+.btn-directions-button:active {
+    background-color:#a6430e !important;
+    border-color: #a6430e !important;
+    color: #fdebe2 !important
+}

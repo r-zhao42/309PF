@@ -2,6 +2,9 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom'
 import Table from 'react-bootstrap/Table';
+import Carousel from 'react-bootstrap/Carousel';
+import Button from 'react-bootstrap/Button';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import "./StudioDetail.css";
 
@@ -30,7 +33,6 @@ const StudioDetail = () => {
           images: data.images
         };
         setStudioData(newStudioState);
-        console.log(studioData.images)
       });
   }, [name]);
 
@@ -65,6 +67,10 @@ const StudioDetail = () => {
 
           </div>
           <br />
+          <Button href={directions.replace('"', '')} target='_blank' rel="noreferrer" variant="directions-button">
+            Get Directions
+          </Button>
+          <br/><br/>
           <h5>
             Amenities
           </h5>
@@ -82,31 +88,24 @@ const StudioDetail = () => {
                     <td>{amenity.name}</td>
                     <td>{amenity.quantity}</td>
                   </tr>
-                  
+
                 );
               }
 
               )}
-            
+
             </tbody>
           </Table>
-          Images
-          <br/>
-          {studioData.images && studioData.images.map(image => {
-                return (
-                  <>
-                  <img src={image.image} key={image.id} className="studio-image"/>
-                  <br/><br/>
-                  </>
-                  
-                );
-              }
-
-              )}
-          <br/>
-          <a href={directions.replace('"', '')} target='_blank' rel="noreferrer">
-          Directions
-        </a>
+          <h5>Images</h5>
+          <div className="container-photo">
+          <Carousel className="studio-car">
+            {studioData.images && studioData.images.map((image) => {
+              return <Carousel.Item key={image.id}>
+                <img src={image.image} className="studio-image" />
+              </Carousel.Item>;
+            })}
+          </Carousel>
+          </div>
         </div>
       </div>
     </>
