@@ -22,16 +22,16 @@ const onLoad = marker => {
   
 const StudioMap = (props) => {
 
-
     return (
         <LoadScript googleMapsApiKey="AIzaSyBkEdtl--bBXsq8DJfVCyWzQiOsafvxhQQ">
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
+          center={props.center}
+          zoom={5}
+          animation={1}
         >
           { /* Child components, such as markers, info windows, etc. */ }
-          {props.markers &&
+          {props.markers && 
             props.markers.map((marker) =>  <Marker onLoad={onLoad} position={marker}
           />)
           }
