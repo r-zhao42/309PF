@@ -2,7 +2,7 @@ import StudioMap from "./StudioMap"
 import StudioList from "./StudioList"
 import Form from 'react-bootstrap/Form'
 import { useState, useEffect} from 'react';
-
+import './StudioSearch.css'
 
 
 
@@ -108,9 +108,10 @@ const StudioSearch = () => {
                 <Form.Control type="input" placeholder="Search for a coaches" onChange={handleSearchCoachChange}/>
                 <Form.Control type="input" placeholder="Search for a amenities" onChange={handleSearchAmenityChange}/>
             </Form.Group> 
-
-            <StudioList studios={studiosArray} onClick={setChosen} chosen={chosen}/>
-            <StudioMap center={getStudioPosition(chosen)} markers={studiosArray.map((studio) => getStudioPosition(studio))}/>
+            <div className="studio-search-flex-box">
+                <StudioList className="studio-search-flex-item" studios={studiosArray} onClick={setChosen} chosen={chosen}/>
+                <StudioMap className="studio-search-flex-item" center={getStudioPosition(chosen)} markers={studiosArray.map((studio) => getStudioPosition(studio))}/>
+            </div>
         </>
     )
 }

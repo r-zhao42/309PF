@@ -1,0 +1,13 @@
+.studio-search-flex-box {
+    display: flex;
+    flex-direction: row;
+    border: 1px green solid;
+    flex-grow: 1;
+    height: 600px;
+    /* max-height: 400px; */
+}
+
+.studio-search-flex-item {
+    flex: 1;
+    border: 5px orange solid
+}

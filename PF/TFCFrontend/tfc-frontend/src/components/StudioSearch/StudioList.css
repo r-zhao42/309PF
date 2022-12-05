@@ -1,0 +1,7 @@
+.summary-card-list{
+    display: flex;
+    flex-direction: column;
+    border: 3px solid purple;
+    max-height: 100%;
+    overflow: scroll;
+}

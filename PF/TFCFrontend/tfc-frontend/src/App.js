@@ -5,6 +5,7 @@ import Signup from "./pages/Signup/Signup"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile"
 import StudioSearchPage from "./pages/StudioSearch/StudioSearchPage"
+import Login from "./pages/Login/Login"
 import './App.css';
 
 
@@ -17,7 +18,7 @@ function App() {
                 <Route path="home" element={<Home />}/>
                 <Route path="signup" element={<Signup />} />
                 <Route path="profile" element={<Profile />} />
-                <Route path="studio-search" element={<StudioSearchPage/>}/>
+                <Route path="studio-search" element={<StudioSearchPage />} />
             </Route>
         </Routes>
     </BrowserRouter>

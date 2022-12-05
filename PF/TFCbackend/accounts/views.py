@@ -72,6 +72,7 @@ class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, U
     def edit(self, request):
         serializer = self.get_serializer(data=request.data)
         validated_data = serializer.validate(request.data)
+        print(validated_data)
         account = get_object_or_404(Account, email=request.user.email)
         account = serializer.save(validated_data, account)
         account = serializer.serialize(account)

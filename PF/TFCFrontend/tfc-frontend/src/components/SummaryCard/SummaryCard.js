@@ -5,7 +5,7 @@ import './SummaryCard.css'
 
 const SummaryCard = (props) => {
     return(
-        <div onClick={props.onClick} className={props.active ? 'summary-card-active' : "summary-card"}>
+        <div onClick={props.onClick} className={props.active ? 'summary-card active' : "summary-card"}>
             <h2 className="summary-title">{props.title}</h2>
             {props.link && 
                 <a href={props.link} className="summary-link">link</a>
@@ -15,7 +15,7 @@ const SummaryCard = (props) => {
 
             <div>
                 {props.buttons && props.links && 
-                 props.buttons.map((button, i) => <Button className="summary-button" variant='outline-orange'>{button}</Button>)}
+                 props.buttons.map((button, i) => <Button href={props.links[i]} className="summary-button" variant='outline-orange'>{button}</Button>)}
             </div>
         </div>
     )
