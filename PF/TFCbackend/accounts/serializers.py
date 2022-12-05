@@ -126,17 +126,19 @@ class RegisterAccountSerializer(ParentAccountSerializer, serializers.ModelSerial
                     if not data[key]:  
                         field = key[0].upper() + key[1:]  
                         err[key] = [f'{field} field is empty.']  
+                        err[key] = [msg.replace('_', ' ') for msg in err[key]]
                 except:  
                     field = key[0].upper() + key[1:]  
-                    err[key] = [f'{field} field is missing.']  
+                    err[key] = [f'{field} field is missing.'] 
+                    err[key] = [msg.replace('_', ' ') for msg in err[key]]
           
         #Do passwords match, if some missing then skip  
         try:  
             if data['password'] != data['repeat_password']:  
-                if err['password']:  
-                    err['password'].append('Passwords do not match.')  
+                if 'password' in  err.keys(): 
+                    err['repeat_password'].append('Passwords do not match.')  
                 else:  
-                    err['password'] = ['Passwords do not match.']  
+                    err['repeat_password'] = ['Passwords do not match.']  
         except:  
             pass  
           
@@ -152,10 +154,10 @@ class RegisterAccountSerializer(ParentAccountSerializer, serializers.ModelSerial
           
         if 'email' in data.keys() and 'email' not in err.keys():  
             if Account.objects.filter(email=data['email']).exists():  
-                err['email'] = 'This email is taken.'  
+                err['email'] = ['This email is taken.']  
         if 'phone_num' in data.keys() and 'phone_num' not in err.keys():  
             if Account.objects.filter(phone_num=data['phone_num']).exists():  
-                err['phone_num'] = 'This phone number is taken.'  
+                err['phone_num'] = ['This phone number is taken.']  
   
         #Raise errors if any  
         if err:  
