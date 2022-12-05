@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from './tfc.png';
 import Button from 'react-bootstrap/Button';
-import '../Button/button.css'
+import '../Button/button.css';
 
 
 

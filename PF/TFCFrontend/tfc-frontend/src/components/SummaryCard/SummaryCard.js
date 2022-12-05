@@ -1,4 +1,5 @@
 import Button from 'react-bootstrap/Button';
+import '../Button/button.css'
 import './SummaryCard.css'
 
 
