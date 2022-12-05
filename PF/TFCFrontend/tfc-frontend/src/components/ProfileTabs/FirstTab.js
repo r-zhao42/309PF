@@ -42,7 +42,7 @@ const FirstTab = ({payment_info, subscription}) => {
       method: "patch",
       mode: 'cors',
       headers: new Headers({
-        'Authorization': 'Token ac0aca069c9f1c7c2725419c4617c8381ccf09a9',
+        'Authorization': 'Token ' + localStorage.getItem('token'),
       }),
       body: formbody,
     })
