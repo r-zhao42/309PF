@@ -35,7 +35,6 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson)
         if (!('token' in responseJson)) {
           const newErrorsState = {
             email: '',
