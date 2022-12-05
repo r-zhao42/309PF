@@ -126,13 +126,11 @@ class RegisterAccountSerializer(ParentAccountSerializer, serializers.ModelSerial
                     if not data[key]:  
                         field = key[0].upper() + key[1:]  
                         err[key] = [f'{field} field is empty.']  
-                        if key == 'phone_num':
-                            err[key] = ['Phone number field is empty.']  
-                        elif key == 'repeat_password':
-                            err[key] = ['Repeat password field is empty.']  
+                        err[key] = [msg.replace('_', ' ') for msg in err[key]]
                 except:  
                     field = key[0].upper() + key[1:]  
-                    err[key] = [f'{field} field is missing.']  
+                    err[key] = [f'{field} field is missing.'] 
+                    err[key] = [msg.replace('_', ' ') for msg in err[key]]
           
         #Do passwords match, if some missing then skip  
         try:  
