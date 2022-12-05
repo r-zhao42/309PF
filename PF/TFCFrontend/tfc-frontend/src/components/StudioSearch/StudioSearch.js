@@ -10,15 +10,43 @@ const StudioSearch = (props) => {
 
     const [studiosArray, setStudios] = useState([])
     const [chosen, setChosen] = useState()
-    const [searchName, setSearchName] = useState()
-    const [searchAmenity, setSearchAmenity] = useState()
-    const [searchClass, setSearchClass] = useState()
-    const [searchCoach, setSearchCoach] = useState()
+    const [searchName, setSearchName] = useState("test1")
+    const [searchAmenity, setSearchAmenity] = useState("")
+    const [searchClass, setSearchClass] = useState("")
+    const [searchCoach, setSearchCoach] = useState("")
     
+    const getFetchLink = () => {
+        var result = 'http://127.0.0.1:8000/api/studios/list'
+        
+        const queries = [searchName, searchAmenity, searchClass, searchCoach]
+
+        if (queries.some((query) => query != "")) {
+            result = result.concat('?')
+
+            if(searchName != ""){
+                result = result.concat('names=', searchName)
+            }
+
+            if(searchAmenity != ""){
+                result = result.concat('amenities=', searchAmenity)
+            }
+
+            if(searchClass != ""){
+                result = result.concat('classes=', searchClass)
+            }
+
+            if(searchCoach != ""){
+                result = result.concat('coaches=', searchCoach)
+            }
+        }
+        result = result.concat('/')
+        console.log(result)
+        return result
+    }
 
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/studios/list/', {
+        fetch(getFetchLink(), {
           method: 'get',
           mode: 'cors',
           headers: new Headers({
