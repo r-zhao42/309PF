@@ -241,7 +241,7 @@ def get_directions(request,studio_name):
     studio = get_object_or_404(Studio, name__iexact=studio_name)
     location = studio.location
     request = f"https://www.google.com/maps/dir/?api=1&destination={location}"
-    return redirect(request)
+    return Response(request)
 
 class ClassScheduleView(ListAPIView):
     permission_classes = [IsAuthenticated]
