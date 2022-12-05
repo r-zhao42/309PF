@@ -18,10 +18,11 @@ function Profile() {
       method: 'get',
       mode: 'cors',
       headers: new Headers({
-          'Authorization': 'Token ac0aca069c9f1c7c2725419c4617c8381ccf09a9',
+          'Authorization': 'Token ' + localStorage.getItem('token'),
       }),
     }).then((response) => response.json())
       .then((data) => {
+        console.log(localStorage.getItem('token'))
         setAccData(data.account_details);
       });
   }, []);
