@@ -50,7 +50,7 @@ class PaymentInfoSerializer(serializers.ModelSerializer):
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ['account', 'amount', 'datetime', 'payment_info']
+        fields = ['id', 'account', 'amount', 'datetime', 'payment_info']
         depth = 1
 
   
@@ -190,6 +190,7 @@ class EditAccountSerializer(ParentAccountSerializer, serializers.ModelSerializer
       
     def validate(self, data):  
         data = data.dict()  
+        clean_data = {}
   
         err = {} #Store the error msgs  
         #Start by checking if any field is extra or remove if they are empty  
@@ -198,14 +199,16 @@ class EditAccountSerializer(ParentAccountSerializer, serializers.ModelSerializer
             if key not in all_keys:  
                 err['extra_key'] = 'Make sure there are no extra fields.'  
                 break  
-            if not data[key]:  
-                data.pop(key)  
-          
+            if data[key]:  
+                clean_data[key] = data[key]
+        
+        data = clean_data
+
         #Do passwords match given both are present  
         inter = list(set(['password', 'repeat_password']) & set(data.keys()))  
         if len(inter) == 2:  
             if data['password'] != data['repeat_password']:  
-                if err['password']:  
+                if 'password' in err.keys():  
                     err['password'].append('Passwords do not match.')  
                 else:  
                     err['password'] = ['Passwords do not match.']  

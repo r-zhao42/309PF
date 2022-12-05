@@ -15,3 +15,19 @@
     width: 90%;
     display: inline-block;
 }
+.pagination-btns{
+    display: inline-flex;
+}
+.btn-schedule{
+    background-color:#e85f15;
+    border-color: #e85f15;
+    color: #fdebe2;
+}
+.btn-schedule:hover{
+    background-color:#a6430e;
+    border-color: #a6430e;
+    color: #fdebe2;
+}
+.btn-schedule:active{
+    box-shadow: 0 0 0 0.25rem #e85f15;
+}

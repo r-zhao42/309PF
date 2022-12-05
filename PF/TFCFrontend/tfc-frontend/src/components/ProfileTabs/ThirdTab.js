@@ -29,9 +29,9 @@ const ThirdTab = () => {
               </tr>
             </thead>
             <tbody>
-              {paymentHistory && paymentHistory.map(({datetime, amount, payment_info}) => {
+              {paymentHistory && paymentHistory.map(({id, datetime, amount, payment_info}) => {
                 return (
-                  <tr key={payment_info.id}>
+                  <tr key={id}>
                     <td>{datetime.slice(0,10)} {datetime.slice(11,19)}</td>
                     <td>{amount}</td>
                     <td>{payment_info.credit_num}</td>

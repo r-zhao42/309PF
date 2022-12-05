@@ -9,7 +9,6 @@ const Tabs = ({payment_info, subscription}) => {
     const handleMouseOver = () => {
         setIsHover(true);
     };
-
     const handleMouseOut = () => {
         setIsHover(false);
     };
