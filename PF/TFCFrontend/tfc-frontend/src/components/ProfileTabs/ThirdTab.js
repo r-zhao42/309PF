@@ -13,7 +13,6 @@ const ThirdTab = () => {
       }),
     }).then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setPaymentHistory({'history': data.results,
                             'next': data.next,
                             'prev': data.previous});

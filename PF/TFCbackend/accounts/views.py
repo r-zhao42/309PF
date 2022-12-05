@@ -220,4 +220,4 @@ class PaymentsView(ListAPIView):
     def get_queryset(self):
         account = get_object_or_404(Account, email=self.request.user.email)
         payments = Payment.objects.filter(account=account)
-        return payments
+        return payments.order_by('-datetime')
