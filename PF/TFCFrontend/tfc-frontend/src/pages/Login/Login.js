@@ -41,7 +41,7 @@ const Login = () => {
             email: '',
             password: '',
           };
-          
+
           if ('email' in responseJson) {
             newErrorsState.email = responseJson.email[0]
           }
@@ -55,7 +55,7 @@ const Login = () => {
           setErrors(newErrorsState);
         }
         else {
-        localStorage.setItem('token', responseJson.token);
+          localStorage.setItem('token', responseJson.token);
           navigate('/profile');
         }
       });
@@ -68,7 +68,7 @@ const Login = () => {
           <h3>Log In</h3>
           <br />
           <Form onSubmit={handleSubmit} className="form-horizontal" >
-           
+
             <Form.Group className="llabel">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" value={email} placeholder="some@example.com" onChange={handleEmailChange} isInvalid={!!errors.email} />
