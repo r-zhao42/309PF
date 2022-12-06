@@ -7,7 +7,7 @@ import SummaryCard from "../SummaryCard/SummaryCard"
 import './StudioList.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const componentHeight = 700;
+const componentHeight = 680;
 
 const StudioSearch = () => {
 
@@ -121,13 +121,16 @@ const StudioSearch = () => {
     };
 
     return (
-        <>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="input" placeholder="Search for a gym name" onChange={handleSearchNameChange}/>
-                <Form.Control type="input" placeholder="Search for a class" onChange={handleSearchClassChange}/>
-                <Form.Control type="input" placeholder="Search for a coaches" onChange={handleSearchCoachChange}/>
-                <Form.Control type="input" placeholder="Search for a amenities" onChange={handleSearchAmenityChange}/>
-            </Form.Group> 
+        <>  
+            <div className="studio-search-form">
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Control className="studio-search-input" type="input" placeholder="Search for a gym name" onChange={handleSearchNameChange}/>
+                    <Form.Control className="studio-search-input" type="input" placeholder="Search for a class" onChange={handleSearchClassChange}/>
+                    <Form.Control className="studio-search-input" type="input" placeholder="Search for a coaches" onChange={handleSearchCoachChange}/>
+                    <Form.Control className="studio-search-input" type="input" placeholder="Search for a amenities" onChange={handleSearchAmenityChange}/>
+                </Form.Group> 
+            </div>
+    
             <div className="studio-search-flex-box" style={{height: componentHeight}}>
             <InfiniteScroll
                 className="summary-card-list"

@@ -1,7 +1,6 @@
 .studio-search-flex-box {
     display: flex;
     flex-direction: row;
-    border: 5px green solid;
     flex-grow: 1;
 }
 
@@ -15,4 +14,16 @@
 
 .studio-map {
     flex: 2
+}
+
+.studio-search-input{
+    margin-bottom: 10px;
+    width: 100%;
+} 
+
+.studio-search-form {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    justify-content: center;
 }
