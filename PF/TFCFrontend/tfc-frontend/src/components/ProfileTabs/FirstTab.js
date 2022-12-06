@@ -14,10 +14,10 @@ const FirstTab = ({payment_info, subscription}) => {
   };
 
 
-  const [number, setNumber] = useState(payment_info.credit_num);
-  const [month, setMonth] = useState(payment_info.credit_exp_month);
-  const [year, setYear] = useState(payment_info.credit_exp_year);
-  const [cvv, setCVV] = useState(payment_info.credit_cvv);
+  const [number, setNumber] = useState(payment_info ? payment_info.credit_num : '');
+  const [month, setMonth] = useState(payment_info ? payment_info.credit_exp_month : '');
+  const [year, setYear] = useState(payment_info ? payment_info.credit_exp_year : '');
+  const [cvv, setCVV] = useState(payment_info ? payment_info.credit_cvv : '');
 
   const handleNumberChange = event => {
     setNumber(event.target.value);

@@ -235,10 +235,9 @@ function Profile() {
           </div>
         }
       </div>
-      
       {accData && 
-      <Tabs payment_info={accData.payment_info}
-            subscription={accData.subscription}/>
+        <Tabs payment_info={accData.payment_info}
+              subscription={accData.subscription}/>
       }
     </div>
   );
