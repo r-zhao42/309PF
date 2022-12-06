@@ -26,8 +26,8 @@ const Logout = ({ setLoginStatus }) => {
 
   return (
     <>
-      <div className="outer-div2">
-        <div className="inner-div2">
+      <div className="outer-div4">
+        <div className="inner-div4">
           <h4>You have logged out</h4>
         </div>
       </div>
