@@ -88,7 +88,7 @@ class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, U
     @rest_framework.decorators.action(methods=["POST"], detail=False)
     def logout(self, request):
         get_object_or_404(Token, user=request.user).delete()
-        return rest_framework.response.Response(status=rest_framework.status.HTTP_202_ACCEPTED)
+        return rest_framework.response.Response("Successfully Logged Out", status=rest_framework.status.HTTP_202_ACCEPTED)
 
 class AddPaymentInfoView(CreateAPIView):
     permission_classes = [IsAuthenticated]

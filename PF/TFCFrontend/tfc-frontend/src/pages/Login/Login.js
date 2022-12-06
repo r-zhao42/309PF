@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./Login.css";
 
-const Login = () => {
+const Login = ({setLoginStatus}) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -56,6 +56,7 @@ const Login = () => {
         else {
           localStorage.setItem('token', responseJson.token);
           navigate('/profile');
+          setLoginStatus('true');
         }
       });
   };
@@ -80,7 +81,7 @@ const Login = () => {
             </Form.Group>
             <br />
             <Button variant="login" type="submit">
-              Sign Up
+              Log In
             </Button>
           </Form>
         </div>

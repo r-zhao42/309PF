@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./Signup.css";
 
-const Signup = () => {
+const Signup = ({ setLoginStatus }) => {
   const navigate = useNavigate();
   const [first, setFirst] = useState('')
   const [last, setLast] = useState('')
@@ -90,6 +90,7 @@ const Signup = () => {
         }
         else {
           localStorage.setItem('token', responseJson.token);
+          setLoginStatus('true')
           navigate('/profile');
         }
       });
