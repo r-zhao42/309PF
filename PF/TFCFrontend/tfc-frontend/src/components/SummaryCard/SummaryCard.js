@@ -15,7 +15,7 @@ const SummaryCard = (props) => {
 
             <div className="summary-card-button-list">
                 {props.buttons && props.links && 
-                 props.buttons.map((button, i) => <Button href={props.links[i]} className="summary-button" variant='outline-orange'>{button}</Button>)}
+                 props.buttons.map((button, i) => <Button href={props.links[i]} className="summary-button" variant='orange'>{button}</Button>)}
             </div>
         </div>
     )
