@@ -13,7 +13,7 @@ from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 
 from .permissions import IsSelfOrAdmin
-from .serializers import AuthTokenSerializer, RegisterAccountSerializer, EditAccountSerializer, DetailAccountSerializer, SubscriptionSerializer, PaymentInfoSerializer, PaymentSerializer
+from .serializers import AuthTokenSerializer, RegisterAccountSerializer, EditAccountSerializer, DetailAccountSerializer, SubscriptionSerializer, PaymentInfoSerializer, PaymentSerializer, SubscriptionTypeSerializer
 from .pagination import PaymentHistoryPagination
 from .models import Account, Subscription, PaymentInfo, Payment, SubscriptionType
 from studios.models import Enrollment
@@ -221,3 +221,10 @@ class PaymentsView(ListAPIView):
         account = get_object_or_404(Account, email=self.request.user.email)
         payments = Payment.objects.filter(account=account)
         return payments.order_by('-datetime')
+
+class SubscriptionTypesView(ListAPIView):
+    permission_classes = []
+    serializer_class = SubscriptionTypeSerializer
+
+    def get_queryset(self):
+        return SubscriptionType.objects.all()
