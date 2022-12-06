@@ -1,10 +1,13 @@
 import StudioMap from "./StudioMap"
-import StudioList from "./StudioList"
+// import StudioList from "./StudioList"
 import Form from 'react-bootstrap/Form'
 import { useState, useEffect} from 'react';
 import './StudioSearch.css'
+import SummaryCard from "../SummaryCard/SummaryCard"
+import './StudioList.css'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-
+const componentHeight = 700;
 
 const StudioSearch = () => {
 
@@ -14,7 +17,8 @@ const StudioSearch = () => {
     const [searchAmenity, setSearchAmenity] = useState("")
     const [searchClass, setSearchClass] = useState("")
     const [searchCoach, setSearchCoach] = useState("")
-    
+    const [nextUrl, setNext] = useState()
+
     const getFetchLink = () => {
         var result = 'http://127.0.0.1:8000/api/studios/list'
         
@@ -56,8 +60,27 @@ const StudioSearch = () => {
         }).then((response) => response.json())
           .then((data) => {
             setStudios(data.results)
+            setNext(data.next)
           });
       }, [searchName, searchAmenity, searchClass, searchCoach]);
+    
+    const loadMore = () => {
+        console.log("hit")
+        fetch(nextUrl, {
+            method: 'get',
+            mode: 'cors',
+            headers: new Headers({
+                'Authorization': 'Token a32af8a10d8eb61c3cfbfa350ccd3ba3e8e81dcc',
+                'Content-type': 'application/json' 
+            }),
+          }).then((response) => response.json())
+            .then((data) => {
+              const newStudios = studiosArray.concat(data.results)
+              setStudios(newStudios)
+              console.log(newStudios)
+              setNext(data.next)
+            });
+    }
 
     const position = (studio_lat, studio_lng) => {
         const lat = studio_lat
@@ -105,8 +128,28 @@ const StudioSearch = () => {
                 <Form.Control type="input" placeholder="Search for a coaches" onChange={handleSearchCoachChange}/>
                 <Form.Control type="input" placeholder="Search for a amenities" onChange={handleSearchAmenityChange}/>
             </Form.Group> 
-            <div className="studio-search-flex-box">
-                <StudioList className="studio-search-flex-item studio-list" studios={studiosArray} onClick={setChosen} chosen={chosen}/>
+            <div className="studio-search-flex-box" style={{height: componentHeight}}>
+            <InfiniteScroll
+                className="summary-card-list"
+                dataLength={studiosArray.length}
+                next={loadMore}
+                hasMore={nextUrl ? true : false}
+                loader={<h4>Loading...</h4>}
+                height={componentHeight}
+                scrollThreshold={0.99}
+                scrollableTarget="summary-card-list"
+                >
+                {studiosArray.map((studio) => { if (studio) {
+                    return  <SummaryCard active={studio===chosen} 
+                    onClick={() => setChosen(studio)} 
+                    title={studio.name} 
+                    subtitles={[studio.address, studio.phone_num]} 
+                    buttons={["Details", "Class Schedule"]}
+                    links={["/studio/"+studio.name, "/class-schedule-page"]}
+                    />
+                }
+                 })}
+                </InfiniteScroll>
                 <StudioMap className="studio-search-flex-item studio-map" center={getStudioPosition(chosen)} markers={studiosArray.map((studio) => getStudioPosition(studio))}/>
             </div>
         </>

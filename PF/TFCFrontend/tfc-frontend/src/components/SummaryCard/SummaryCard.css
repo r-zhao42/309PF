@@ -1,6 +1,6 @@
 .summary-card {
     border: 1px black solid;
-    display: inline-block;
+    /* display: inline-block; */
     padding: 5px 10px;
 }
 
