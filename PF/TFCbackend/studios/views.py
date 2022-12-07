@@ -103,10 +103,13 @@ class SearchClassesView(ListAPIView):
 
         #classes on any of the search dates
         if date:
-            date = date.split('-')
-            classes = classes.filter(start_time__year=date[0],
-                                    start_time__month=date[1],
-                                    start_time__day=date[2])
+            datesArray = date.split(",")
+            print(datesArray)
+            for day in datesArray:
+                date = day.split('-')
+                classes = classes.filter(start_time__year=date[0],
+                                        start_time__month=date[1],
+                                        start_time__day=date[2])
         if startTime:
             classes = classes.filter(start_time__time__gte=startTime)
         if endTime:

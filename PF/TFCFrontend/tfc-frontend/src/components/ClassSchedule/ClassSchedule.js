@@ -27,36 +27,36 @@ const StudioClassSchedule = (props) => {
         const getFetchLink = () => {
             const queries = [searchName, searchDates, searchCoaches, searchStart, searchEnd]
             const params = new URLSearchParams()
-            console.log(studio)
-            const url = "http://127.0.0.1:8000/api/studios/".concat(studio.name).concat("/classes/list/")
+            // console.log(studio)
+            var url = "http://127.0.0.1:8000/api/studios/".concat(studio.name).concat("/classes/list/")
 
             if (queries.some((query) => query != "")) {
-
+                console.log(searchCoaches)
                 if(searchName != ""){
                     params.append("name", searchName)
                 }
     
                 if(searchCoaches != ""){
-                    params.append("classes", searchCoaches)
+                    console.log("hit2")
+                    params.append("coach", searchCoaches)
                 }
 
                 if(searchDates != ""){
-                    params.append("classes", searchDates)
+                    console.log(searchDates)
+                    params.append("date", searchDates)
                 }
     
     
                 if(searchEnd != ""){
-                    params.append("coaches", searchEnd)
+                    params.append("end_time", searchEnd)
                 }
 
                 if(searchStart != ""){
-                    params.append("coaches", searchStart)
+                    params.append("start_time", searchStart)
                 }
 
-                url.concat("?" + params.toString())
-            }  else {
-                url.concat("/")
-            }
+                url = url.concat("?" + params.toString())
+            }  
             console.log(url)
             return url
         }
@@ -79,7 +79,7 @@ const StudioClassSchedule = (props) => {
                 });
         }
         
-      }, [studio]);
+      }, [studio, searchName, searchDates, searchCoaches, searchStart, searchEnd]);
 
     const fetchMore = (target) => {
         var fetchUrl = ""
@@ -131,7 +131,9 @@ const StudioClassSchedule = (props) => {
                         setName={setSearchName} 
                         setDate={setSearchDates} 
                         setStartTime={setSearchStart} 
-                        setEndTime={setSearchEnd}/>
+                        setEndTime={setSearchEnd}
+                        start={searchStart}
+                        end={searchEnd}/>
                     <div className='class-table'>
                     {classArray &&
                         classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
