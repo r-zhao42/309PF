@@ -13,6 +13,9 @@
     display: flex;
 }
 
-.class-row-text p {
+.class-row-info{
     margin-left: 100px;
+    margin-right: 20px;
+    justify-content: left;
+    text-align: left;
 }

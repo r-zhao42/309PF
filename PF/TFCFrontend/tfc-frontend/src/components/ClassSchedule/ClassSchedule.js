@@ -1,6 +1,7 @@
-import Button from 'react-bootstrap/Button';
 import './ClassSchedule.css'
 import { useEffect, useState } from "react"
+import ClassScheduleRow from './ClassScheduleRow';
+import Button from 'react-bootstrap/Button';
 
 const StudioClassSchedule = (props) => {
     const [studio, setStudio] = useState()
@@ -11,6 +12,9 @@ const StudioClassSchedule = (props) => {
     const [searchCoaches, setSearchCoaches] = useState("")
     const [searchStart, setSearchStart] = useState("")
     const [searchEnd, setSearchEnd] = useState("")
+
+    const [nextURL, setNext] = useState()
+    const [prevURL, setPrev] = useState()
 
     useEffect(() => {
         setStudio(props.studio)
@@ -65,41 +69,67 @@ const StudioClassSchedule = (props) => {
               }).then((response) => response.json())
                 .then((data) => {
                   // TODO 
-                  console.log(data.results)
+                  console.log(data)
                   setClasses(data.results)
+                  setNext(data.next)
+                  setPrev(data.previous)
                 });
         }
         
       }, [studio]);
+
+    const fetchMore = (target) => {
+        var fetchUrl = ""
+        if (target==="next" && nextURL) {
+            fetchUrl = nextURL
+        } else if(target==="prev") {
+            fetchUrl = prevURL
+        }
+        console.log(fetchUrl)
+
+        fetch(fetchUrl, {
+            method: 'get',
+            mode: 'cors',
+            headers: new Headers({
+                'Authorization': 'Token ' + localStorage.getItem('token'),
+                'Content-type': 'application/json' 
+            }),
+          }).then((response) => response.json())
+            .then((data) => {
+              // TODO 
+              console.log(data)
+              setClasses(data.results)
+              setNext(data.next)
+              setPrev(data.previous)
+            });
+    }
+
+    const handleNext = (e) => {
+        e.preventDefault();
+        console.log(nextURL)
+        fetchMore("next")
+    }
+
+    const handlePrev = (e) => {
+        e.preventDefault();
+        console.log(nextURL)
+        fetchMore("prev")
+    }
 
     return (
         <>
 
             {studio &&
                 <>
-                    <h1>{studio.name}</h1>
+                    <h1>Class Schedule</h1>
+
+
                     <div className='class-table'>
                     {classArray &&
-                        classArray.map((c)=> 
-                        <div className="class-row">
-                            <div className='class-row-text'>                            
-                                <h6>{c.parent_class.name}</h6>
-                                <div className='class-row-info'>
-                                    <p>Date: {}</p>
-                                    <p>Time: {}</p>
-                                    <p>Coach: {}</p>
-                                    <p>Spots Left: {}</p>
-
-                                </div>
-                            </div>
-
-                            <div className='class-row-buttons'> 
-                                <Button variant="primary">Enroll</Button>
-                                <Button variant="primary">Enroll All</Button>
-                            </div>
-                        </div>
-                        )
+                        classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
                     }
+                    {nextURL && <Button variant="primary" onClick={handleNext}>next</Button>}
+                    {prevURL && <Button variant="primary" onClick={handlePrev}>prev</Button>}
                     </div>
                 </>
             }
