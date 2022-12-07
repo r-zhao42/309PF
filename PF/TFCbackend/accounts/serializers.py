@@ -199,7 +199,7 @@ class EditAccountSerializer(ParentAccountSerializer, serializers.ModelSerializer
         all_keys = ['email', 'password', 'repeat_password', 'first_name', 'last_name', 'phone_num', 'avatar']  
         for key in data.keys():  
             if key not in all_keys:  
-                err['extra_key'] = 'Make sure there are no extra fields.'  
+                err['extra_key'] = ['Make sure there are no extra fields.']
                 break  
             if data[key]:  
                 clean_data[key] = data[key]
@@ -229,10 +229,10 @@ class EditAccountSerializer(ParentAccountSerializer, serializers.ModelSerializer
           
         if 'email' in data.keys() and 'email' not in err.keys():  
             if Account.objects.filter(email=data['email']).exists():  
-                err['email'] = 'This email is taken.'  
+                err['email'] = ['This email is taken.']  
         if 'phone_num' in data.keys() and 'phone_num' not in err.keys():  
             if Account.objects.filter(phone_num=data['phone_num']).exists():  
-                err['phone_num'] = 'This phone number is taken.'  
+                err['phone_num'] = ['This phone number is taken.']  
   
         #Raise errors if any  
         if err:  
