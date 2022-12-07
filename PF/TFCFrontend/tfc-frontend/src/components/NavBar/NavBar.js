@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from './tfc.png';
 import Button from 'react-bootstrap/Button';
+import '../Button/button.css';
 
 
 
@@ -112,7 +113,7 @@ const NavBar = ({loginStatus}) => {
                             navbarScroll
                         >
                             <Nav.Link href="/home" className="nav-item">Home</Nav.Link>
-                            <Nav.Link href="/gyms" className="nav-item">Gyms</Nav.Link>
+                            <Nav.Link href="/studio-search" className="nav-item">Gyms</Nav.Link>
                             <Nav.Link href="/classes" className="nav-item">Classes</Nav.Link>
                             <Nav.Link href="/subscription" className="nav-item">Subscription</Nav.Link>
                         </Nav>

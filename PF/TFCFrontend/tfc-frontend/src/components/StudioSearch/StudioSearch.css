@@ -1,0 +1,30 @@
+.studio-search-flex-box {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    margin: 10px;
+}
+
+.studio-search-flex-item {
+    border: 5px orange solid
+}
+
+.studio-list {
+    flex: 6
+}
+
+.studio-map {
+    flex: 2
+}
+
+.studio-search-input{
+    margin-bottom: 10px;
+    width: 100%;
+} 
+
+.studio-search-form {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    justify-content: center;
+}
