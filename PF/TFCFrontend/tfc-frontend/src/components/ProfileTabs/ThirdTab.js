@@ -3,8 +3,9 @@ import './TableTab.css';
 
 const ThirdTab = () => {
   const [paymentHistory, setPaymentHistory] = useState(null);
+  const [fetchLink, setFetchLink] = useState('http://127.0.0.1:8000/api/accounts/payment/history/');
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/accounts/payment/history/', {
+    fetch(fetchLink, {
       method: 'get',
       mode: 'cors',
       headers: new Headers({
@@ -12,9 +13,22 @@ const ThirdTab = () => {
       }),
     }).then((response) => response.json())
       .then((data) => {
-        setPaymentHistory(data.results);
+        setPaymentHistory({'history': data.results,
+                            'next': data.next,
+                            'prev': data.previous});
       });
-  }, []);
+  }, [fetchLink]);
+
+  const prevPage = () => {
+    if (paymentHistory.prev != null){
+      setFetchLink(String(paymentHistory.prev));
+    }
+  };
+  const nextPage = () => {
+    if (paymentHistory.next != null){
+      setFetchLink(String(paymentHistory.next));
+    }
+  };
 
   return (
     <div className="table-tab">
@@ -29,7 +43,7 @@ const ThirdTab = () => {
               </tr>
             </thead>
             <tbody>
-              {paymentHistory && paymentHistory.map(({id, datetime, amount, payment_info}) => {
+              {paymentHistory && paymentHistory.history.map(({id, datetime, amount, payment_info}) => {
                 return (
                   <tr key={id}>
                     <td>{datetime.slice(0,10)} {datetime.slice(11,19)}</td>
@@ -40,6 +54,10 @@ const ThirdTab = () => {
               })}
             </tbody>
           </table>
+          <div className="pagination-btns">
+            {paymentHistory && (paymentHistory.prev && <button className="btn btn-schedule" onClick={prevPage}>Prev</button>)}
+            {paymentHistory && (paymentHistory.next && <button className="btn btn-schedule" onClick={nextPage}>Next</button>)}
+          </div>
         </div>
       </div>
     </div>

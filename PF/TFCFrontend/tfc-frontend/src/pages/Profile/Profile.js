@@ -6,18 +6,6 @@ import './Profile.css';
 import Tabs from "../../components/ProfileTabs/Tabs"
 
 function Profile() {
-  const [editMode, setEditMode] = useState(true);
-  const clickEditMode = () => {
-    setEditMode(editMode ? false : true);
-  };
-
-
-  const [show, setShow] = useState(false);
-  const avatarModal = () => {
-    setShow(show ? false : true);
-  };
-
-  
   const [first, setFirst] = useState('');
   const [last, setLast] = useState('');
   const [phone, setPhone] = useState('');
@@ -26,6 +14,55 @@ function Profile() {
   const [repeatpassword, setRepeatPassword] = useState('');
   const [avatar, setAvatar] = useState([]);
 
+
+  const [accData, setAccData] = useState(null);
+  const [dataChange, setDataChange] = useState(0);
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/accounts/details/', {
+      method: 'get',
+      mode: 'cors',
+      headers: new Headers({
+        'Authorization': 'Token ' + localStorage.getItem('token'),
+      }),
+    }).then((response) => response.json())
+      .then((data) => {
+        setAccData(data.account_details);
+        setFirst(data.account_details.first_name);
+        setLast(data.account_details.last_name);
+        setPhone(data.account_details.phone_num);
+        setEmail(data.account_details.email);
+      });
+  }, [dataChange]);
+
+
+  const [isHover, setIsHover] = useState(false);
+  const handleMouseOver = () => {
+    setIsHover(true);
+  };
+  const handleMouseOut = () => {
+    setIsHover(false);
+  };
+
+
+  const [avatarHover, setAvatarHover] = useState(false);
+  const avatarHoverOn = () => {
+    setAvatarHover(true);
+  };
+  const avatarHoverOff = () => {
+    setAvatarHover(false);
+  };
+  const [show, setShow] = useState(false);
+  const avatarModal = () => {
+    setShow(show ? false : true);
+  };
+
+
+  const [editMode, setEditMode] = useState(true);
+  const clickEditMode = () => {
+    setEditMode(editMode ? false : true);
+  };
+
+  
   const [errors, setErrors] = useState({});
 
   const handleFirstChange = event => {
@@ -71,61 +108,33 @@ function Profile() {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        const newErrorsState = {
-          first_name: '',
-          last_name: '',
-          phone_num: '',
-          email: '',
-          password: '',
-          repeatpassword: ''
-        };
+        const newErrorsState = {};
 
         if ('first_name' in responseJson) {
-          newErrorsState.first_name = responseJson.first_name[0]
+          newErrorsState.first_name = responseJson.first_name[0];
         }
         if ('last_name' in responseJson) {
-          newErrorsState.last_name = responseJson.last_name[0]
+          newErrorsState.last_name = responseJson.last_name[0];
         }
         if ('phone_num' in responseJson) {
-          newErrorsState.phone_num = responseJson.phone_num[0]
+          newErrorsState.phone_num = responseJson.phone_num[0];
         }
         if ('email' in responseJson) {
-          newErrorsState.email = responseJson.email[0]
+          newErrorsState.email = responseJson.email[0];
         }
         if ('password' in responseJson) {
-          newErrorsState.password = responseJson.password[0]
+          newErrorsState.password = responseJson.password[0];
         }
         if ('repeat_password' in responseJson) {
-          newErrorsState.repeatpassword = responseJson.repeat_password[0]
+          newErrorsState.repeatpassword = responseJson.repeat_password[0];
         }
         setErrors(newErrorsState);
+        if (Object.keys(newErrorsState).length === 0){
+          setDataChange(dataChange+1);
+          clickEditMode();
+        }
       });
-  }
-
-
-  const [isHover, setIsHover] = useState(false);
-  const handleMouseOver = () => {
-    setIsHover(true);
   };
-  const handleMouseOut = () => {
-    setIsHover(false);
-  };
-
-
-  const [accData, setAccData] = useState(null);
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/accounts/details/', {
-      method: 'get',
-      mode: 'cors',
-      headers: new Headers({
-        'Authorization': 'Token ' + localStorage.getItem('token'),
-      }),
-    }).then((response) => response.json())
-      .then((data) => {
-        console.log(localStorage.getItem('token'))
-        setAccData(data.account_details);
-      });
-  }, []);
 
   return (
     <div className='profile'>
@@ -155,8 +164,11 @@ function Profile() {
         </Modal>
         <div className='avatar-table'>
           <div className='account-avatar'>
-            <div className='avatar-frame' onClick={avatarModal}>
+            <div className='avatar-frame' onClick={avatarModal}
+                                          onMouseOver={avatarHoverOn} 
+                                          onMouseOut={avatarHoverOff}>
               {accData && <img alt='Avatar' src={'http://localhost:8000' + accData.avatar}/>}
+              <div className={avatarHover ? 'avatar-blur' : ''}></div>
             </div>
           </div>
         </div>
@@ -181,28 +193,30 @@ function Profile() {
           )
         : 
           <div className="account-short-details-edit">
-            <button className="edit-profile-btn" onClick={clickEditMode}>Edit</button>
+            <button className="edit-profile-btn" onClick={clickEditMode}>View</button>
             {accData && 
               <Form onSubmit={handleEdit} className="edit-form">
                 <div className="edit-form-duo">
                   <Form.Group className="edit-form-left">
                     <Form.Label className="float-start">First Name</Form.Label>
-                    <Form.Control className="float-start" type="text" value={first} onChange={handleFirstChange} />
+                    <Form.Control type="text" value={first} placeholder={accData.first_name} onChange={handleFirstChange} />
+                    <Form.Control.Feedback className="float-start" type="invalid">{errors.first_name}</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="edit-form-right">
                     <Form.Label className="float-start">Last Name</Form.Label>
-                    <Form.Control className="float-start" type="text" value={last} onChange={handleLastChange} />
+                    <Form.Control type="text" value={last} placeholder={accData.last_name} onChange={handleLastChange} />
+                    <Form.Control.Feedback className="float-start" type="invalid">{errors.last_name}</Form.Control.Feedback>
                   </Form.Group>
                 </div>
                 <div className="edit-form-duo">
                   <Form.Group className="edit-form-left">
                     <Form.Label className="float-start">Phone Number</Form.Label>
-                    <Form.Control type="tel" value={phone} placeholder="+14169567234" onChange={handlePhoneChange} isInvalid={!!errors.phone_num} />
+                    <Form.Control type="tel" value={phone} placeholder={accData.phone_num} onChange={handlePhoneChange} isInvalid={!!errors.phone_num} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.phone_num}</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="edit-form-right">
                     <Form.Label className="float-start">Email</Form.Label>
-                    <Form.Control type="email" value={email} placeholder="some@example.com" onChange={handleEmailChange} isInvalid={!!errors.email} />
+                    <Form.Control type="email" value={email} placeholder={accData.email} onChange={handleEmailChange} isInvalid={!!errors.email} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.email}</Form.Control.Feedback>
                   </Form.Group>
                 </div>
@@ -226,9 +240,10 @@ function Profile() {
           </div>
         }
       </div>
-
-      <Tabs payment_info={accData && accData.payment_info}
-            subscription={accData && accData.subscription} />
+      {accData && 
+        <Tabs payment_info={accData.payment_info}
+              subscription={accData.subscription}/>
+      }
     </div>
   );
 }
