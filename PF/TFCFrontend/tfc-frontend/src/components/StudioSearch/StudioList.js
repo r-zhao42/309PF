@@ -18,7 +18,7 @@ const StudioList = ({loadMore, nextUrl, componentHeight, studiosArray, setChosen
                 scrollableTarget="summary-card-list"
                 >
                 {studiosArray.map((studio) => { if (studio) {
-                    return  <SummaryCard active={studio===chosen} 
+                    return  <SummaryCard key={studio.name} active={studio===chosen} 
                     onClick={() => setChosen(studio)} 
                     title={studio.name} 
                     subtitles={[studio.address, studio.phone_num]} 

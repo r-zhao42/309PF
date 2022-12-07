@@ -19,7 +19,7 @@ const StudioMap = (props) => {
         >
           { /* Child components, such as markers, info windows, etc. */ }
           {props.markers && 
-            props.markers.map((marker) =>  <Marker position={marker}
+            props.markers.map((marker, i) =>  <Marker key={i} position={marker}
           />)
           }
           <></>
