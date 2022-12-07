@@ -114,7 +114,7 @@ const NavBar = ({loginStatus}) => {
                             <Nav.Link href="/home" className="nav-item">Home</Nav.Link>
                             <Nav.Link href="/gyms" className="nav-item">Gyms</Nav.Link>
                             <Nav.Link href="/classes" className="nav-item">Classes</Nav.Link>
-                            <Nav.Link href="/membership" className="nav-item">Membership</Nav.Link>
+                            <Nav.Link href="/subscription" className="nav-item">Subscription</Nav.Link>
                         </Nav>
                         <Nav>
                             { loginStatus === 'true' ? 
