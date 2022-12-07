@@ -3,11 +3,10 @@ import StudioMap from "./StudioMap"
 import Form from 'react-bootstrap/Form'
 import { useState, useEffect} from 'react';
 import './StudioSearch.css'
-import SummaryCard from "../SummaryCard/SummaryCard"
 import './StudioList.css'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import StudioList from "./StudioList";
 
-const componentHeight = 660;
+const componentHeight = 630;
 
 const StudioSearch = () => {
 
@@ -153,28 +152,17 @@ const StudioSearch = () => {
             </div>
     
             <div className="studio-search-flex-box" style={{height: componentHeight}}>
-            <InfiniteScroll
-                className="summary-card-list"
-                dataLength={studiosArray.length}
-                next={loadMore}
-                hasMore={nextUrl ? true : false}
-                loader={<h4>Loading...</h4>}
-                height={componentHeight}
-                scrollThreshold={0.99}
-                scrollableTarget="summary-card-list"
-                >
-                {studiosArray.map((studio) => { if (studio) {
-                    return  <SummaryCard active={studio===chosen} 
-                    onClick={() => setChosen(studio)} 
-                    title={studio.name} 
-                    subtitles={[studio.address, studio.phone_num]} 
-                    buttons={["Details", "Class Schedule"]}
-                    links={["/studio/"+studio.name, "/class-schedule-page"]}
-                    />
-                }
-                 })}
-                </InfiniteScroll>
-                <StudioMap className="studio-search-flex-item studio-map" center={getStudioPosition(chosen)} markers={studiosArray.map((studio) => getStudioPosition(studio))}/>
+                <StudioList 
+                    loadMore={loadMore} 
+                    nextUrl={nextUrl}  
+                    componentHeight={componentHeight}
+                    studiosArray={studiosArray}
+                    setChosen={setChosen}
+                    chosen={chosen}/>
+                <StudioMap 
+                    className="studio-search-flex-item studio-map" 
+                    center={getStudioPosition(chosen)} 
+                    markers={studiosArray.map((studio) => getStudioPosition(studio))}/>
             </div>
         </>
     )
