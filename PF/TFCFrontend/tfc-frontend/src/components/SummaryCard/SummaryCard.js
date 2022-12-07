@@ -2,11 +2,13 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import '../Button/button.css'
 import './SummaryCard.css'
+import React from 'react';
+
 
 
 const SummaryCard = (props) => {
     return(
-        <div key={props.title} onClick={props.onClick} className={props.active ? 'summary-card active' : "summary-card"}>
+        <div key={props.title} onClick={props.onClick} className={props.active ? 'summary-card summary-card-active' : "summary-card"}>
             <h2 className="summary-title">{props.title}</h2>
             {props.link && 
                 <a href={props.link} className="summary-link">link</a>
