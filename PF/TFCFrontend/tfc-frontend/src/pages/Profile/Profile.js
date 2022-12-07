@@ -6,6 +6,15 @@ import './Profile.css';
 import Tabs from "../../components/ProfileTabs/Tabs"
 
 function Profile() {
+  const [first, setFirst] = useState('');
+  const [last, setLast] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatpassword, setRepeatPassword] = useState('');
+  const [avatar, setAvatar] = useState([]);
+
+
   const [accData, setAccData] = useState(null);
   const [dataChange, setDataChange] = useState(0);
   useEffect(() => {
@@ -18,6 +27,10 @@ function Profile() {
     }).then((response) => response.json())
       .then((data) => {
         setAccData(data.account_details);
+        setFirst(data.account_details.first_name);
+        setLast(data.account_details.last_name);
+        setPhone(data.account_details.phone_num);
+        setEmail(data.account_details.email);
       });
   }, [dataChange]);
 
@@ -50,14 +63,6 @@ function Profile() {
   };
 
   
-  const [first, setFirst] = useState('');
-  const [last, setLast] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatpassword, setRepeatPassword] = useState('');
-  const [avatar, setAvatar] = useState([]);
-
   const [errors, setErrors] = useState({});
 
   const handleFirstChange = event => {
@@ -188,7 +193,7 @@ function Profile() {
           )
         : 
           <div className="account-short-details-edit">
-            <button className="edit-profile-btn" onClick={clickEditMode}>Edit</button>
+            <button className="edit-profile-btn" onClick={clickEditMode}>View</button>
             {accData && 
               <Form onSubmit={handleEdit} className="edit-form">
                 <div className="edit-form-duo">
