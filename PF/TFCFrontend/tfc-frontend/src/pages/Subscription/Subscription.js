@@ -8,7 +8,8 @@ import "./Subscription.css";
 const Subscription = ({ loginStatus }) => {
 
   const [sub, setSub] = useState({})
-  const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/accounts/subscription/types/', {
@@ -27,7 +28,6 @@ const Subscription = ({ loginStatus }) => {
 
   const handleChoice0 = event => {
     event.preventDefault();
-    setShow(true)
     const formbody = new FormData();
     if (sub.results[0].type === 'monthly') {
       formbody.append("sub_type", 'monthly');
@@ -45,15 +45,17 @@ const Subscription = ({ loginStatus }) => {
     })
       .then((response) => {
         if (response.status === 200) {
-          // alert("Successfully Changed Subscription")
+          setSuccess(true);
+        }
+        else{
+          setError(true);
         }
       });
   };
 
   const handleChoice1 = event => {
     event.preventDefault();
-    setShow(true)
-
+   
     const formbody = new FormData();
     if (sub.results[1].type === 'monthly') {
       formbody.append("sub_type", 'monthly');
@@ -71,7 +73,10 @@ const Subscription = ({ loginStatus }) => {
     })
       .then((response) => {
         if (response.status === 200) {
-          // alert("Successfully Changed Subscription")
+          setSuccess(true)
+        }
+        else{
+          setError(true);
         }
       });
   };
@@ -81,15 +86,21 @@ const Subscription = ({ loginStatus }) => {
   return (
     <>
       <div className="outer-div5">
-        {show ?
-          // <div className="inner-div5">
-          <Alert variant="changed-sub" onClose={() => setShow(false)} dismissible>
+        {success ?
+          <Alert variant="changed-sub" onClose={() => setSuccess(false)} dismissible>
             Your Subscription Has Been Changed
           </Alert>
-          // </div>
           :
           <></>
         }
+         {error ?
+          <Alert variant="changed-sub" onClose={() => setError(false)} dismissible>
+            Sorry, we are unable to change your subscription. Note that you must have added payment info to subscribe. 
+          </Alert>
+          :
+          <></>
+        }
+        
 
         <div className="inner-div5">
           <h3>Our Plans</h3>
