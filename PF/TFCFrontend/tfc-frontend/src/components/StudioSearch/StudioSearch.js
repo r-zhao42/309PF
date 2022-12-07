@@ -7,23 +7,63 @@ import SummaryCard from "../SummaryCard/SummaryCard"
 import './StudioList.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const componentHeight = 680;
+const componentHeight = 660;
 
 const StudioSearch = () => {
 
     const [studiosArray, setStudios] = useState([])
     const [chosen, setChosen] = useState()
+    const [nextUrl, setNext] = useState()
+    const [currLoc, setLoc] = useState()
+    
+
+    // Form states
     const [searchName, setSearchName] = useState("")
     const [searchAmenity, setSearchAmenity] = useState("")
     const [searchClass, setSearchClass] = useState("")
     const [searchCoach, setSearchCoach] = useState("")
-    const [nextUrl, setNext] = useState()
 
-    const getFetchLink = () => {
+    // effects
+    useEffect(() => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                setLoc(position(pos.coords.latitude, pos.coords.longitude))
+                console.log(pos.coords)
+            })
+          } else {
+            console.log("Not Available");
+          }
+    }, [])
+
+    useEffect(() => {
+        fetch(getFetchLink(), {
+          method: 'get',
+          mode: 'cors',
+          headers: new Headers({
+              'Authorization': 'Token a32af8a10d8eb61c3cfbfa350ccd3ba3e8e81dcc',
+              'Content-type': 'application/json' 
+          }),
+        }).then((response) => response.json())
+          .then((data) => {
+            setStudios(data.results)
+            setNext(data.next)
+            setChosen(data.results[0])
+          });
+      }, [searchName, searchAmenity, searchClass, searchCoach, currLoc]);
+
+      // helper functions
+      const getFetchLink = () => {
         var result = 'http://127.0.0.1:8000/api/studios/list'
         
         const queries = [searchName, searchAmenity, searchClass, searchCoach]
         const params = new URLSearchParams()
+        console.log("loc during fetc")
+        
+        if(currLoc) {
+            params.append("lat", currLoc.lat)
+            params.append("lon", currLoc.lng)
+        }
+
         if (queries.some((query) => query != "")) {
 
             if(searchName != ""){
@@ -41,28 +81,12 @@ const StudioSearch = () => {
             if(searchCoach != ""){
                 params.append("coaches", searchCoach)
             }
-            result = result.concat("?" + params.toString())
-        } else {
-            result = result.concat('/')
-        }
+            
+        } 
+        result = result.concat("?" + params.toString())
         console.log(result)
         return result
     }
-
-    useEffect(() => {
-        fetch(getFetchLink(), {
-          method: 'get',
-          mode: 'cors',
-          headers: new Headers({
-              'Authorization': 'Token a32af8a10d8eb61c3cfbfa350ccd3ba3e8e81dcc',
-              'Content-type': 'application/json' 
-          }),
-        }).then((response) => response.json())
-          .then((data) => {
-            setStudios(data.results)
-            setNext(data.next)
-          });
-      }, [searchName, searchAmenity, searchClass, searchCoach]);
     
     const loadMore = () => {
         console.log("hit")
@@ -101,6 +125,8 @@ const StudioSearch = () => {
         }
     }
 
+    // Form change handlers
+
     const handleSearchNameChange = (e) => {
         e.preventDefault(); // prevent the default action
         setSearchName(e.target.value); // set name to e.target.value (event)
@@ -119,6 +145,8 @@ const StudioSearch = () => {
         e.preventDefault(); // prevent the default action
         setSearchClass(e.target.value); // set name to e.target.value (event)
     };
+
+    // return 
 
     return (
         <>  

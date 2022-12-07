@@ -14,7 +14,7 @@ const StudioMap = (props) => {
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={props.center}
-          zoom={5}
+          zoom={15}
           animation={1}
         >
           { /* Child components, such as markers, info windows, etc. */ }
