@@ -28,11 +28,8 @@ const StudioSearch = () => {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((pos) => {
                 setLoc(position(pos.coords.latitude, pos.coords.longitude))
-                console.log(pos.coords)
             })
-          } else {
-            console.log("Not Available");
-          }
+          } 
     }, [])
 
     useEffect(() => {
@@ -57,7 +54,6 @@ const StudioSearch = () => {
         
         const queries = [searchName, searchAmenity, searchClass, searchCoach]
         const params = new URLSearchParams()
-        console.log("loc during fetc")
         
         if(currLoc) {
             params.append("lat", currLoc.lat)
@@ -84,12 +80,10 @@ const StudioSearch = () => {
             
         } 
         result = result.concat("?" + params.toString())
-        console.log(result)
         return result
     }
     
     const loadMore = () => {
-        console.log("hit")
         fetch(nextUrl, {
             method: 'get',
             mode: 'cors',
@@ -101,7 +95,6 @@ const StudioSearch = () => {
             .then((data) => {
               const newStudios = studiosArray.concat(data.results)
               setStudios(newStudios)
-              console.log(newStudios)
               setNext(data.next)
             });
     }
