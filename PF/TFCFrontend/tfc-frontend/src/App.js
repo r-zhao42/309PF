@@ -30,6 +30,7 @@ function App() {
                 <Route path="studio-search" element={<StudioSearchPage setLoginStatus={handleChange}/>} />
                 <Route path="studio/:name" element={<StudioDetail />} />
                 <Route path="logout" element={<Logout setLoginStatus={handleChange}/>} />
+                <Route path="login" element={<Login setLoginStatus={handleChange}/>} />
             </Route>
         </Routes>
     </BrowserRouter>
