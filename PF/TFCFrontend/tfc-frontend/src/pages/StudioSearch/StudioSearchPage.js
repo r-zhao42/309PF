@@ -1,5 +1,7 @@
 import StudioSearch from '../../components/StudioSearch/StudioSearch';
 import './StudioSearchPage.css';
+import React from 'react';
+
 
 const StudioSearchPage = () => {
     return (

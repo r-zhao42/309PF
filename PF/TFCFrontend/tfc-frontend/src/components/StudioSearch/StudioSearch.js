@@ -5,6 +5,8 @@ import { useState, useEffect} from 'react';
 import './StudioSearch.css'
 import './StudioList.css'
 import StudioList from "./StudioList";
+import React from 'react';
+
 
 const componentHeight = 630;
 
