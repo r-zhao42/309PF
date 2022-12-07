@@ -4,7 +4,14 @@ import Form from 'react-bootstrap/Form';
 import "./FirstTab.css";
 
 const FirstTab = ({payment_info, subscription}) => {
-  const [addMode, setAddMode] = useState(payment_info ? false : true);
+  const [hasPaymentInfo, setHasPaymentInfo] = useState(payment_info === null ? false : true);
+  const [paymentInfo, setPaymentInfo] = useState(hasPaymentInfo ? payment_info : 
+                                                                  {'credit_num': '',
+                                                                  'credit_exp_month': '',
+                                                                  'credit_exp_year': '',
+                                                                  'credit_cvv': '',
+                                                                  });
+  const [addMode, setAddMode] = useState(true);
   const clickAddMode = () => {
     setAddMode(addMode ? false : true);
   };
@@ -14,10 +21,10 @@ const FirstTab = ({payment_info, subscription}) => {
   };
 
 
-  const [number, setNumber] = useState(payment_info.credit_num);
-  const [month, setMonth] = useState(payment_info.credit_exp_month);
-  const [year, setYear] = useState(payment_info.credit_exp_year);
-  const [cvv, setCVV] = useState(payment_info.credit_cvv);
+  const [number, setNumber] = useState(paymentInfo.credit_num);
+  const [month, setMonth] = useState(paymentInfo.credit_exp_month);
+  const [year, setYear] = useState(paymentInfo.credit_exp_year);
+  const [cvv, setCVV] = useState(paymentInfo.credit_cvv);
 
   const handleNumberChange = event => {
     setNumber(event.target.value);
@@ -51,10 +58,12 @@ const FirstTab = ({payment_info, subscription}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         if ('Payment Info Successfully Edited' === responseJson){
-          payment_info.credit_num = number;
-          payment_info.credit_exp_month = month;
-          payment_info.credit_exp_year = year;
-          payment_info.credit_cvv = cvv;
+          setPaymentInfo({
+            'credit_num': number,
+            'credit_exp_month': month,
+            'credit_exp_year': year,
+            'credit_cvv': cvv,
+          });
           clickEditMode();
         }
       });
@@ -74,13 +83,20 @@ const FirstTab = ({payment_info, subscription}) => {
       .then((responseJson) => {
         if ('Payment Info Successfully Added' === responseJson){
           clickAddMode();
+          setPaymentInfo({
+            'credit_num': number,
+            'credit_exp_month': month,
+            'credit_exp_year': year,
+            'credit_cvv': cvv,
+          });
+          setHasPaymentInfo(true);
         }
       });
   }
 
   return (
     <div className="account-details">
-      {payment_info ? 
+      {hasPaymentInfo ? 
         <div>
           {editMode ? 
             <div className="info-container">
@@ -88,11 +104,11 @@ const FirstTab = ({payment_info, subscription}) => {
                 <button className="edit-info-btn" onClick={clickEditMode}>Edit</button>
                 <h3 className="info-subtitle">Payment Information:</h3>
                 <div className="row info-text">
-                  <p className="col-sm">Number: {payment_info && payment_info.credit_num}</p>
-                  <p className="col-sm">Exp Date: {payment_info && (payment_info.credit_exp_month + '/' + payment_info.credit_exp_year)}</p>
+                  <p className="col-sm">Number: {paymentInfo.credit_num}</p>
+                  <p className="col-sm">Exp Date: {(paymentInfo.credit_exp_month + '/' + paymentInfo.credit_exp_year)}</p>
                 </div>
                 <div className="row info-text">
-                  <p className="col-sm">CVV: {payment_info && payment_info.credit_cvv}</p>
+                  <p className="col-sm">CVV: {paymentInfo.credit_cvv}</p>
                 </div>
               </div>
               <div className="sub-info">
@@ -105,24 +121,24 @@ const FirstTab = ({payment_info, subscription}) => {
             </div>
           :
             <div className="info-container-edit">
-              <button className="edit-info-btn" onClick={clickEditMode}>Edit</button>
+              <button className="edit-info-btn" onClick={clickEditMode}>View</button>
               <h3 className="info-subtitle">Edit Payment Info</h3>
               <Form onSubmit={handleEdit}>
                 <Form.Group className="">
                   <Form.Label className="float-start">Number</Form.Label>
-                  <Form.Control className="float-start" type="text" value={number} placeholder={payment_info && payment_info.credit_num} onChange={handleNumberChange} />
+                  <Form.Control className="float-start" type="text" value={number} placeholder={paymentInfo.credit_num} onChange={handleNumberChange} />
                 </Form.Group>
                 <Form.Group className="">
                   <Form.Label className="float-start">Exp Month</Form.Label>
-                  <Form.Control className="float-start" type="text" value={month} placeholder={payment_info && payment_info.credit_exp_month} onChange={handleMonthChange} />
+                  <Form.Control className="float-start" type="text" value={month} placeholder={paymentInfo.credit_exp_month} onChange={handleMonthChange} />
                 </Form.Group>
                 <Form.Group className="">
                   <Form.Label className="float-start">Exp Year</Form.Label>
-                  <Form.Control className="float-start" type="text" value={year} placeholder={payment_info && payment_info.credit_exp_year} onChange={handleYearChange} />
+                  <Form.Control className="float-start" type="text" value={year} placeholder={paymentInfo.credit_exp_year} onChange={handleYearChange} />
                 </Form.Group>
                 <Form.Group className="">
                   <Form.Label className="float-start">CVV</Form.Label>
-                  <Form.Control className="float-start" type="text" value={cvv} placeholder={payment_info && payment_info.credit_cvv} onChange={handleCVVChange} />
+                  <Form.Control className="float-start" type="text" value={cvv} placeholder={paymentInfo.credit_cvv} onChange={handleCVVChange} />
                 </Form.Group>
                 <Button className="float-start" variant="edit" type="submit">
                   Save
@@ -141,23 +157,23 @@ const FirstTab = ({payment_info, subscription}) => {
           : 
             <div className="info-container-edit">
               <h3 className="info-subtitle">Add Payment Information</h3>
-              <button className="edit-info-btn" onClick={clickAddMode}>Add</button>
+              <button className="edit-info-btn" onClick={clickAddMode}>View</button>
               <Form onSubmit={handleAdd}>
-                <Form.Group className="">
+                <Form.Group>
                   <Form.Label className="float-start">Number</Form.Label>
-                  <Form.Control className="float-start" type="text" value={number} placeholder={payment_info && payment_info.credit_num} onChange={handleNumberChange} />
+                  <Form.Control className="float-start" type="text" value={number} placeholder={paymentInfo.credit_num} onChange={handleNumberChange} />
                 </Form.Group>
-                <Form.Group className="">
+                <Form.Group>
                   <Form.Label className="float-start">Exp Month</Form.Label>
-                  <Form.Control className="float-start" type="text" value={month} placeholder={payment_info && payment_info.credit_exp_month} onChange={handleMonthChange} />
+                  <Form.Control className="float-start" type="text" value={month} placeholder={paymentInfo.credit_exp_month} onChange={handleMonthChange} />
                 </Form.Group>
-                <Form.Group className="">
+                <Form.Group>
                   <Form.Label className="float-start">Exp Year</Form.Label>
-                  <Form.Control className="float-start" type="text" value={year} placeholder={payment_info && payment_info.credit_exp_year} onChange={handleYearChange} />
+                  <Form.Control className="float-start" type="text" value={year} placeholder={paymentInfo.credit_exp_year} onChange={handleYearChange} />
                 </Form.Group>
-                <Form.Group className="">
+                <Form.Group>
                   <Form.Label className="float-start">CVV</Form.Label>
-                  <Form.Control className="float-start" type="text" value={cvv} placeholder={payment_info && payment_info.credit_cvv} onChange={handleCVVChange} />
+                  <Form.Control className="float-start" type="text" value={cvv} placeholder={paymentInfo.credit_cvv} onChange={handleCVVChange} />
                 </Form.Group>
                 <Button className="float-start" variant="edit" type="submit">
                   Save
