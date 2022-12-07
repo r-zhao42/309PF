@@ -1,4 +1,6 @@
 import Button from 'react-bootstrap/Button';
+import React from 'react';
+
 
 
 const ClassScheduleRow = ({classInfo}) => {
@@ -23,11 +25,9 @@ const ClassScheduleRow = ({classInfo}) => {
             mode: 'cors',
             headers: new Headers({
                 'Authorization': 'Token a32af8a10d8eb61c3cfbfa350ccd3ba3e8e81dcc',
-                'Accept': '*/*',
-                'Content-Type': ''
             }),
             body: data
-          }).then((response) => console.log(response.data))
+          }).then((response) => response.text())
             .then((data) => {
               // TODO 
               console.log(data)

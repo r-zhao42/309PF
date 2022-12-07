@@ -2,6 +2,9 @@ import './ClassSchedule.css'
 import { useEffect, useState } from "react"
 import ClassScheduleRow from './ClassScheduleRow';
 import Button from 'react-bootstrap/Button';
+import React from 'react';
+import ClassSearch from './ClassSearch';
+
 
 const StudioClassSchedule = (props) => {
     const [studio, setStudio] = useState()
@@ -123,7 +126,12 @@ const StudioClassSchedule = (props) => {
                 <>
                     <h1>Class Schedule</h1>
 
-
+                    <ClassSearch 
+                        setCoach={setSearchCoaches} 
+                        setName={setSearchName} 
+                        setDate={setSearchDates} 
+                        setStartTime={setSearchStart} 
+                        setEndTime={setSearchEnd}/>
                     <div className='class-table'>
                     {classArray &&
                         classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
