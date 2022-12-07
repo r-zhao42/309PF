@@ -1,7 +1,7 @@
-import './StudioList.css'
+import './StudioList.css';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import SummaryCard from "../SummaryCard/SummaryCard"
-
+import SummaryCard from "../SummaryCard/SummaryCard";
+import React from 'react';
 
 const StudioList = ({loadMore, nextUrl, componentHeight, studiosArray, setChosen, chosen}) => {
 
