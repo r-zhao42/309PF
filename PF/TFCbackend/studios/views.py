@@ -1,7 +1,7 @@
 from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
 import geopy.distance
 import datetime
@@ -81,7 +81,7 @@ class ClassView(ListAPIView):
         return RepeatClass.objects.filter(studio=obj, start_time__gte=timezone.now(), cancelled=False).order_by('start_time')
 
 class SearchClassesView(ListAPIView):
-    permission_classes = []
+    permission_classes = [AllowAny]
     serializer_class = RepeatClassSerializer
     pagination_class = ClassPagination
 
@@ -230,7 +230,7 @@ def perform_delete(request):
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@permission_classes([])
+@permission_classes([AllowAny])
 def get_directions(request,studio_name):
     """
     We simply redirect the user to a google maps page with the destination set to the gym.

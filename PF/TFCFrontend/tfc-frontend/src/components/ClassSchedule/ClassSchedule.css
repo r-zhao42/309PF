@@ -1,0 +1,18 @@
+.class-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px #9d9d9d solid;
+}
+
+.class-table {
+    border-bottom: 1px black solid;
+    border-top: 1px black solid;
+}
+
+.class-row-text {
+    display: flex;
+}
+
+.class-row-text p {
+    margin-left: 100px;
+}

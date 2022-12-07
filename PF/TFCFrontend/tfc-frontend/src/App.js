@@ -9,6 +9,7 @@ import Login from "./pages/Login/Login"
 import StudioDetail from "./pages/StudioDetail/StudioDetail"
 import Logout from "./pages/Logout/Logout"
 import Subscription from "./pages/Subscription/Subscription"
+import StudioClassSchedulePage from './components/ClassSchedule/ClassSchedule';
 import './App.css';
 
 
@@ -33,6 +34,7 @@ function App() {
                 <Route path="logout" element={<Logout setLoginStatus={handleChange}/>} />
                 <Route path="login" element={<Login setLoginStatus={handleChange}/>} />
                 <Route path="subscription" element={<Subscription loginStatus={auth}/>} />
+                {/* <Route path="studio/class-schedule" element={<StudioClassSchedulePage />} /> */}
             </Route>
         </Routes>
     </BrowserRouter>

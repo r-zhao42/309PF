@@ -1,4 +1,5 @@
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 import '../Button/button.css'
 import './SummaryCard.css'
 
@@ -15,7 +16,7 @@ const SummaryCard = (props) => {
 
             <div className="summary-card-button-list">
                 {props.buttons && props.links && 
-                 props.buttons.map((button, i) => <Button key={i} href={props.links[i]} className="summary-button" variant='orange'>{button}</Button>)}
+                 props.buttons.map((button, i) => <Link to={{pathname: props.links[i]}}><Button key={i} href={props.links[i]} className="summary-button" variant='orange'>{button}</Button></Link> ) }
             </div>
         </div>
     )
