@@ -5,7 +5,7 @@ import './SummaryCard.css'
 
 const SummaryCard = (props) => {
     return(
-        <div key={props.title} onClick={props.onClick} className={props.active ? 'summary-card active' : "summary-card"}>
+        <div key={props.title} onClick={props.onClick} className={props.active ? 'summary-card summary-card-active' : "summary-card"}>
             <h2 className="summary-title">{props.title}</h2>
             {props.link && 
                 <a href={props.link} className="summary-link">link</a>
