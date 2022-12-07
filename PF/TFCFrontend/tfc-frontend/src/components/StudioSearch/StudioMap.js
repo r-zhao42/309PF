@@ -1,6 +1,8 @@
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { Marker } from '@react-google-maps/api';
 import './StudioSearch';
+import React from 'react';
+
 
 const containerStyle = {
     width: '100%',

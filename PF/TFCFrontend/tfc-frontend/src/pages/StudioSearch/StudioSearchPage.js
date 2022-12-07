@@ -1,6 +1,7 @@
 import StudioSearch from '../../components/StudioSearch/StudioSearch';
 import './StudioSearchPage.css';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+
 
 const StudioSearchPage = () => {
     return (
