@@ -13,13 +13,14 @@ from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 
 from .permissions import IsSelfOrAdmin
-from .serializers import AuthTokenSerializer, RegisterAccountSerializer, EditAccountSerializer, DetailAccountSerializer, SubscriptionSerializer, PaymentInfoSerializer, PaymentSerializer
+from .serializers import AuthTokenSerializer, RegisterAccountSerializer, EditAccountSerializer, DetailAccountSerializer, SubscriptionSerializer, PaymentInfoSerializer, PaymentSerializer, SubscriptionTypeSerializer
 from .pagination import PaymentHistoryPagination
 from .models import Account, Subscription, PaymentInfo, Payment, SubscriptionType
 from studios.models import Enrollment
 
+
 class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin):
-    
+
     lookup_field = 'email'
     lookup_url_kwarg = 'email'
     authentication_classes = [
@@ -51,7 +52,7 @@ class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, U
         else:
             permission_list = [AllowAny]
         return [permission() for permission in permission_list]
-    
+
     @rest_framework.decorators.action(methods=["POST"], detail=False)
     def register(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -68,7 +69,7 @@ class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, U
         account = serializer.validated_data['user']
         token = Token.objects.get_or_create(user=account)[0]
         return rest_framework.response.Response({'token': token.key})
-    
+
     @rest_framework.decorators.action(methods=["PUT"], detail=False)
     def edit(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -78,7 +79,7 @@ class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, U
         account = serializer.save(validated_data, account)
         account = serializer.serialize(account)
         return rest_framework.response.Response({'updated_account': account})
-    
+
     @rest_framework.decorators.action(methods=["GET"], detail=False)
     def details(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -91,6 +92,7 @@ class AccountsAPIViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, U
         get_object_or_404(Token, user=request.user).delete()
         return rest_framework.response.Response("Successfully Logged Out", status=rest_framework.status.HTTP_202_ACCEPTED)
 
+
 class AddPaymentInfoView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PaymentInfoSerializer
@@ -102,19 +104,21 @@ class AddPaymentInfoView(CreateAPIView):
         paymentInfo = PaymentInfo.objects.filter(account=account)
 
         if len(paymentInfo) == 0:
-            payment_info = PaymentInfo.objects.create(**self.request.POST.dict())
+            payment_info = PaymentInfo.objects.create(
+                **self.request.POST.dict())
             payment_info.account = account
             payment_info.save()
             return rest_framework.response.Response('Payment Info Successfully Added', status=rest_framework.status.HTTP_200_OK)
-        
+
         return rest_framework.response.Response('Request Unsuccessful: Account has payment info added already', status=rest_framework.status.HTTP_401_UNAUTHORIZED)
+
 
 class EditPaymentInfoView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PaymentInfoSerializer
 
     def put(self, request, *args, **kwargs):
-        return rest_framework.response.Response({"detail":"Method \"PUT\" not allowed."}, status=rest_framework.status.HTTP_404_NOT_FOUND)
+        return rest_framework.response.Response({"detail": "Method \"PUT\" not allowed."}, status=rest_framework.status.HTTP_404_NOT_FOUND)
 
     def patch(self, request, *args, **kwargs):
         account = get_object_or_404(Account, email=request.user.email)
@@ -122,76 +126,100 @@ class EditPaymentInfoView(UpdateAPIView):
         if len(paymentInfo) == 1:
             payment_info = paymentInfo.first()
             serializer = self.get_serializer()
-            #validate data
+            # validate data
             serializer.save(self.request.POST.dict(), payment_info)
             return rest_framework.response.Response('Payment Info Successfully Edited', status=rest_framework.status.HTTP_200_OK)
 
         return rest_framework.response.Response('Request Unsuccessful: Account does not have payment info', status=rest_framework.status.HTTP_200_OK)
 
 
-class AddSubscriptionView(CreateAPIView):
+# class AddSubscriptionView(CreateAPIView):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = SubscriptionSerializer
+
+#     def post(self, request):
+#         account = get_object_or_404(Account, email=request.user.email)
+
+#         # invalid info
+#         if request.POST.get('sub_type', None) is None:
+#             return rest_framework.response.Response(status=rest_framework.status.HTTP_400_BAD_REQUEST)
+
+#         if not SubscriptionType.objects.filter(type=request.POST.get('sub_type')).exists():
+#             return rest_framework.response.Response('Request Not Completed: Subscription type does not exists', status=rest_framework.status.HTTP_404_NOT_FOUND)
+
+#         paymentInfo = PaymentInfo.objects.filter(account=account)
+#         # Check if payment info exists, only add subscription if there is payment info in database
+#         if len(paymentInfo) == 0:
+#             return rest_framework.response.Response('Request Not Completed: User does not have payment info', status=rest_framework.status.HTTP_200_OK)
+
+#         subscription = Subscription.objects.filter(account=request.user)
+#         # Only allow creating subscription if user doesn't already have subscription
+#         if len(subscription) > 0:
+#             return rest_framework.response.Response('Request Not Completed: User already has a subscription', status=rest_framework.status.HTTP_200_OK)
+
+        # decide next payment date
+        # if request.POST.get('sub_type') == 'monthly':
+        #     subtype = SubscriptionType.objects.get(type='monthly')
+        #     next_payment_date = datetime.date.today() + relativedelta(months=+1)
+        # else:
+        #     subtype = SubscriptionType.objects.get(type='yearly')
+        #     next_payment_date = datetime.date.today() + relativedelta(years=+1)
+
+        # new_subscription = Subscription.objects.create(
+        #     account=account, sub_type=subtype, start_date=timezone.now(), next_payment_date=next_payment_date)
+        # new_subscription.save()
+        # new_payment = Payment.objects.create(
+        #     account=request.user, amount=new_subscription.sub_type.amount, datetime=timezone.now(), payment_info=paymentInfo.first())
+        # new_payment.save()
+        # return rest_framework.response.Response('Subscription Added', status=rest_framework.status.HTTP_200_OK)
+
+
+class EditSubscriptionView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = SubscriptionSerializer
 
-    def post(self, request):
+    def patch(self, request, *args, **kwargs):
+        return rest_framework.response.Response({"detail": "Method \"PATCH\" not allowed."}, status=rest_framework.status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def put(self, request):
         account = get_object_or_404(Account, email=request.user.email)
 
-        # invalid info
-        if request.POST.get('sub_type', None) is None:
-            return rest_framework.response.Response(status=rest_framework.status.HTTP_400_BAD_REQUEST)
-        
+        if request.data.get('sub_type', None) is None:
+            return rest_framework.response.Response("Request Not Completed: Missing Field", status=rest_framework.status.HTTP_400_BAD_REQUEST)
+
         if not SubscriptionType.objects.filter(type=request.POST.get('sub_type')).exists():
             return rest_framework.response.Response('Request Not Completed: Subscription type does not exists', status=rest_framework.status.HTTP_404_NOT_FOUND)
 
         paymentInfo = PaymentInfo.objects.filter(account=account)
         # Check if payment info exists, only add subscription if there is payment info in database
         if len(paymentInfo) == 0:
-            return rest_framework.response.Response('Request Not Completed: User does not have payment info', status=rest_framework.status.HTTP_200_OK) 
-
-        subscription = Subscription.objects.filter(account=request.user)
-        # Only allow creating subscription if user doesn't already have subscription
-        if len(subscription) > 0:
-            return rest_framework.response.Response('Request Not Completed: User already has a subscription', status=rest_framework.status.HTTP_200_OK)
-
-        # decide next payment date
-        if request.POST.get('sub_type') == 'monthly':
-            subtype = SubscriptionType.objects.get(type='monthly')
-            next_payment_date = datetime.date.today() + relativedelta(months=+1)
-        else:
-            subtype = SubscriptionType.objects.get(type='yearly')
-            next_payment_date = datetime.date.today() + relativedelta(years=+1)
-
-        new_subscription = Subscription.objects.create(account=account, sub_type=subtype, start_date=timezone.now(), next_payment_date=next_payment_date)
-        new_subscription.save()
-        new_payment = Payment.objects.create(account=request.user, amount=new_subscription.sub_type.amount, datetime=timezone.now(), payment_info=paymentInfo.first())
-        new_payment.save()
-        return rest_framework.response.Response('Subscription Added', status=rest_framework.status.HTTP_200_OK)
-
-class EditSubscriptionView(UpdateAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = SubscriptionSerializer
-
-    def put(self, request, *args, **kwargs):
-        return rest_framework.response.Response({"detail":"Method \"PUT\" not allowed."}, status=rest_framework.status.HTTP_404_NOT_FOUND)
-
-    def patch(self, request):
-        account = get_object_or_404(Account, email=request.user.email)
-
-        if request.data.get('sub_type', None) is None:
-            return rest_framework.response.Response(status=rest_framework.status.HTTP_400_BAD_REQUEST)
-        
-        if not SubscriptionType.objects.filter(type=request.POST.get('sub_type')).exists():
-            return rest_framework.response.Response('Request Not Completed: Subscription type does not exists', status=rest_framework.status.HTTP_404_NOT_FOUND)
+            return rest_framework.response.Response('Request Not Completed: User does not have payment info', status=rest_framework.status.HTTP_400_BAD_REQUEST)
 
         subscription = Subscription.objects.filter(account=account)
-        
+
         if len(subscription) == 0:
-            return rest_framework.response.Response('Request Not Completed: User does not have a subscription', status=rest_framework.status.HTTP_200_OK)
+            if request.POST.get('sub_type') == 'monthly':
+                subtype = SubscriptionType.objects.get(type='monthly')
+                next_payment_date = datetime.date.today() + relativedelta(months=+1)
+            else:
+                subtype = SubscriptionType.objects.get(type='yearly')
+                next_payment_date = datetime.date.today() + relativedelta(years=+1)
 
-        subscription = Subscription.objects.get(account=account)
+            new_subscription = Subscription.objects.create(account=account, sub_type=subtype, start_date=timezone.now(), next_payment_date=next_payment_date)
+            new_subscription.save()
+            new_payment = Payment.objects.create(account=request.user, amount=new_subscription.sub_type.amount, datetime=timezone.now(), payment_info=paymentInfo.first())
+            new_payment.save()
+        
+        else:
 
-        serializer = self.get_serializer()
-        serializer.save({'sub_type': SubscriptionType.objects.get(type=request.data.get('sub_type', None))}, subscription)
+            subscription = Subscription.objects.get(account=account)
+
+            serializer = self.get_serializer()
+
+            if request.POST.get('sub_type') == 'monthly':
+                serializer.save({'sub_type': SubscriptionType.objects.get(type=request.data.get('sub_type', None)), 'next_payment_date': datetime.date.today() + relativedelta(months=+1)}, subscription)
+            else:
+                serializer.save({'sub_type': SubscriptionType.objects.get(type=request.data.get('sub_type', None)), 'next_payment_date': datetime.date.today() + relativedelta(years=+1)}, subscription)
 
         return rest_framework.response.Response('Subscription successfully updated', status=rest_framework.status.HTTP_200_OK)
 
@@ -221,3 +249,10 @@ class PaymentsView(ListAPIView):
         account = get_object_or_404(Account, email=self.request.user.email)
         payments = Payment.objects.filter(account=account)
         return payments.order_by('-datetime')
+
+class SubscriptionTypesView(ListAPIView):
+    permission_classes = []
+    serializer_class = SubscriptionTypeSerializer
+
+    def get_queryset(self):
+        return SubscriptionType.objects.all()

@@ -5,6 +5,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from './tfc.png';
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
+import '../Button/button.css';
 
 
 
@@ -96,7 +98,57 @@ const NavBar = ({loginStatus}) => {
                 .nav-item:hover::after {
                     transform: scaleX(1);
                     transform-origin: bottom left;
+
+                
                 }
+                .account-drop {
+                    background: #f5f5f5;
+                    color: #31548a;
+                    border: 2px solid #fdebe2;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+            
+                  }
+                
+                  .account-drop:hover {
+                    background: #f5f5f5;
+                    color: #31548a;
+                    border: 2px solid #fdebe2;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                  }
+                  .account-drop:active   {
+                    background: #d25715 !important;
+                    color: #fff !important;
+                    border: 2px solid #d25715 !important;
+                    border-radius: 5px !important;
+                    padding: 5px 10px !important;
+                  }
+
+                  .drop-item {
+                    background: #f5f5f5;
+                    color: #31548a;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                  }
+                  
+                  .drop-item:hover{
+                    background: #f5f5f5;
+                    color: #31548a;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                  }
+
+                  .drop-item:active   {
+                    background: #f5f5f5 !important;
+                    color: #31548a  !important;
+                    border-radius: 5px  !important;
+                    padding: 5px 10px  !important;
+                  }
+                  .drop {
+                    background: #f5f5f5;
+                  }
+                  
                 
                 `}
                 </style>
@@ -112,15 +164,25 @@ const NavBar = ({loginStatus}) => {
                             navbarScroll
                         >
                             <Nav.Link href="/home" className="nav-item">Home</Nav.Link>
-                            <Nav.Link href="/gyms" className="nav-item">Gyms</Nav.Link>
+                            <Nav.Link href="/studio-search" className="nav-item">Gyms</Nav.Link>
                             <Nav.Link href="/classes" className="nav-item">Classes</Nav.Link>
-                            <Nav.Link href="/membership" className="nav-item">Membership</Nav.Link>
+                            <Nav.Link href="/subscription" className="nav-item">Subscription</Nav.Link>
                         </Nav>
                         <Nav>
                             { loginStatus === 'true' ? 
                             <>
-                            <Nav.Link href="/logout"><Button variant="orange">Logout</Button></Nav.Link>
-                            <Nav.Link href="/profile"><Button variant="outline-orange">My Profile</Button></Nav.Link>
+                            
+                            <Dropdown className='dropdown'>
+                                <Dropdown.Toggle className="account-drop">
+                                    My Account
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu className='drop'>
+                                    <Dropdown.Item href="/profile" className='drop-item'>View Profile</Dropdown.Item>
+                                    <Dropdown.Item href="/subscription" className='drop-item'>Edit Subscription</Dropdown.Item>
+                                    <Dropdown.Item href="/logout" className='drop-item'>Log out</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
 
                             </>
                             :

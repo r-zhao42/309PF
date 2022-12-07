@@ -4,9 +4,11 @@ import NavBar from "./components/NavBar/NavBar"
 import Signup from "./pages/Signup/Signup"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile"
+import StudioSearchPage from "./pages/StudioSearch/StudioSearchPage"
 import Login from "./pages/Login/Login"
 import StudioDetail from "./pages/StudioDetail/StudioDetail"
 import Logout from "./pages/Logout/Logout"
+import Subscription from "./pages/Subscription/Subscription"
 import './App.css';
 
 
@@ -26,9 +28,11 @@ function App() {
                 <Route path="home" element={<Home />}/>
                 <Route path="signup" element={<Signup setLoginStatus={handleChange}/>} />
                 <Route path="profile" element={<Profile />} />
-                <Route path="login" element={<Login setLoginStatus={handleChange}/>} />
+                <Route path="studio-search" element={<StudioSearchPage setLoginStatus={handleChange}/>} />
                 <Route path="studio/:name" element={<StudioDetail />} />
                 <Route path="logout" element={<Logout setLoginStatus={handleChange}/>} />
+                <Route path="login" element={<Login setLoginStatus={handleChange}/>} />
+                <Route path="subscription" element={<Subscription loginStatus={auth}/>} />
             </Route>
         </Routes>
     </BrowserRouter>
