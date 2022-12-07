@@ -5,6 +5,8 @@ import { useState, useEffect} from 'react';
 import './StudioSearch.css'
 import './StudioList.css'
 import StudioList from "./StudioList";
+import React from 'react';
+
 
 const componentHeight = 630;
 
@@ -22,6 +24,8 @@ const StudioSearch = () => {
     const [searchClass, setSearchClass] = useState("")
     const [searchCoach, setSearchCoach] = useState("")
 
+     
+
     // effects
     useEffect(() => {
         if ("geolocation" in navigator) {
@@ -32,6 +36,44 @@ const StudioSearch = () => {
     }, [])
 
     useEffect(() => {
+        // helper functions
+        const getFetchLink = () => {
+            var result = 'http://127.0.0.1:8000/api/studios/list'
+            
+            const queries = [searchName, searchAmenity, searchClass, searchCoach]
+            const params = new URLSearchParams()
+            
+            if(currLoc) {
+                params.append("lat", currLoc.lat)
+                params.append("lon", currLoc.lng)
+            }
+
+            if (queries.some((query) => query !== "")) {
+
+                if(searchName !== ""){
+                    params.append("name", searchName)
+                }
+
+                if(searchAmenity !== ""){
+                    params.append("amenities", searchAmenity)
+                }
+
+                if(searchClass !== ""){
+                    params.append("classes", searchClass)
+                }
+
+                if(searchCoach !== ""){
+                    params.append("coaches", searchCoach)
+                }
+                
+            } 
+            result = result.concat("?" + params.toString())
+            return result
+        }
+
+
+
+
         fetch(getFetchLink(), {
           method: 'get',
           mode: 'cors',
@@ -47,40 +89,7 @@ const StudioSearch = () => {
           });
       }, [searchName, searchAmenity, searchClass, searchCoach, currLoc]);
 
-      // helper functions
-      const getFetchLink = () => {
-        var result = 'http://127.0.0.1:8000/api/studios/list'
-        
-        const queries = [searchName, searchAmenity, searchClass, searchCoach]
-        const params = new URLSearchParams()
-        
-        if(currLoc) {
-            params.append("lat", currLoc.lat)
-            params.append("lon", currLoc.lng)
-        }
-
-        if (queries.some((query) => query != "")) {
-
-            if(searchName != ""){
-                params.append("name", searchName)
-            }
-
-            if(searchAmenity != ""){
-                params.append("amenities", searchAmenity)
-            }
-
-            if(searchClass != ""){
-                params.append("classes", searchClass)
-            }
-
-            if(searchCoach != ""){
-                params.append("coaches", searchCoach)
-            }
-            
-        } 
-        result = result.concat("?" + params.toString())
-        return result
-    }
+     
     
     const loadMore = () => {
         fetch(nextUrl, {
