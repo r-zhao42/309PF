@@ -17,7 +17,7 @@ const StudioList = ({loadMore, nextUrl, componentHeight, studiosArray, setChosen
                 scrollThreshold={0.99}
                 scrollableTarget="summary-card-list"
                 >
-                {studiosArray.map((studio) => { if (studio) {
+                {studiosArray.map((studio) => {
                     return  <SummaryCard key={studio.name} active={studio===chosen} 
                     onClick={() => setChosen(studio)} 
                     title={studio.name} 
@@ -25,7 +25,6 @@ const StudioList = ({loadMore, nextUrl, componentHeight, studiosArray, setChosen
                     buttons={["Details", "Class Schedule"]}
                     links={["/studio/"+studio.name, "/class-schedule-page"]}
                     />
-                }
                  })}
                 </InfiniteScroll>
     )
