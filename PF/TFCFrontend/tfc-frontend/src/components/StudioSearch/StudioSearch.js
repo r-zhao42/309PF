@@ -148,7 +148,7 @@ const StudioSearch = () => {
                     <Form.Control className="studio-search-input" type="input" placeholder="Search for a gym name" onChange={handleSearchNameChange}/>
                     <Form.Control className="studio-search-input" type="input" placeholder="Search for a class" onChange={handleSearchClassChange}/>
                     <Form.Control className="studio-search-input" type="input" placeholder="Search for a coaches" onChange={handleSearchCoachChange}/>
-                    <Form.Control className="studio-search-input" type="input" placeholder="Search for a amenities" onChange={handleSearchAmenityChange}/>
+                    <Form.Control className="studio-search-input" type="input" placeholder="Search for an amenities" onChange={handleSearchAmenityChange}/>
                 </Form.Group> 
             </div>
     
