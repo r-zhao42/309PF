@@ -99,12 +99,12 @@ const Subscription = ({ loginStatus }) => {
             (sub.results ?
               (sub.results.length === 1 ?
                 (loginStatus === 'true' ?
-                  <Button variant="sub" className="subscription-type-1" onClick={handleChoice0}>
+                  <Button variant="sub" className="subscription-type" onClick={handleChoice0}>
                     <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
                     Amount: ${sub.results[0].amount}
                   </Button>
                   :
-                  <div className="subscription-type-1">
+                  <div className="subscription-type">
                     <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
                     Amount: ${sub.results[0].amount}
                   </div>
