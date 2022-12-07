@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model  
 from django.contrib.auth import authenticate  
   
-from .models import Account, Subscription, Payment, PaymentInfo
+from .models import Account, Subscription, Payment, PaymentInfo, SubscriptionType
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -272,3 +272,14 @@ class DetailAccountSerializer(ParentAccountSerializer, serializers.ModelSerializ
                 'subscription': sub,
         }
         return json_data  
+
+class SubscriptionTypeSerializer(serializers.ModelSerializer):  
+    class Meta:
+        model = SubscriptionType
+        fields = ['type', 'amount']
+    def serialize(self, subscription_type):  
+        json_data = {'type': subscription_type.type,  
+                'amount': subscription_type.amount
+        }
+        return json_data  
+
