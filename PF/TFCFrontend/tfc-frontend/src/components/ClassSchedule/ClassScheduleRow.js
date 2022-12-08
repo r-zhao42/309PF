@@ -118,6 +118,14 @@ const ClassScheduleRow = ({classInfo}) => {
                                         }>
                     Enroll
                 </Button>
+                <Button variant={localStorage.getItem('token') ? "orange" : "disabled"}
+                        disabled={localStorage.getItem('token') ? false : true}
+                        onClick={(e) => {
+                                            handleClose() 
+                                            handleEnrollFuture(e)}
+                                        }>
+                    Enroll All
+                </Button>
                 </Modal.Footer>
             </Modal>
 
