@@ -1,36 +1,23 @@
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
-import { DateRangePicker } from 'react-date-range';
 import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
-import TimePicker from 'react-time-picker'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Slider from '@mui/material/Slider'
+import TextField from '@mui/material/TextField';
+
+import { useState } from 'react';
 
 
-const ClassSearch = ({setCoach, setName, setDate, setStartTime, setEndTime, start, end}) => {
+const ClassSearch = ({setCoach, setName, setDate, setStartTime, setEndTime, dateRange}) => {
 
-    const getDaysArray = function(start, end) {
-        console.log(start)
-        console.log(end)
-        for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){
-            arr.push(new Date(dt));
-        }
-        return arr;
-    };
-    const handleSelect = (ranges) => {
-        console.log(ranges)
-        const datesArr = getDaysArray(ranges.selection.startDate, ranges.selection.endDate)
-        console.log(datesArr);
-        const formattedDates = datesArr.map((date) => date.toISOString().split('T')[0])
-        console.log(formattedDates)
+    const handleDateChange = (newRange) => {
+        console.log("rang;ajskdhflkajsdhflkjsadhfe")
+        console.log(newRange)
 
-        setDate(formattedDates.join(','))
-      }
-
-      const selectionRange = {
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection',
+        setDate(newRange.selection)
       }
 
     const handleNameChange = (e) => {
@@ -41,39 +28,79 @@ const ClassSearch = ({setCoach, setName, setDate, setStartTime, setEndTime, star
         e.preventDefault(); // prevent the default action
         setCoach(e.target.value); // set name to e.target.value (event)
     };
+    const [range, setRange] = useState([0, 1440])
+    const [timeRange, setTimeRange] = useState(["00:00:00", "23:59:59"])
 
-    const handleStartChange = (time) => {
-        // const start = date.toLocaleTimeString()
-        time ? setStartTime(time.concat(":00")) : setStartTime("")
-    }
+    function padToTwoDigits(num) {
+        return num.toString().padStart(2, '0');
+      }
 
-    const handleEndChange = (time) => {
-        // const start = date.toLocaleTimeString()
-        time ? setEndTime(time.concat(":00")) : setEndTime("")
-    }
+    const handleTimeChange = (event, newValue) => {
+        setRange(newValue)
 
+        const start = parseInt(newValue[0])
+        const startHr = parseInt(start/60)
+        const startMin = parseInt(newValue[0]) - startHr * 60
+        const startTime = `${startHr}:${padToTwoDigits(startMin)}:00`
+
+        const end = parseInt(newValue[1])
+        const endHr = parseInt(end/60)
+        const endMin = parseInt(newValue[1]) - endHr * 60
+        const endTime = `${endHr}:${padToTwoDigits(endMin)}:00`
+
+        setTimeRange([startTime, endTime])
+        setStartTime(startTime)
+        setEndTime(endTime)
+    };
 
     return (
         <Form >
             <Form.Control onChange={handleNameChange} type="text" placeholder="Search for a class name" />
             <Form.Control onChange={handleCoachChange} type="text" placeholder="Search for a coach name" />
-            <TimePicker onChange={handleStartChange} disableClock={true} value={start}/>
-            <TimePicker onChange={handleEndChange} disableClock={true} value={end}/>
-            <Dropdown>
-                
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Dropdown Button
-                </Dropdown.Toggle>
+            <p>{timeRange[0]} - {timeRange[1]}</p>
+            <Slider
+                value={range}
+                onChange={handleTimeChange}
+                min={0}
+                max={1439}
+                step={15}
+                disableSwap
+                />
+            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <StaticDateRangePicker
+                    // displayStaticWrapperAs="desktop"
+                    value={dateRange}
+                    onChange={handleDateChange}
+                    // renderInput={(startProps, endProps) => (
+                    // <React.Fragment>
+                    //     <TextField {...startProps} />
+                    //     <Box sx={{ mx: 2 }}> to </Box>
+                    //     <TextField {...endProps} />
+                    // </React.Fragment>
+                    // )}
+                />
+            </LocalizationProvider> */}
 
-                {/* <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">  */}
-                        <DateRangePicker
-                            ranges={[selectionRange]}
-                            onChange={handleSelect}
-                        />
-                    {/* </Dropdown.Item>
-                </Dropdown.Menu> */}
-            </Dropdown>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+                label="Start Date"
+                preventDefault
+                value={dateRange[0]}
+                onChange={(newValue) => {
+                setDate([newValue, dateRange[1]]);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+            />
+            <DatePicker
+                label="End Date"
+                value={dateRange[1]}
+                onChange={(newValue) => {
+                setDate([dateRange[0], newValue]);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+                disablePast={true}
+            />
+            </LocalizationProvider>
         </Form>
     )
 }

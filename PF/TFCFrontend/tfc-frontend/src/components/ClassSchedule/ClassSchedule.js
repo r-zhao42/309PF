@@ -11,13 +11,16 @@ const StudioClassSchedule = (props) => {
     const [classArray, setClasses] = useState()
 
     const [searchName, setSearchName] = useState("")
-    const [searchDates, setSearchDates] = useState("")
     const [searchCoaches, setSearchCoaches] = useState("")
     const [searchStart, setSearchStart] = useState("")
     const [searchEnd, setSearchEnd] = useState("")
 
+    const[searchDateRange, setRange] = useState([null, null])
+
     const [nextURL, setNext] = useState()
     const [prevURL, setPrev] = useState()
+
+    // const [chosenDay, setChosenDay] = useState(new Date().toLocaleDateString())
 
     useEffect(() => {
         setStudio(props.studio)
@@ -25,13 +28,25 @@ const StudioClassSchedule = (props) => {
 
     useEffect(() => {
         const getFetchLink = () => {
-            const queries = [searchName, searchDates, searchCoaches, searchStart, searchEnd]
+            
+
+
+            const queries = [searchName, searchDateRange[0], searchDateRange[1], searchCoaches, searchStart, searchEnd]
             const params = new URLSearchParams()
             // console.log(studio)
             var url = "http://127.0.0.1:8000/api/studios/".concat(studio.name).concat("/classes/list/")
 
             if (queries.some((query) => query != "")) {
-                console.log(searchCoaches)
+                if (searchDateRange[0]) {
+                    const startDate = new Date(searchDateRange[0]).toLocaleDateString('fr-CA')
+                    params.append("start_date", startDate)
+                }
+                if (searchDateRange[1]) {
+                    const endDate = new Date(searchDateRange[1]).toLocaleDateString('fr-CA')
+                    params.append("end_date", endDate) 
+                }
+                
+
                 if(searchName != ""){
                     params.append("name", searchName)
                 }
@@ -39,11 +54,6 @@ const StudioClassSchedule = (props) => {
                 if(searchCoaches != ""){
                     console.log("hit2")
                     params.append("coach", searchCoaches)
-                }
-
-                if(searchDates != ""){
-                    console.log(searchDates)
-                    params.append("date", searchDates)
                 }
     
     
@@ -72,14 +82,13 @@ const StudioClassSchedule = (props) => {
               }).then((response) => response.json())
                 .then((data) => {
                   // TODO 
-                  console.log(data)
                   setClasses(data.results)
                   setNext(data.next)
                   setPrev(data.previous)
                 });
         }
         
-      }, [studio, searchName, searchDates, searchCoaches, searchStart, searchEnd]);
+      }, [studio, searchName, searchDateRange, searchCoaches, searchStart, searchEnd]);
 
     const fetchMore = (target) => {
         var fetchUrl = ""
@@ -119,9 +128,30 @@ const StudioClassSchedule = (props) => {
         fetchMore("prev")
     }
 
+    // const getDates = () => {
+    //     // const start = new Date()
+    //     // const end = new Date(start.getDate() + 7)
+    //     // console.log(start)
+    //     // console.log(end)
+    //     // for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){
+    //     //     console.log("hti")
+    //     //     arr.push(new Date(dt));
+    //     // }
+    //     // return arr;
+    //     var arr = []
+    //     const start = new Date()
+    //     for(let i=0; i<7; i++) {
+    //         const newDay = new Date()
+    //         var result = newDay.setDate(newDay.getDate() + i);
+    //         arr.push(newDay)
+    //     }
+    //     console.log(arr)
+
+    //     return arr
+    // };
+
     return (
         <>
-
             {studio &&
                 <>
                     <h1>Class Schedule</h1>
@@ -129,18 +159,28 @@ const StudioClassSchedule = (props) => {
                     <ClassSearch 
                         setCoach={setSearchCoaches} 
                         setName={setSearchName} 
-                        setDate={setSearchDates} 
+                        setDate={setRange} 
                         setStartTime={setSearchStart} 
                         setEndTime={setSearchEnd}
                         start={searchStart}
-                        end={searchEnd}/>
-                    <div className='class-table'>
-                    {classArray &&
-                        classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
-                    }
-                    {nextURL && <Button variant="primary" onClick={handleNext}>next</Button>}
-                    {prevURL && <Button variant="primary" onClick={handlePrev}>prev</Button>}
+                        end={searchEnd}
+                        dateRange={searchDateRange}/>
+                    <div className='class-schedule'>
+                        {/* <div className='class-dates'>
+                            {
+                                getDates().map((day)=> <p className={day.toLocaleDateString()===chosenDay ? "day-tab day-tab-active" : "day-tab"} onClick={()=> setChosenDay(day.toLocaleDateString())}>{day.toLocaleDateString()}</p>)
+                            }
+                        </div>   */}
+
+                        <div className='class-table'>
+                        {classArray &&
+                            classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
+                        }
+                        {nextURL && <Button variant="primary" onClick={handleNext}>next</Button>}
+                        {prevURL && <Button variant="primary" onClick={handlePrev}>prev</Button>}
+                        </div>
                     </div>
+                    
                 </>
             }
 

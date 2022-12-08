@@ -11,11 +11,22 @@
 
 .class-row-text {
     display: flex;
+    justify-content: left;
 }
 
 .class-row-info{
+    border: solid black 1px;
     margin-left: 100px;
     margin-right: 20px;
     justify-content: left;
     text-align: left;
+}
+
+.class-dates {
+    display: flex;
+}
+
+.day-tab-active {
+    color: orange;
+    background-color: aqua;
 }

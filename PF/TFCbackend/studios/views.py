@@ -93,6 +93,8 @@ class SearchClassesView(ListAPIView):
         coach = self.request.GET.get('coach', None)
         startTime = self.request.GET.get('start_time', None)
         endTime = self.request.GET.get('end_time', None)
+        startDate = self.request.GET.get('start_date', None)
+        endDate = self.request.GET.get('end_date', None)
         #classes with at least one of the search names
         if name:
             classes = classes.filter(parent_class__name__icontains=name)
@@ -102,14 +104,12 @@ class SearchClassesView(ListAPIView):
             classes = classes.filter(parent_class__coach__icontains=coach)
 
         #classes on any of the search dates
-        if date:
-            datesArray = date.split(",")
-            print(datesArray)
-            for day in datesArray:
-                date = day.split('-')
-                classes = classes.filter(start_time__year=date[0],
-                                        start_time__month=date[1],
-                                        start_time__day=date[2])
+        if startDate:
+            classes = classes.filter(start_time__date__gte=startDate)
+        
+        if endDate:
+            classes = classes.filter(end_time__date__lte=endDate)
+
         if startTime:
             classes = classes.filter(start_time__time__gte=startTime)
         if endTime:
