@@ -71,6 +71,10 @@
     justify-content: space-between; */
 }
 
+.class-row:hover {
+    background-color: #bfbfbe;
+}
+
 .class-table table {
     border-collapse: collapse;
     width: 100%;

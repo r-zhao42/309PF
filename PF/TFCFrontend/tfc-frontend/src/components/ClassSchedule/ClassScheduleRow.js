@@ -7,12 +7,12 @@ import Modal from 'react-bootstrap/Modal';
 
 const ClassScheduleRow = ({classInfo}) => {
 
+    const [showResponseModal, setShowResponseModal] = useState(false)
+    const [response, setResponse] = useState("")
+
+
     const enrollClass = (enrollFuture) => {
         const fetchUrl = "http://127.0.0.1:8000/api/studios/classes/enroll/"
-        // const data = {
-        //     class_id: classInfo.id,
-        //     enroll_future: enrollFuture
-        // }
 
         const data = new FormData();
         data.append("class_id", classInfo.id);
@@ -26,14 +26,13 @@ const ClassScheduleRow = ({classInfo}) => {
             method: 'post',
             mode: 'cors',
             headers: new Headers({
-                'Authorization': 'Token a32af8a10d8eb61c3cfbfa350ccd3ba3e8e81dcc',
+                'Authorization': 'Token ' + localStorage.getItem('token'),
             }),
             body: data
           }).then((response) => response.text())
             .then((data) => {
-              // TODO 
-              console.log(data)
-
+              setResponse(data)
+              setShowResponseModal(true)
             });
     }
 
@@ -50,10 +49,9 @@ const ClassScheduleRow = ({classInfo}) => {
     const [showDetailModal, setShowModal] = useState(false)
 
     const handleClose = () => setShowModal(false);
-    const handleShow = () => {
-        console.log(classInfo)
-        setShowModal(true)
-    };
+    const handleShow = () => setShowModal(true);
+
+    const handleCloseResponse = () => setShowResponseModal(false);
 
     const getTimeString = (dateTime) => {
         return new Date(dateTime).toLocaleTimeString("en-US", {hour: '2-digit', minute:'2-digit'})
@@ -68,11 +66,11 @@ const ClassScheduleRow = ({classInfo}) => {
 
     return (
         <>
-            <tr className="class-row" onClick={handleShow}>
-                    <td className='class-name-td'>                    
+            <tr className="class-row" >
+                    <td onClick={handleShow} className='class-name-td'>                    
                         <h6>{classInfo.parent_class.name}</h6>
                     </td>    
-                    <td className='class-info-td'> 
+                    <td onClick={handleShow} className='class-info-td'> 
                         <div className='class-row-info'>
                             <p>Date: {new Date(classInfo.start_time).toLocaleDateString("en-US", getLocaleDateStringOptions)}</p>
                             <p>Time: {getTimeString(classInfo.start_time)} - {getTimeString(classInfo.end_time)}</p>
@@ -80,20 +78,14 @@ const ClassScheduleRow = ({classInfo}) => {
                         </div>
                     </td>
                 <td className="class-button-td">
-                    {/* {localStorage.getItem('token') ? 
-                        <div className='class-row-buttons'> 
-                            <Button onClick={handleEnroll} variant="orange">Enroll</Button>
-                            <Button onClick={handleEnrollFuture} variant="orange">Enroll All</Button>
-                        </div> 
-                        :
-                        <p>You must be logged in to enroll</p>
-                    }     */}
                     <Button 
                         onClick={handleEnroll} 
-                        variant={localStorage.getItem('token') ? "orange" : "disabled"}>Enroll</Button>
+                        variant={localStorage.getItem('token') ? "orange" : "disabled"} 
+                        disabled={localStorage.getItem('token') ? false : true}>Enroll</Button>
                     <Button 
                         onClick={handleEnrollFuture} 
-                        variant={localStorage.getItem('token') ? "orange" : "disabled"}>Enroll All</Button>
+                        variant={localStorage.getItem('token') ? "orange" : "disabled"}
+                        disabled={localStorage.getItem('token') ? false : true}>Enroll All</Button>
                 </td>       
             </tr>
 
@@ -116,11 +108,30 @@ const ClassScheduleRow = ({classInfo}) => {
                 <Button variant="orange" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="orange" onClick={(e) => {
-                                                handleClose() 
-                                                handleEnroll(e)}
-                                                }>
+                <Button variant={localStorage.getItem('token') ? "orange" : "disabled"}
+                        disabled={localStorage.getItem('token') ? false : true}
+                        onClick={(e) => {
+                                            handleClose() 
+                                            handleEnroll(e)}
+                                        }>
                     Enroll
+                </Button>
+                </Modal.Footer>
+            </Modal>
+
+
+
+            <Modal show={showResponseModal} onHide={handleCloseResponse}>
+
+                <Modal.Header closeButton>
+                </Modal.Header>
+
+                <Modal.Body> {response ? response.substring(1, response.length - 1) : "Enrollment Successful"}
+                </Modal.Body>
+
+                <Modal.Footer>
+                <Button variant="orange" onClick={handleCloseResponse}>
+                    Close
                 </Button>
                 </Modal.Footer>
             </Modal>
