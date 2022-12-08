@@ -1,3 +1,4 @@
+import { Button } from "bootstrap";
 import React, { useEffect, useState } from "react";
 import './TableTab.css';
 
@@ -5,6 +6,10 @@ const SecondTab = () => {
   const [classData, setClassSchedule] = useState(null);
   const [fetchLink, setFetchLink] = useState('http://127.0.0.1:8000/api/studios/schedule/');
   useEffect(() => {
+    refreshTab()
+  }, [fetchLink]);
+  
+  const refreshTab = () => {
     fetch(fetchLink, {
       method: 'get',
       mode: 'cors',
@@ -13,11 +18,12 @@ const SecondTab = () => {
       }),
     }).then((response) => response.json())
       .then((data) => {
+        console.log(data.results)
         setClassSchedule({'schedule': data.results,
                           'next': data.next,
                           'prev': data.previous});
       });
-  }, [fetchLink]);
+  }
 
   const prevPage = () => {
     if (classData.prev != null){
@@ -29,6 +35,28 @@ const SecondTab = () => {
       setFetchLink(String(classData.next));
     }
   };
+
+  const handleUnenroll = (classData, enrollFuture) => {
+      const fetchUrl = "http://127.0.0.1:8000/api/studios/classes/unenroll/"
+
+      const data = new FormData();
+      data.append("class_id", classData.id);
+      data.append("enroll_future", enrollFuture);
+
+      console.log(fetchUrl)
+      console.log(classData.start_time)
+      for (var pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+      fetch(fetchUrl, {
+          method: 'post',
+          mode: 'cors',
+          headers: new Headers({
+              'Authorization': 'Token ' + localStorage.getItem('token'),
+          }),
+          body: data
+        }).then((response) => refreshTab());
+  }
 
   return (
     <div className="table-tab">
@@ -51,6 +79,14 @@ const SecondTab = () => {
                     <td>{repeat_class.start_time.slice(0,10)} {repeat_class.start_time.slice(11,19)}</td>
                     <td>{repeat_class.end_time.slice(0,10)} {repeat_class.end_time.slice(11,19)}</td>
                     <td>{repeat_class.cancelled ? 'true' : 'false'}</td>
+                    <td>
+                      <button className="btn btn-schedule" onClick={(e) => handleUnenroll(repeat_class, false)}>
+                        Unenroll
+                      </button> 
+                      <button className="btn btn-schedule" onClick={(e) => handleUnenroll(repeat_class, true)}>
+                        Unenroll All
+                      </button>
+                    </td>
                   </tr>
                 );
               })}

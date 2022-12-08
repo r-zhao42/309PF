@@ -6,7 +6,9 @@ import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import "./StudioDetail.css";
+import "../../components/Button/button.css"
+import "./StudioDetail.css"
+import StudioClassSchedule from '../../components/ClassSchedule/ClassSchedule';
 
 const StudioDetail = () => {
   const { name } = useParams()
@@ -20,9 +22,9 @@ const StudioDetail = () => {
       mode: 'cors',
     }).then((response) => response.json())
       .then((data) => {
-        console.log(localStorage.getItem('token'))
+        // console.log(localStorage.getItem('token'))
 
-        console.log(data)
+        // console.log(data)
         const newStudioState = {
           name: data.name,
           address: data.address,
@@ -40,9 +42,6 @@ const StudioDetail = () => {
     fetch('http://127.0.0.1:8000/api/studios/' + name + '/directions/', {
       method: 'get',
       mode: 'cors',
-      headers: new Headers({
-        'Authorization': 'Token ' + localStorage.getItem('token'),
-      }),
     }).then((response) => response.text())
       .then((data) => {
         setDirections(data);
@@ -96,16 +95,23 @@ const StudioDetail = () => {
 
             </tbody>
           </Table>
-          <h5>Images</h5>
-          <div className="container-photo">
-          <Carousel className="studio-car">
-            {studioData.images && studioData.images.map((image) => {
-              return <Carousel.Item key={image.id}>
-                <img src={image.image} className="studio-image" alt={image.id} />
-              </Carousel.Item>;
-            })}
-          </Carousel>
-          </div>
+          { studioData.images && studioData.images.length > 0 &&
+            <>
+              <h5>Images</h5>
+              <div className="container-photo">
+                <Carousel className="studio-car">
+                  {studioData.images.map((image) => {
+                    return <Carousel.Item key={image.id}>
+                      <img src={image.image} className="studio-image" alt={image.id} />
+                    </Carousel.Item>;
+                  })}
+                </Carousel>
+              </div>
+            </>
+          }
+          <h3>Class Schedule</h3>
+          <StudioClassSchedule studio={studioData}/>
+
         </div>
       </div>
     </>

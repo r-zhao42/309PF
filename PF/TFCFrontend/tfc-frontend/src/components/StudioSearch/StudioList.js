@@ -22,8 +22,8 @@ const StudioList = ({loadMore, nextUrl, componentHeight, studiosArray, setChosen
                     onClick={() => setChosen(studio)} 
                     title={studio.name} 
                     subtitles={[studio.address, studio.phone_num]} 
-                    buttons={["Details", "Class Schedule"]}
-                    links={["/studio/"+studio.name, "/class-schedule-page"]}
+                    buttons={["Details"]}
+                    links={["/studio/"+studio.name]}
                     />
                  })}
                 </InfiniteScroll>
