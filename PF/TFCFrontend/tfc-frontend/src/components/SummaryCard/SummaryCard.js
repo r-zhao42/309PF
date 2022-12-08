@@ -15,7 +15,7 @@ const SummaryCard = (props) => {
 
             <div className="summary-card-button-list">
                 {props.buttons && props.links && 
-                 props.buttons.map((button, i) => <Link to={{pathname: props.links[i]}} key={i}><Button className="summary-button" variant='orange'>{button}</Button></Link> ) }
+                 props.buttons.map((button, i) => <Link style={{width: "100%", paddingLeft: "20px", paddingRight: "20px"}} to={{pathname: props.links[i]}} key={i}><Button style={{width: "100%"}} className="summary-button" variant='orange'>{button}</Button></Link> ) }
             </div>
         </div>
     )
