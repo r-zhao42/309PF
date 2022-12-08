@@ -10,6 +10,7 @@ const Subscription = ({ loginStatus }) => {
   const [sub, setSub] = useState({})
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [subStatus, setSubStatus] = useState(false);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/accounts/subscription/types/', {
@@ -46,8 +47,9 @@ const Subscription = ({ loginStatus }) => {
       .then((response) => {
         if (response.status === 200) {
           setSuccess(true);
+          setSubStatus(true);
         }
-        else{
+        else {
           setError(true);
         }
       });
@@ -55,7 +57,7 @@ const Subscription = ({ loginStatus }) => {
 
   const handleChoice1 = event => {
     event.preventDefault();
-   
+
     const formbody = new FormData();
     if (sub.results[1].type === 'monthly') {
       formbody.append("sub_type", 'monthly');
@@ -74,9 +76,28 @@ const Subscription = ({ loginStatus }) => {
       .then((response) => {
         if (response.status === 200) {
           setSuccess(true)
+          setSubStatus(true);
         }
-        else{
+        else {
           setError(true);
+        }
+      });
+  };
+
+  const handleChoice2 = event => {
+    event.preventDefault();
+
+    fetch("http://127.0.0.1:8000/api/accounts/subscription/delete/", {
+      method: "POST",
+      mode: 'cors',
+      headers: new Headers({
+        'Authorization': 'Token ' + localStorage.getItem('token'),
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          setSuccess(true);
+          setSubStatus(false);
         }
       });
   };
@@ -93,66 +114,69 @@ const Subscription = ({ loginStatus }) => {
           :
           <></>
         }
-         {error ?
+        {error ?
           <Alert variant="changed-sub" onClose={() => setError(false)} dismissible>
-            Sorry, we are unable to change your subscription. Note that you must have added payment info to subscribe. 
+            Sorry, we are unable to change your subscription. Note that you must have added payment info to subscribe.
           </Alert>
           :
           <></>
         }
-        
+
 
         <div className="inner-div5">
           <h3>Our Plans</h3>
           <br />
 
-          {
-            (sub.results ?
-              (sub.results.length === 1 ?
-                (loginStatus === 'true' ?
-                  <Button variant="sub" className="subscription-type" onClick={handleChoice0}>
-                    <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
-                    Amount: ${sub.results[0].amount}
-                  </Button>
-                  :
-                  <div className="subscription-type">
-                    <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
-                    Amount: ${sub.results[0].amount}
-                  </div>
-                )
+          {sub.results &&
+            (sub.results.length === 1 ?
+              (loginStatus === 'true' ?
+                <Button variant="sub" className="subscription-type" onClick={handleChoice0}>
+                  <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
+                  Amount: ${sub.results[0].amount}
+                </Button>
                 :
-                (loginStatus === 'true' ?
-                  <>
-                    <div className="subscription-types">
-                      <Button variant="sub" className="subscription-type" onClick={handleChoice1}>
-                        <h5>{sub.results[1].type.charAt(0).toUpperCase() + sub.results[1].type.slice(1)}</h5>
-                        Amount: ${sub.results[1].amount}
-                      </Button>
-                      <Button variant="sub" className="subscription-type" onClick={handleChoice0}>
-                        <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
-                        Amount: ${sub.results[0].amount}
-                      </Button>
-                    </div>
-                  </>
-                  :
-                  <>
-                    <div className="subscription-types">
-                      <div className="subscription-type">
-                        <h5>{sub.results[1].type.charAt(0).toUpperCase() + sub.results[1].type.slice(1)}</h5>
-                        Amount: ${sub.results[1].amount}
-                      </div>
-                      <div className="subscription-type">
-                        <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
-                        Amount: ${sub.results[0].amount}
-                      </div>
-                    </div>
-                  </>
-                )
+                <div className="subscription-type">
+                  <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
+                  Amount: ${sub.results[0].amount}
+                </div>
               )
               :
-              <></>)
+              (loginStatus === 'true' ?
+                <>
+                  <div className="subscription-types">
+                    <Button variant="sub" className="subscription-type" onClick={handleChoice1}>
+                      <h5>{sub.results[1].type.charAt(0).toUpperCase() + sub.results[1].type.slice(1)}</h5>
+                      Amount: ${sub.results[1].amount}
+                    </Button>
+                    <Button variant="sub" className="subscription-type" onClick={handleChoice0}>
+                      <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
+                      Amount: ${sub.results[0].amount}
+                    </Button>
+                  </div>
+                </>
+                :
+                <>
+                  <div className="subscription-types">
+                    <div className="subscription-type">
+                      <h5>{sub.results[1].type.charAt(0).toUpperCase() + sub.results[1].type.slice(1)}</h5>
+                      Amount: ${sub.results[1].amount}
+                    </div>
+                    <div className="subscription-type">
+                      <h5>{sub.results[0].type.charAt(0).toUpperCase() + sub.results[0].type.slice(1)}</h5>
+                      Amount: ${sub.results[0].amount}
+                    </div>
+                  </div>
+                </>
+              )
+            )
+
           }
         </div>
+        {subStatus &&
+          <div className="inner-div5">
+            <Button variant="sub" className="subscription-type" onClick={handleChoice2}>Delete My Subscription</Button>
+          </div>
+        }
       </div>
     </>
   )
