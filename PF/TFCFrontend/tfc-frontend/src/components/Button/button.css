@@ -67,3 +67,9 @@ button {
     border-color: #a6430e !important;
     color: #fdebe2 !important
 }
+
+.btn-disabled {
+    background-color: #eaeaea !important;
+    border-color: #a6430e !important;
+    color: #a6430e !important;
+}

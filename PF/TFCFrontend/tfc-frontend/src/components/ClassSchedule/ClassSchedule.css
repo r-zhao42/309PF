@@ -2,11 +2,7 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px #9d9d9d solid;
-}
-
-.class-table {
-    border-bottom: 1px black solid;
-    border-top: 1px black solid;
+    padding: 10px;
 }
 
 .class-row-text {
@@ -15,7 +11,6 @@
 }
 
 .class-row-info{
-    border: solid black 1px;
     margin-left: 100px;
     margin-right: 20px;
     justify-content: left;
@@ -29,4 +24,49 @@
 .day-tab-active {
     color: orange;
     background-color: aqua;
+}
+
+.class-schedule {
+    display: flex;
+    border: #5d5d5d solid 1px;
+    border-radius: 10px;
+}
+
+.class-table {
+    height: 600px;
+    overflow: scroll;
+    flex: 3;
+    flex-grow: 3;
+}
+
+.class-search-control {
+    flex: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-right: #5d5d5d solid 1px;
+}
+
+.class-control-input {
+    margin: 8px;
+}
+
+.class-control-datepicker{
+    margin: 5px !important;
+}
+
+.time-range-picker {
+    margin-top: 25px;
+    margin-bottom: 8px;
+}
+
+.time-range-picker p{
+    margin-bottom: 0px !important;
+    font-weight: bold;
+}
+
+.time-range-display {
+    display: flex;
+    justify-content: space-between;
 }

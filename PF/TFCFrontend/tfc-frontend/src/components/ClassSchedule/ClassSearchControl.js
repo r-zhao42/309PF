@@ -5,6 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Slider from '@mui/material/Slider'
 import TextField from '@mui/material/TextField';
+import './ClassSchedule.css'
 
 import { useState } from 'react';
 
@@ -75,44 +76,59 @@ const ClassSearchControl = ({setCoach, setName, setDate, setStartTime, setEndTim
     }
 
     return (
-        <Form >
-            <Form.Control onChange={handleNameChange} type="text" placeholder="Search for a class name" />
-            <Form.Control onChange={handleCoachChange} type="text" placeholder="Search for a coach name" />
-            <p>{timeRange[0]} - {timeRange[1]}</p>
-            <ThemeProvider theme={theme}>
-                <Slider
-                    value={range}
-                    onChange={handleTimeChange}
-                    onChangeCommitted={handleTimeCommitted}
-                    min={0}
-                    max={1439}
-                    step={15}
-                    disableSwap
-                    color="primary"
-                />
-            </ThemeProvider>
-            
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-                label="Start Date"
-                preventDefault
-                value={dateRange[0]}
-                onChange={(newValue) => {
-                setDate([newValue, dateRange[1]]);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />
-            <DatePicker
-                label="End Date"
-                value={dateRange[1]}
-                onChange={(newValue) => {
-                setDate([dateRange[0], newValue]);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-                disablePast={true}
-            />
-            </LocalizationProvider>
-        </Form>
+        <div className='class-search-control'>
+            <h4>Filter Classes</h4>
+            <Form >
+                <Form.Control className='class-control-input' onChange={handleNameChange} type="text" placeholder="Search for a class name" />
+                <Form.Control className='class-control-input' onChange={handleCoachChange} type="text" placeholder="Search for a coach name" />
+                <ThemeProvider theme={theme}>
+                    <div className="time-range-picker">
+                        <div className="time-range-display">
+                            <p>Class Starts At:</p>
+                            <p>{timeRange[0]} - {timeRange[1]}</p>
+                        </div>
+                            <Slider
+                                value={range}
+                                onChange={handleTimeChange}
+                                onChangeCommitted={handleTimeCommitted}
+                                min={0}
+                                max={1439}
+                                step={15}
+                                disableSwap
+                                color="primary"
+                                className="time-range-slider"
+                            />
+                    </div>
+                
+                
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            className='class-control-datepicker'
+                            label="Start Date"
+                            preventDefault
+                            value={dateRange[0]}
+                            onChange={(newValue) => {
+                            setDate([newValue, dateRange[1]]);
+                            }}
+                            renderInput={(params) => <TextField {...params} 
+                            color="primary"/>}
+                        />
+                        <DatePicker
+                            className='class-control-datepicker'
+                            label="End Date"
+                            value={dateRange[1]}
+                            onChange={(newValue) => {
+                            setDate([dateRange[0], newValue]);
+                            }}
+                            renderInput={(params) => <TextField {...params} />}
+                            disablePast={true}
+                            color="primary"
+                        />
+                    
+                    </LocalizationProvider>
+                </ThemeProvider>
+            </Form>
+        </div>
     )
 }
 

@@ -139,14 +139,18 @@ const StudioClassSchedule = (props) => {
                             setEndTime={setSearchEnd}
                             start={searchStart}
                             end={searchEnd}
-                            dateRange={searchDateRange}/>
+                            dateRange={searchDateRange}
+                            />
+                            <div>
+                                <div className='class-table'>
+                                    {classArray &&
+                                        classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
+                                    }
+                                    
+                                    </div>
+                                    {prevURL ? <Button variant="orange" onClick={handlePrev}>prev</Button> : <Button variant="disabled" disabled>prev</Button>}
+                                    {nextURL ? <Button variant="orange" onClick={handleNext}>next</Button> : <Button variant="disabled" disabled>next</Button>}
 
-                            <div className='class-table'>
-                            {classArray &&
-                                classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
-                            }
-                            {nextURL && <Button variant="orange" onClick={handleNext}>next</Button>}
-                            {prevURL && <Button variant="orange" onClick={handlePrev}>prev</Button>}
                             </div>
                     </div>
                     
