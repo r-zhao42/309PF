@@ -1,18 +1,8 @@
-.class-row {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px #9d9d9d solid;
-    padding: 10px;
-}
-
-.class-row-text {
-    display: flex;
-    justify-content: left;
+.class-row-info {
+    margin-left: 20px;
 }
 
 .class-row-info{
-    margin-left: 100px;
-    margin-right: 20px;
     justify-content: left;
     text-align: left;
 }
@@ -30,18 +20,15 @@
     display: flex;
     border: #5d5d5d solid 1px;
     border-radius: 10px;
+    min-width: 70%;
 }
 
 .class-table {
     height: 600px;
     overflow: scroll;
-    flex: 3;
-    flex-grow: 3;
 }
 
 .class-search-control {
-    flex: 1;
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -69,4 +56,31 @@
 .time-range-display {
     display: flex;
     justify-content: space-between;
+}
+
+.class-row td {
+    vertical-align: top;
+    padding: 10px;
+}
+
+.class-row {
+    border-top: #bfbfbe solid 1px;
+    border-bottom: #bfbfbe solid 1px;
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+.class-table table {
+    border-collapse: collapse;
+}
+
+.button-td {
+    vertical-align: middle;
+}
+
+.class-search-control {
+    flex-grow: 1;
+}
+.class-schedule-list {
+    flex-grow: 3;
 }

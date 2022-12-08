@@ -140,14 +140,17 @@ const StudioClassSchedule = (props) => {
                             start={searchStart}
                             end={searchEnd}
                             dateRange={searchDateRange}
+                            className="class-schedule-control"
                             />
-                            <div>
+                            <div className="class-schedule-list">
                                 <div className='class-table'>
+                                    <table>
                                     {classArray &&
                                         classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
                                     }
+                                    </table>
                                     
-                                    </div>
+                                </div>
                                     {prevURL ? <Button variant="orange" onClick={handlePrev}>prev</Button> : <Button variant="disabled" disabled>prev</Button>}
                                     {nextURL ? <Button variant="orange" onClick={handleNext}>next</Button> : <Button variant="disabled" disabled>next</Button>}
 
