@@ -9,7 +9,6 @@ import Login from "./pages/Login/Login"
 import StudioDetail from "./pages/StudioDetail/StudioDetail"
 import Logout from "./pages/Logout/Logout"
 import Subscription from "./pages/Subscription/Subscription"
-import StudioClassSchedulePage from './components/ClassSchedule/ClassSchedule';
 import './App.css';
 
 

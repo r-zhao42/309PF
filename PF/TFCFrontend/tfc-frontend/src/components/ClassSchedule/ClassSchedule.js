@@ -34,7 +34,7 @@ const StudioClassSchedule = (props) => {
             const params = new URLSearchParams()
             var url = "http://127.0.0.1:8000/api/studios/".concat(studio.name).concat("/classes/list/")
 
-            if (queries.some((query) => query != "")) {
+            if (queries.some((query) => query !== "")) {
                 if (searchDateRange[0]) {
                     const startDate = new Date(searchDateRange[0]).toLocaleDateString('fr-CA')
                     params.append("start_date", startDate)
@@ -45,21 +45,21 @@ const StudioClassSchedule = (props) => {
                 }
                 
 
-                if(searchName != ""){
+                if(searchName !== ""){
                     params.append("name", searchName)
                 }
     
-                if(searchCoaches != ""){
+                if(searchCoaches !== ""){
                     console.log("hit2")
                     params.append("coach", searchCoaches)
                 }
     
     
-                if(searchEnd != ""){
+                if(searchEnd !== ""){
                     params.append("end_time", searchEnd)
                 }
 
-                if(searchStart != ""){
+                if(searchStart !== ""){
                     params.append("start_time", searchStart)
                 }
 
