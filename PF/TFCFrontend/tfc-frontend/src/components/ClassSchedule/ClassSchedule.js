@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import ClassScheduleRow from './ClassScheduleRow';
 import Button from 'react-bootstrap/Button';
 import React from 'react';
-import ClassSearch from './ClassSearch';
+import ClassSearchControl from './ClassSearchControl';
+import '../NavBar/NavBar'
 
 
 const StudioClassSchedule = (props) => {
@@ -20,8 +21,6 @@ const StudioClassSchedule = (props) => {
     const [nextURL, setNext] = useState()
     const [prevURL, setPrev] = useState()
 
-    // const [chosenDay, setChosenDay] = useState(new Date().toLocaleDateString())
-
     useEffect(() => {
         setStudio(props.studio)
     }, [props])
@@ -33,7 +32,6 @@ const StudioClassSchedule = (props) => {
 
             const queries = [searchName, searchDateRange[0], searchDateRange[1], searchCoaches, searchStart, searchEnd]
             const params = new URLSearchParams()
-            // console.log(studio)
             var url = "http://127.0.0.1:8000/api/studios/".concat(studio.name).concat("/classes/list/")
 
             if (queries.some((query) => query != "")) {
@@ -128,57 +126,28 @@ const StudioClassSchedule = (props) => {
         fetchMore("prev")
     }
 
-    // const getDates = () => {
-    //     // const start = new Date()
-    //     // const end = new Date(start.getDate() + 7)
-    //     // console.log(start)
-    //     // console.log(end)
-    //     // for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){
-    //     //     console.log("hti")
-    //     //     arr.push(new Date(dt));
-    //     // }
-    //     // return arr;
-    //     var arr = []
-    //     const start = new Date()
-    //     for(let i=0; i<7; i++) {
-    //         const newDay = new Date()
-    //         var result = newDay.setDate(newDay.getDate() + i);
-    //         arr.push(newDay)
-    //     }
-    //     console.log(arr)
-
-    //     return arr
-    // };
-
     return (
         <>
             {studio &&
                 <>
-                    <h1>Class Schedule</h1>
-
-                    <ClassSearch 
-                        setCoach={setSearchCoaches} 
-                        setName={setSearchName} 
-                        setDate={setRange} 
-                        setStartTime={setSearchStart} 
-                        setEndTime={setSearchEnd}
-                        start={searchStart}
-                        end={searchEnd}
-                        dateRange={searchDateRange}/>
                     <div className='class-schedule'>
-                        {/* <div className='class-dates'>
-                            {
-                                getDates().map((day)=> <p className={day.toLocaleDateString()===chosenDay ? "day-tab day-tab-active" : "day-tab"} onClick={()=> setChosenDay(day.toLocaleDateString())}>{day.toLocaleDateString()}</p>)
-                            }
-                        </div>   */}
+                        <ClassSearchControl
+                            setCoach={setSearchCoaches} 
+                            setName={setSearchName} 
+                            setDate={setRange} 
+                            setStartTime={setSearchStart} 
+                            setEndTime={setSearchEnd}
+                            start={searchStart}
+                            end={searchEnd}
+                            dateRange={searchDateRange}/>
 
-                        <div className='class-table'>
-                        {classArray &&
-                            classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
-                        }
-                        {nextURL && <Button variant="primary" onClick={handleNext}>next</Button>}
-                        {prevURL && <Button variant="primary" onClick={handlePrev}>prev</Button>}
-                        </div>
+                            <div className='class-table'>
+                            {classArray &&
+                                classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
+                            }
+                            {nextURL && <Button variant="orange" onClick={handleNext}>next</Button>}
+                            {prevURL && <Button variant="orange" onClick={handlePrev}>prev</Button>}
+                            </div>
                     </div>
                     
                 </>

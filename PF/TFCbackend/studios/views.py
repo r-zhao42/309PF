@@ -89,7 +89,6 @@ class SearchClassesView(ListAPIView):
         classes = RepeatClass.objects.filter(parent_class__studio__name__iexact=self.kwargs['studio_name'], start_time__gte=timezone.now(), cancelled=False)
 
         name = self.request.GET.get('name', None)
-        date = self.request.GET.get('date', None)
         coach = self.request.GET.get('coach', None)
         startTime = self.request.GET.get('start_time', None)
         endTime = self.request.GET.get('end_time', None)

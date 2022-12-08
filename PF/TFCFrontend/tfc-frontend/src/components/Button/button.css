@@ -27,17 +27,17 @@ button {
 }
 
 .btn-orange {
-    background: #ce5311;
+    background: #ce5311 !important;
     color: #fff;
-    border: 2px solid #ce5311;
-    border-radius: 5px;
+    border: 2px solid #ce5311 !important;
+    border-radius: 5px; 
     padding: 5px 10px;
 }
 
 .btn-orange:hover {
-    background: #b74a10;
+    background: #b74a10 !important;
     color: #fff;
-    border: 2px solid #b74a10;
+    border: 2px solid #b74a10 !important;
     border-radius: 5px;
     padding: 5px 10px;
 }
@@ -48,4 +48,22 @@ button {
     border: 2px solid #a1420f !important;
     border-radius: 5px !important;
     padding: 5px 10px !important;
+}
+
+.btn-directions-button {
+    background-color:#e85f15 !important;
+    border-color: #e85f15 !important;
+    color: #fdebe2 !important;
+}
+
+.btn-directions-button:hover {
+    background-color:#a6430e !important;
+    border-color: #a6430e !important;
+    color: #fdebe2 !important;
+}
+
+.btn-directions-button:active {
+    background-color:#a6430e !important;
+    border-color: #a6430e !important;
+    color: #fdebe2 !important
 }

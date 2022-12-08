@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import React from 'react';
+import '../Button/button.css';
 
 
 
@@ -57,8 +58,8 @@ const ClassScheduleRow = ({classInfo}) => {
                             </div>
                             {localStorage.getItem('token') ? 
                                 <div className='class-row-buttons'> 
-                                    <Button onClick={handleEnroll} variant="primary">Enroll</Button>
-                                    <Button onClick={handleEnrollFuture} variant="primary">Enroll All</Button>
+                                    <Button onClick={handleEnroll} variant="orange">Enroll</Button>
+                                    <Button onClick={handleEnrollFuture} variant="orange">Enroll All</Button>
                                 </div> 
                                 :
                                 <p>You must be logged in to enroll</p>

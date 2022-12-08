@@ -6,7 +6,8 @@ import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import "./StudioDetail.css";
+import "../../components/Button/button.css"
+import "./StudioDetail.css"
 import StudioClassSchedule from '../../components/ClassSchedule/ClassSchedule';
 
 const StudioDetail = () => {
@@ -41,9 +42,9 @@ const StudioDetail = () => {
     fetch('http://127.0.0.1:8000/api/studios/' + name + '/directions/', {
       method: 'get',
       mode: 'cors',
-      // headers: new Headers({
-      //   'Authorization': 'Token ' + localStorage.getItem('token'),
-      // }),
+      headers: new Headers({
+        'Authorization': 'Token ' + localStorage.getItem('token'),
+      }),
     }).then((response) => response.text())
       .then((data) => {
         setDirections(data);
@@ -111,7 +112,7 @@ const StudioDetail = () => {
               </div>
             </>
           }
-          <h5>Class Schedule</h5>
+          <h3>Class Schedule</h3>
           <StudioClassSchedule studio={studioData}/>
 
         </div>
