@@ -9,7 +9,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/replace-this');
+        navigate('/studio-search');
       };
     
   

@@ -1,0 +1,5 @@
+.summary-card-list{
+    max-height: 100%;
+    overflow: scroll;
+    width: 400px;
+}

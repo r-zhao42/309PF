@@ -1,0 +1,23 @@
+.studio-search-title {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.studio-separator-hr {
+    background-color: transparent;
+    width: 15rem;
+    height: 0.4rem;
+    display: inline-block;
+    position: relative;
+    margin: auto;
+    border: 0.4rem solid #fb6414;
+}
+
+.studio-separator {
+    text-align: center;
+}
+
+.studio-search-description{
+    color: #656565;
+    text-align: center;
+}
