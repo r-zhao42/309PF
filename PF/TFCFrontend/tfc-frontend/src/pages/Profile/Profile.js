@@ -27,10 +27,6 @@ function Profile() {
     }).then((response) => response.json())
       .then((data) => {
         setAccData(data.account_details);
-        setFirst(data.account_details.first_name);
-        setLast(data.account_details.last_name);
-        setPhone(data.account_details.phone_num);
-        setEmail(data.account_details.email);
       });
   }, [dataChange]);
 
@@ -97,6 +93,7 @@ function Profile() {
   formbody.append("avatar", avatar);
 
   const handleEdit = event => {
+    console.log(formbody);
     event.preventDefault();
     fetch("http://127.0.0.1:8000/api/accounts/edit/", {
       method: "put",
@@ -108,6 +105,7 @@ function Profile() {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log(responseJson);
         const newErrorsState = {};
 
         if ('first_name' in responseJson) {
@@ -199,36 +197,36 @@ function Profile() {
                 <div className="edit-form-duo">
                   <Form.Group className="edit-form-left">
                     <Form.Label className="float-start">First Name</Form.Label>
-                    <Form.Control type="text" value={first} placeholder={accData.first_name} onChange={handleFirstChange} />
+                    <Form.Control type="text" placeholder={accData.first_name} onChange={handleFirstChange} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.first_name}</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="edit-form-right">
                     <Form.Label className="float-start">Last Name</Form.Label>
-                    <Form.Control type="text" value={last} placeholder={accData.last_name} onChange={handleLastChange} />
+                    <Form.Control type="text" placeholder={accData.last_name} onChange={handleLastChange} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.last_name}</Form.Control.Feedback>
                   </Form.Group>
                 </div>
                 <div className="edit-form-duo">
                   <Form.Group className="edit-form-left">
                     <Form.Label className="float-start">Phone Number</Form.Label>
-                    <Form.Control type="tel" value={phone} placeholder={accData.phone_num} onChange={handlePhoneChange} isInvalid={!!errors.phone_num} />
+                    <Form.Control type="tel" placeholder={accData.phone_num} onChange={handlePhoneChange} isInvalid={!!errors.phone_num} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.phone_num}</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="edit-form-right">
                     <Form.Label className="float-start">Email</Form.Label>
-                    <Form.Control type="email" value={email} placeholder={accData.email} onChange={handleEmailChange} isInvalid={!!errors.email} />
+                    <Form.Control type="email" placeholder={accData.email} onChange={handleEmailChange} isInvalid={!!errors.email} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.email}</Form.Control.Feedback>
                   </Form.Group>
                 </div>
                 <div className="edit-form-duo">
                   <Form.Group className="edit-form-left">
                     <Form.Label className="float-start">Password</Form.Label>
-                    <Form.Control type="password" value={password} onChange={handlePasswordChange} isInvalid={!!errors.password} />
+                    <Form.Control type="password" onChange={handlePasswordChange} isInvalid={!!errors.password} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.password}</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="edit-form-right">
                     <Form.Label className="float-start">Repeat Password</Form.Label>
-                    <Form.Control type="password" value={repeatpassword} onChange={handleRepeatPasswordChange} isInvalid={!!errors.repeatpassword} />
+                    <Form.Control type="password" onChange={handleRepeatPasswordChange} isInvalid={!!errors.repeatpassword} />
                     <Form.Control.Feedback className="float-start" type="invalid">{errors.repeatpassword}</Form.Control.Feedback>
                   </Form.Group>
                 </div>
