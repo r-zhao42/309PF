@@ -107,19 +107,15 @@ const Subscription = ({ loginStatus }) => {
   return (
     <>
       <div className="outer-div5">
-        {success ?
+        {success &&
           <Alert variant="changed-sub" onClose={() => setSuccess(false)} dismissible>
             Your Subscription Has Been Changed
           </Alert>
-          :
-          <></>
         }
-        {error ?
+        {error &&
           <Alert variant="changed-sub" onClose={() => setError(false)} dismissible>
             Sorry, we are unable to change your subscription. Note that you must have added payment info to subscribe.
           </Alert>
-          :
-          <></>
         }
 
 
