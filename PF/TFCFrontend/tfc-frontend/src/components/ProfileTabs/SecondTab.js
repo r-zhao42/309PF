@@ -44,9 +44,10 @@ const SecondTab = () => {
       data.append("enroll_future", enrollFuture);
 
       console.log(fetchUrl)
-      console.log(data)
-
-
+      console.log(classData.start_time)
+      for (var pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
       fetch(fetchUrl, {
           method: 'post',
           mode: 'cors',
@@ -54,10 +55,7 @@ const SecondTab = () => {
               'Authorization': 'Token ' + localStorage.getItem('token'),
           }),
           body: data
-        }).then((response) => response.text())
-          .then((data) => {
-            console.log(data)
-          });
+        }).then((response) => refreshTab());
   }
 
   return (
@@ -82,15 +80,11 @@ const SecondTab = () => {
                     <td>{repeat_class.end_time.slice(0,10)} {repeat_class.end_time.slice(11,19)}</td>
                     <td>{repeat_class.cancelled ? 'true' : 'false'}</td>
                     <td>
-                      <button className="btn btn-schedule" onClick={(e) => {
-                                                                handleUnenroll(repeat_class, false)
-                                                                refreshTab()}}>
+                      <button className="btn btn-schedule" onClick={(e) => handleUnenroll(repeat_class, false)}>
                         Unenroll
                       </button> 
-                      <button className="btn btn-schedule" onClick={(e) => {
-                                                                handleUnenroll(repeat_class, true)
-                                                                refreshTab()}}>
-                        Unenroll Future
+                      <button className="btn btn-schedule" onClick={(e) => handleUnenroll(repeat_class, true)}>
+                        Unenroll All
                       </button>
                     </td>
                   </tr>
