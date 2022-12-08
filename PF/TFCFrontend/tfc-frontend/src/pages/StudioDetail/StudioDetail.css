@@ -34,15 +34,15 @@
 }
 
 .studio-image {
-    height: 60vh;
-    width:  80vw;
-    max-width: 500px;
+    height: 50vh;
+    width:  40vw;
+    /* max-width: 500px; */
 }
 
 .studio-car {
-    height: 60vh;
-    width: 80vw;
-    max-width: 500px;
+    height: 50vh;
+    width: 40vw;
+    /* max-width: 500px; */
 }
 
 .btn-directions-button {
