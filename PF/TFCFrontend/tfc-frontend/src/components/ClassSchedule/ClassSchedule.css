@@ -20,12 +20,13 @@
     display: flex;
     border: #5d5d5d solid 1px;
     border-radius: 10px;
-    min-width: 70%;
+    width: 100%;
 }
 
 .class-table {
     height: 600px;
     overflow: scroll;
+    width: 100%;
 }
 
 .class-search-control {
@@ -72,15 +73,26 @@
 
 .class-table table {
     border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
 }
 
-.button-td {
+.class-name-td {
+    width: 20%;
+}
+
+.class-info-td {
+    width: 50%;
+}
+
+.class-button-td {
     vertical-align: middle;
+    width: 30%;
 }
 
-.class-search-control {
-    flex-grow: 1;
-}
+
 .class-schedule-list {
-    flex-grow: 3;
+    width: 100%;
 }
+
+

@@ -42,9 +42,6 @@ const StudioDetail = () => {
     fetch('http://127.0.0.1:8000/api/studios/' + name + '/directions/', {
       method: 'get',
       mode: 'cors',
-      headers: new Headers({
-        'Authorization': 'Token ' + localStorage.getItem('token'),
-      }),
     }).then((response) => response.text())
       .then((data) => {
         setDirections(data);

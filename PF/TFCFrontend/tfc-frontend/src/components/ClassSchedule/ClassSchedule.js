@@ -74,7 +74,6 @@ const StudioClassSchedule = (props) => {
                 method: 'get',
                 mode: 'cors',
                 headers: new Headers({
-                    'Authorization': 'Token a32af8a10d8eb61c3cfbfa350ccd3ba3e8e81dcc',
                     'Content-type': 'application/json' 
                 }),
               }).then((response) => response.json())
@@ -101,12 +100,10 @@ const StudioClassSchedule = (props) => {
             method: 'get',
             mode: 'cors',
             headers: new Headers({
-                'Authorization': 'Token ' + localStorage.getItem('token'),
                 'Content-type': 'application/json' 
             }),
           }).then((response) => response.json())
             .then((data) => {
-              // TODO 
               console.log(data)
               setClasses(data.results)
               setNext(data.next)
@@ -145,9 +142,11 @@ const StudioClassSchedule = (props) => {
                             <div className="class-schedule-list">
                                 <div className='class-table'>
                                     <table>
-                                    {classArray &&
-                                        classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
-                                    }
+                                        <tbody>
+                                            {classArray &&
+                                                classArray.map((c, i)=> <ClassScheduleRow key={i} classInfo={c} />)
+                                            }
+                                        </tbody>
                                     </table>
                                     
                                 </div>

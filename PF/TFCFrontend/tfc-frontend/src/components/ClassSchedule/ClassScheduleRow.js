@@ -69,27 +69,34 @@ const ClassScheduleRow = ({classInfo}) => {
     return (
         <>
             <tr className="class-row" onClick={handleShow}>
-                    <td>                    
+                    <td className='class-name-td'>                    
                         <h6>{classInfo.parent_class.name}</h6>
                     </td>    
-                    <td> 
+                    <td className='class-info-td'> 
                         <div className='class-row-info'>
                             <p>Date: {new Date(classInfo.start_time).toLocaleDateString("en-US", getLocaleDateStringOptions)}</p>
                             <p>Time: {getTimeString(classInfo.start_time)} - {getTimeString(classInfo.end_time)}</p>
                             <p>Coach: {classInfo.parent_class.coach}</p>
                         </div>
                     </td>
-                <td className="button-td">
-                {localStorage.getItem('token') ? 
-                    <div className='class-row-buttons'> 
-                        <Button onClick={handleEnroll} variant="orange">Enroll</Button>
-                        <Button onClick={handleEnrollFuture} variant="orange">Enroll All</Button>
-                    </div> 
-                    :
-                    <p>You must be logged in to enroll</p>
-                }    
+                <td className="class-button-td">
+                    {/* {localStorage.getItem('token') ? 
+                        <div className='class-row-buttons'> 
+                            <Button onClick={handleEnroll} variant="orange">Enroll</Button>
+                            <Button onClick={handleEnrollFuture} variant="orange">Enroll All</Button>
+                        </div> 
+                        :
+                        <p>You must be logged in to enroll</p>
+                    }     */}
+                    <Button 
+                        onClick={handleEnroll} 
+                        variant={localStorage.getItem('token') ? "orange" : "disabled"}>Enroll</Button>
+                    <Button 
+                        onClick={handleEnrollFuture} 
+                        variant={localStorage.getItem('token') ? "orange" : "disabled"}>Enroll All</Button>
                 </td>       
             </tr>
+
             <Modal show={showDetailModal} onHide={handleClose}>
 
                 <Modal.Header closeButton>
