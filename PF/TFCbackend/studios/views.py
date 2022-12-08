@@ -154,7 +154,7 @@ def perform_create(request):
         return Response('Enrollment Unsuccessful: This datetime of this class has already passed')
 
     # user wants to enrol in all future instances of this class
-    if request.POST.get('enroll_future', False):
+    if request.POST.get('enroll_future', "false") == "true":
         # get parent class and date of target class
         parent_class = target_class.parent_class
         date_of_class = target_class.start_time    
@@ -218,10 +218,10 @@ def perform_delete(request):
         return Response('Unenrollment Unsuccessful: This datetime of this class has already passed')
 
     # user wants to unenroll from all future classes
-    if request.POST.get('enroll_future', False):
+    if request.POST.get('enroll_future', "false") == "true":
         # get ids of all classes with same parent class
         parent_class = RepeatClass.objects.get(id=request.POST.get("class_id", None)).parent_class
-        queryset = RepeatClass.objects.filter(parent_class=parent_class)
+        queryset = Enrollment.objects.filter(repeat_class__parent_class=parent_class)
 
     # user only wants to unenroll from this class
     else:

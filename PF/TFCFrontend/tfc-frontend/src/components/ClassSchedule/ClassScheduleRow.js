@@ -19,7 +19,9 @@ const ClassScheduleRow = ({classInfo}) => {
         data.append("enroll_future", enrollFuture);
 
         console.log(fetchUrl)
-        console.log(data)
+        for (var pair of data.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
 
 
         fetch(fetchUrl, {
