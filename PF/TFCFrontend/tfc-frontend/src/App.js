@@ -33,6 +33,7 @@ function App() {
                 <Route path="logout" element={<Logout setLoginStatus={handleChange}/>} />
                 <Route path="login" element={<Login setLoginStatus={handleChange}/>} />
                 <Route path="subscription" element={<Subscription loginStatus={auth}/>} />
+                {/* <Route path="studio/class-schedule" element={<StudioClassSchedulePage />} /> */}
             </Route>
         </Routes>
     </BrowserRouter>

@@ -1,0 +1,102 @@
+.class-row-info {
+    margin-left: 20px;
+}
+
+.class-row-info{
+    justify-content: left;
+    text-align: left;
+}
+
+.class-dates {
+    display: flex;
+}
+
+.day-tab-active {
+    color: orange;
+    background-color: aqua;
+}
+
+.class-schedule {
+    display: flex;
+    border: #5d5d5d solid 1px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.class-table {
+    height: 600px;
+    overflow: scroll;
+    width: 100%;
+}
+
+.class-search-control {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-right: #5d5d5d solid 1px;
+}
+
+.class-control-input {
+    margin: 8px;
+}
+
+.class-control-datepicker{
+    margin: 5px !important;
+}
+
+.time-range-picker {
+    margin-top: 25px;
+    margin-bottom: 8px;
+}
+
+.time-range-picker p{
+    margin-bottom: 0px !important;
+    font-weight: bold;
+}
+
+.time-range-display {
+    display: flex;
+    justify-content: space-between;
+}
+
+.class-row td {
+    vertical-align: top;
+    padding: 10px;
+}
+
+.class-row {
+    border-top: #bfbfbe solid 1px;
+    border-bottom: #bfbfbe solid 1px;
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+.class-row:hover {
+    background-color: #bfbfbe;
+}
+
+.class-table table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.class-name-td {
+    width: 20%;
+}
+
+.class-info-td {
+    width: 50%;
+}
+
+.class-button-td {
+    vertical-align: middle;
+    width: 30%;
+}
+
+
+.class-schedule-list {
+    width: 100%;
+}
+
+

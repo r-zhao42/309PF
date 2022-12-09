@@ -2,8 +2,7 @@
     width: 100vw;
     min-width: 600px;
     text-align: center;
-    background-image: url("./ProfileBackground.png");
-    background-size: cover;
+    background-color: rgb(36, 36, 36);
     overflow: hidden;
 }
 .profile-header{

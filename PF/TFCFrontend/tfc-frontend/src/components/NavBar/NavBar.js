@@ -165,7 +165,6 @@ const NavBar = ({loginStatus}) => {
                         >
                             <Nav.Link href="/home" className="nav-item">Home</Nav.Link>
                             <Nav.Link href="/studio-search" className="nav-item">Gyms</Nav.Link>
-                            <Nav.Link href="/classes" className="nav-item">Classes</Nav.Link>
                             <Nav.Link href="/subscription" className="nav-item">Subscription</Nav.Link>
                         </Nav>
                         <Nav>

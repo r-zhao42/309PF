@@ -1,7 +1,7 @@
 from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
 import geopy.distance
 import datetime
@@ -81,7 +81,7 @@ class ClassView(ListAPIView):
         return RepeatClass.objects.filter(studio=obj, start_time__gte=timezone.now(), cancelled=False).order_by('start_time')
 
 class SearchClassesView(ListAPIView):
-    permission_classes = []
+    permission_classes = [AllowAny]
     serializer_class = RepeatClassSerializer
     pagination_class = ClassPagination
 
@@ -89,10 +89,11 @@ class SearchClassesView(ListAPIView):
         classes = RepeatClass.objects.filter(parent_class__studio__name__iexact=self.kwargs['studio_name'], start_time__gte=timezone.now(), cancelled=False)
 
         name = self.request.GET.get('name', None)
-        date = self.request.GET.get('date', None)
         coach = self.request.GET.get('coach', None)
         startTime = self.request.GET.get('start_time', None)
         endTime = self.request.GET.get('end_time', None)
+        startDate = self.request.GET.get('start_date', None)
+        endDate = self.request.GET.get('end_date', None)
         #classes with at least one of the search names
         if name:
             classes = classes.filter(parent_class__name__icontains=name)
@@ -102,11 +103,12 @@ class SearchClassesView(ListAPIView):
             classes = classes.filter(parent_class__coach__icontains=coach)
 
         #classes on any of the search dates
-        if date:
-            date = date.split('-')
-            classes = classes.filter(start_time__year=date[0],
-                                    start_time__month=date[1],
-                                    start_time__day=date[2])
+        if startDate:
+            classes = classes.filter(start_time__date__gte=startDate)
+        
+        if endDate:
+            classes = classes.filter(end_time__date__lte=endDate)
+
         if startTime:
             classes = classes.filter(start_time__time__gte=startTime)
         if endTime:
@@ -152,7 +154,7 @@ def perform_create(request):
         return Response('Enrollment Unsuccessful: This datetime of this class has already passed')
 
     # user wants to enrol in all future instances of this class
-    if request.POST.get('enroll_future', False):
+    if request.POST.get('enroll_future', "false") == "true":
         # get parent class and date of target class
         parent_class = target_class.parent_class
         date_of_class = target_class.start_time    
@@ -216,10 +218,10 @@ def perform_delete(request):
         return Response('Unenrollment Unsuccessful: This datetime of this class has already passed')
 
     # user wants to unenroll from all future classes
-    if request.POST.get('enroll_future', False):
+    if request.POST.get('enroll_future', "false") == "true":
         # get ids of all classes with same parent class
         parent_class = RepeatClass.objects.get(id=request.POST.get("class_id", None)).parent_class
-        queryset = RepeatClass.objects.filter(parent_class=parent_class)
+        queryset = Enrollment.objects.filter(repeat_class__parent_class=parent_class)
 
     # user only wants to unenroll from this class
     else:
@@ -230,7 +232,7 @@ def perform_delete(request):
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@permission_classes([])
+@permission_classes([AllowAny])
 def get_directions(request,studio_name):
     """
     We simply redirect the user to a google maps page with the destination set to the gym.
